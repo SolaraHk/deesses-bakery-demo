@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deesses Bakery — Warm Golden Breads & Pastries</title>
+  <meta name="description" content="A concept demo site for Deesses Bakery — warm, golden, handcrafted breads and pastries. Demo only; not an official site." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Sticky glass navigation -->
+  <header class="nav" id="nav">
+    <nav class="nav__inner" aria-label="Primary">
+      <a href="#top" class="nav__brand">
+        <span class="nav__mark" aria-hidden="true">◍</span>
+        <span class="nav__name">Deesses Bakery</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="#story">Story</a></li>
+        <li><a href="#bakes">Bakes</a></li>
+        <li><a href="#artemis">Artemis</a></li>
+        <li><a href="#visit">Visit</a></li>
+      </ul>
+      <a href="https://www.facebook.com/deessesbakery" class="nav__cta" target="_blank" rel="noopener">Facebook</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__content">
+          <p class="eyebrow">Concept demo · Hong Kong</p>
+          <h1 class="hero__title">Bread, the colour<br />of late afternoon.</h1>
+          <p class="hero__lede">
+            Slow ferments, blistered crusts, and pastries pulled from the oven at their most golden.
+            Deesses Bakery is a small idea about warmth — the kind you can smell before you see it.
+          </p>
+          <div class="hero__actions">
+            <a href="#bakes" class="btn btn--primary">See the bakes</a>
+            <a href="#artemis" class="btn btn--ghost">Meet Artemis</a>
+            <a href="https://www.facebook.com/deessesbakery" class="btn btn--facebook" target="_blank" rel="noopener">
+              <span class="btn__fb-mark" aria-hidden="true">f</span>
+              Follow on Facebook
+            </a>
+          </div>
+        </div>
+
+        <!-- Right-side bakery display composition (pure CSS, no images) -->
+        <div class="hero__visual" aria-hidden="true">
+          <div class="display-card">
+            <div class="display-card__top">
+              <span class="display-card__tag">Fresh from the oven</span>
+              <span class="display-card__dot"></span>
+            </div>
+            <div class="display-card__stage">
+              <span class="steam steam--a"></span>
+              <span class="steam steam--b"></span>
+              <span class="steam steam--c"></span>
+              <div class="bake3d bake3d--croissant"></div>
+              <div class="bake3d bake3d--loaf"></div>
+              <div class="bake3d bake3d--bun"></div>
+            </div>
+            <div class="display-card__shelf"></div>
+            <p class="display-card__caption">Golden crusts · laminated layers · honey crumb</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+    </section>
+
+    <!-- Story -->
+    <section class="story" id="story">
+      <div class="section__head">
+        <p class="eyebrow">The Story</p>
+        <h2>A bakery that chases the light.</h2>
+      </div>
+      <div class="story__grid">
+        <p class="story__lead">
+          This is a design concept — a love letter to golden crumb and honeyed crust.
+          The look borrows from quiet morning markets and the soft glow that lands on a loaf
+          just as the city wakes up.
+        </p>
+        <div class="story__cards">
+          <article class="card">
+            <h3>Long, patient ferments</h3>
+            <p>Dough left to find its own flavour overnight, until the crust caramelises into deep amber.</p>
+          </article>
+          <article class="card">
+            <h3>Pastry, laminated by hand</h3>
+            <p>Butter and flour folded into countless layers that shatter, lift, and shine.</p>
+          </article>
+          <article class="card">
+            <h3>Rooted in Hong Kong</h3>
+            <p>An imagined neighbourhood bakery with one foot in the wetlands and one in the harbour.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bakes -->
+    <section class="bakes" id="bakes">
+      <div class="section__head">
+        <p class="eyebrow">The Bakes</p>
+        <h2>Golden, every one.</h2>
+        <p class="section__sub">A sampler of the kind of things this concept bakery would pull from the oven.</p>
+      </div>
+      <div class="bakes__grid">
+        <article class="bake">
+          <div class="bake__swatch bake__swatch--crust" aria-hidden="true"></div>
+          <div class="bake__head">
+            <h3>Country Sourdough</h3>
+            <span class="bake__price">Price TBC</span>
+          </div>
+          <p>A dark, crackling crust over an open, custardy crumb.</p>
+        </article>
+        <article class="bake">
+          <div class="bake__swatch bake__swatch--butter" aria-hidden="true"></div>
+          <div class="bake__head">
+            <h3>Butter Croissant</h3>
+            <span class="bake__price">Price TBC</span>
+          </div>
+          <p>Honeycomb layers, burnished tips, and a quiet shower of flakes.</p>
+        </article>
+        <article class="bake">
+          <div class="bake__swatch bake__swatch--honey" aria-hidden="true"></div>
+          <div class="bake__head">
+            <h3>Honey Brioche</h3>
+            <span class="bake__price">Price TBC</span>
+          </div>
+          <p>Soft, golden, and barely sweet — the loaf that smells like home.</p>
+        </article>
+        <article class="bake">
+          <div class="bake__swatch bake__swatch--seed" aria-hidden="true"></div>
+          <div class="bake__head">
+            <h3>Seeded Wheat</h3>
+            <span class="bake__price">Price TBC</span>
+          </div>
+          <p>Toasted seeds and wholegrain warmth, baked to a deep, nutty amber.</p>
+        </article>
+      </div>
+      <p class="note">Items shown are illustrative of the concept. Prices are to be confirmed; no menu or availability is implied.</p>
+    </section>
+
+    <!-- Artemis -->
+    <section class="artemis" id="artemis">
+      <div class="artemis__inner">
+        <p class="eyebrow eyebrow--light">A sibling concept</p>
+        <h2>Artemis<span class="artemis__by"> by Deesses Bakery</span></h2>
+        <p class="artemis__lead">
+          The search results pair Deesses Bakery with <strong>Artemis by Deesses Bakery</strong>,
+          listed at <strong>AIRSIDE, Kai Tak</strong>. In this demo, Artemis is imagined as the
+          calmer, evening-lit counter — the same golden palette, a slower pour.
+        </p>
+        <ul class="artemis__facts">
+          <li><span>Listed as</span> Artemis by Deesses Bakery</li>
+          <li><span>Area</span> AIRSIDE, Kai Tak</li>
+          <li><span>Status</span> Concept demo — details not verified</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Visit -->
+    <section class="visit" id="visit">
+      <div class="section__head">
+        <p class="eyebrow">Find the Light</p>
+        <h2>Somewhere near the wetlands.</h2>
+        <p class="section__sub">
+          The source post mentions <strong>Hong Kong Wetland Park</strong>. We've kept that as the
+          mood of the place — reeds, soft water, low golden sun.
+        </p>
+      </div>
+      <div class="visit__card">
+        <div class="visit__col">
+          <h3>Setting</h3>
+          <p>Hong Kong Wetland Park (referenced in the original post)</p>
+        </div>
+        <div class="visit__col">
+          <h3>Hours</h3>
+          <p>Not published — this is a concept demo.</p>
+        </div>
+        <div class="visit__col">
+          <h3>Contact</h3>
+          <p>No phone or address is invented here. Follow the Facebook page for anything official.</p>
+        </div>
+      </div>
+      <div class="visit__cta">
+        <a href="https://www.facebook.com/deessesbakery" class="btn btn--facebook btn--lg" target="_blank" rel="noopener">
+          <span class="btn__fb-mark" aria-hidden="true">f</span>
+          Follow Deesses Bakery on Facebook
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <p class="footer__brand">Deesses Bakery</p>
+        <a href="https://www.facebook.com/deessesbakery" class="footer__fb" target="_blank" rel="noopener">
+          <span class="btn__fb-mark" aria-hidden="true">f</span>
+          facebook.com/deessesbakery
+        </a>
+      </div>
+      <p class="footer__fine">
+        Unofficial design concept. Not affiliated with, endorsed by, or representing the real
+        business. No real prices, hours, phone numbers, or addresses are stated. Place and brand
+        references (Artemis by Deesses Bakery · AIRSIDE, Kai Tak · Hong Kong Wetland Park) are drawn
+        from public search and social results for illustration only.
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
