@@ -1,8 +1,8 @@
 /* =========================================================
    DÉESSES Bakery — multi-branch static demo
    - Data-driven branches + product menu with category/branch filters
-   - Sticky glass nav, scroll-driven warm theme, reveal-on-scroll
-   NOTE: image URLs are temporary public-preview references and
+   - Sticky glass nav, scroll-driven warm theme, accessible modal/order flow
+   NOTE: image files are temporary local-preview references and
    should be replaced with approved assets before delivery.
    ========================================================= */
 
@@ -74,6 +74,22 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function smartScroll(target, options) {
+    if (!target) return;
+    var opts = options || {};
+    target.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : (opts.behavior || "smooth"), block: opts.block || "start" });
+  }
+
+  function todayIso() {
+    var now = new Date();
+    var local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 10);
   }
 
 
@@ -267,6 +283,7 @@
   var activeBranch = "all";
   var activeCategory = "all";
   var activeSearch = "";
+  var previousModalFocus = null;
 
   function el(tag, cls, html) {
     var n = document.createElement(tag);
@@ -285,28 +302,30 @@
     var grid = document.getElementById("branchGrid");
     if (!grid) return;
     BRANCHES.forEach(function (b) {
-      var card = el("button", "branch-card");
-      card.type = "button";
+      var card = el("article", "branch-card");
       card.setAttribute("data-branch", b.id);
-      card.setAttribute("aria-pressed", "false");
+      card.setAttribute("aria-current", "false");
       var phone = b.phone
-        ? '<a class="branch-card__phone" href="tel:+852' + b.phone.replace(/\s/g, "") + '" onclick="event.stopPropagation()">☏ ' + b.phone + "</a>"
+        ? '<a class="branch-card__phone" href="tel:+852' + esc(b.phone.replace(/\s/g, "")) + '">☏ ' + esc(b.phone) + "</a>"
         : '<span class="branch-card__phone branch-card__phone--none">Pre-order via IG / WhatsApp</span>';
       card.innerHTML =
-        '<span class="branch-card__heart" aria-hidden="true">' + b.heart + "</span>" +
-        '<h3 class="branch-card__name">' + b.name + "</h3>" +
-        '<p class="branch-card__sub">' + b.sub + "</p>" +
-        '<p class="branch-card__addr">' + b.addr + "</p>" +
-        '<p class="branch-card__addr branch-card__addr--en">' + b.addrEn + "</p>" +
-        '<p class="branch-card__note">' + b.note + "</p>" +
+        '<span class="branch-card__heart" aria-hidden="true">' + esc(b.heart) + "</span>" +
+        '<h3 class="branch-card__name">' + esc(b.name) + "</h3>" +
+        '<p class="branch-card__sub">' + esc(b.sub) + "</p>" +
+        '<p class="branch-card__addr" lang="zh-Hant">' + esc(b.addr) + "</p>" +
+        '<p class="branch-card__addr branch-card__addr--en">' + esc(b.addrEn) + "</p>" +
+        '<p class="branch-card__note">' + esc(b.note) + "</p>" +
         phone +
-        '<span class="branch-card__cta">' + (b.id === "kaitak" ? "Enter Artemis · 進入啟德專櫃 →" : "View menu · 看餐單 →") + '</span>';
-      card.addEventListener("click", function () {
+        '<button type="button" class="branch-card__cta">' + (b.id === "kaitak" ? "Enter Artemis · 進入啟德專櫃 →" : "View menu · 看餐單 →") + '</button>';
+      function activateBranchCard() {
         var nextBranch = activeBranch === b.id ? "all" : b.id;
         selectBranch(nextBranch);
         var targetId = b.id === "kaitak" ? "signature" : "menu";
-        var target = document.getElementById(targetId);
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        smartScroll(document.getElementById(targetId), { block: "start" });
+      }
+      card.addEventListener("click", function (event) {
+        if (event.target && event.target.closest && event.target.closest("a")) return;
+        activateBranchCard();
       });
       grid.appendChild(card);
     });
@@ -323,6 +342,7 @@
       c.type = "button";
       c.setAttribute("data-key", key);
       c.setAttribute("data-group", group);
+      c.setAttribute("aria-pressed", "false");
       c.addEventListener("click", onClick);
       row.appendChild(c);
       return c;
@@ -343,15 +363,19 @@
 
   function syncChips() {
     document.querySelectorAll('.chip[data-group="cat"]').forEach(function (c) {
-      c.classList.toggle("chip--on", c.getAttribute("data-key") === activeCategory);
+      var on = c.getAttribute("data-key") === activeCategory;
+      c.classList.toggle("chip--on", on);
+      c.setAttribute("aria-pressed", on ? "true" : "false");
     });
     document.querySelectorAll('.chip[data-group="br"]').forEach(function (c) {
-      c.classList.toggle("chip--on", c.getAttribute("data-key") === activeBranch);
+      var on = c.getAttribute("data-key") === activeBranch;
+      c.classList.toggle("chip--on", on);
+      c.setAttribute("aria-pressed", on ? "true" : "false");
     });
     document.querySelectorAll(".branch-card").forEach(function (c) {
       var on = c.getAttribute("data-branch") === activeBranch;
       c.classList.toggle("branch-card--on", on);
-      c.setAttribute("aria-pressed", on ? "true" : "false");
+      c.setAttribute("aria-current", on ? "true" : "false");
     });
   }
 
@@ -449,7 +473,7 @@
         '<label class="product-modal__control">款式/Option<select data-order-field="variant">' + optionTags(p.options || [p.name]) + '</select></label>' +
         '<label class="product-modal__control">尺寸/Size<select data-order-field="size">' + optionTags(sizeChoices) + '</select></label>' +
         '<label class="product-modal__control">數量/Quantity<select data-order-field="quantity"><option>1</option><option>2</option><option>3</option><option>4</option><option>6</option><option>12</option></select></label>' +
-        '<label class="product-modal__control">取貨日期/Pickup date<input data-order-field="pickupDate" type="date" /></label>' +
+        '<label class="product-modal__control">取貨日期/Pickup date<input data-order-field="pickupDate" type="date" min="' + todayIso() + '" /></label>' +
       '</div>' + cakeFields +
       '<input class="product-modal__field" data-order-field="remarks" type="text" placeholder="Remarks · 備註（可留空）" />' +
       '<p class="product-modal__fine">Only the main order details are shown here. Other special requests can go in remarks or be confirmed in WhatsApp.</p>' +
@@ -476,7 +500,8 @@
   function bindOrderBranchChoices(modal, product) {
     var orderBtn = modal.querySelector(".product-modal__order");
     var branchNote = modal.querySelector(".product-modal__branch-note strong");
-    var currentBranch = branchName((modal.querySelector(".product-modal__branch-choice--on") || {}).getAttribute && modal.querySelector(".product-modal__branch-choice--on").getAttribute("data-order-branch")) || getActiveBranchForOrder(product);
+    var selectedChoice = modal.querySelector(".product-modal__branch-choice--on");
+    var currentBranch = branchName(selectedChoice ? selectedChoice.getAttribute("data-order-branch") : "") || getActiveBranchForOrder(product);
 
     function refreshOrderUrl() {
       var extras = collectOrderExtras(modal);
@@ -530,20 +555,18 @@
       });
     }
 
-    empty.hidden = items.length > 0;
+    if (empty) empty.hidden = items.length > 0;
 
     items.forEach(function (p) {
-      var card = el("button", "product");
-      card.type = "button";
+      var card = el("article", "product");
       if (p.id) card.setAttribute("data-product-id", p.id);
-      card.setAttribute("aria-label", "View details for " + p.name);
       var badge = "";
       if (p.signature) badge = '<span class="product__badge product__badge--sig">Signature · 招牌</span>';
       else if (p.seasonal) badge = '<span class="product__badge product__badge--season">Seasonal · 節日</span>';
 
       var hearts = p.branches.map(function (id) {
         var b = branchName(id);
-        return b ? '<span title="' + b.name + '">' + b.heart + "</span>" : "";
+        return b ? '<span title="' + esc(b.name) + '">' + esc(b.heart) + "</span>" : "";
       }).join("");
       var avail = p.branches.length === ALL_IDS.length
         ? '<span class="product__avail-all">All branches · 全線供應</span>'
@@ -555,20 +578,21 @@
       card.innerHTML =
         '<div class="product__media">' +
           badge +
-          '<span class="product__cat">' + (cat ? cat.emoji + " " + cat.label : "") + "</span>" +
-          '<img src="' + p.img + '" alt="' + p.name + '" decoding="async" />' +
+          '<span class="product__cat">' + esc(cat ? cat.emoji + " " + cat.label : "") + "</span>" +
+          '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" width="320" height="320" loading="lazy" decoding="async" />' +
         "</div>" +
         '<div class="product__body">' +
-          '<div class="product__head"><h3>' + p.name + "</h3></div>" +
-          "<p class=\"product__desc\">" + p.desc + "</p>" +
+          '<div class="product__head"><h3>' + esc(p.name) + "</h3></div>" +
+          "<p class=\"product__desc\">" + esc(p.desc) + "</p>" +
           '<div class="product__foot">' +
-            '<span class="product__price">' + p.price + "</span>" +
+            '<span class="product__price">' + esc(p.price) + "</span>" +
             '<span class="product__avail">' + avail + "</span>" +
-            '<span class="product__open">View details · 查看詳情 →</span>' +
+            '<button type="button" class="product__open">View details · 查看詳情 →</button>' +
             '<span class="product__order-hint">Pre-order now · 立即預訂</span>' +
           "</div>" +
         "</div>";
-      card.addEventListener("click", function () { openProductModal(p); });
+      var detailsButton = card.querySelector(".product__open");
+      if (detailsButton) detailsButton.addEventListener("click", function () { openProductModal(p, detailsButton); });
       grid.appendChild(card);
     });
   }
@@ -589,19 +613,41 @@
       if (e.target && e.target.hasAttribute("data-close-modal")) closeProductModal();
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && m.classList.contains("product-modal--open")) closeProductModal();
+      if (!m.classList.contains("product-modal--open")) return;
+      if (e.key === "Escape") closeProductModal();
+      if (e.key === "Tab") trapModalFocus(e, m);
     });
     document.body.appendChild(m);
     return m;
   }
 
-  function openProductModal(p) {
+  function trapModalFocus(event, modal) {
+    var focusable = modal.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    focusable = Array.prototype.filter.call(focusable, function (node) {
+      return node.offsetParent !== null || node === document.activeElement;
+    });
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  function openProductModal(p, trigger) {
     var modal = ensureModal();
+    previousModalFocus = trigger || document.activeElement;
     var content = document.getElementById("productModalContent");
     var branch = getActiveBranchForOrder(p);
     var orderUrl = productWhatsAppUrl(p, branch);
     content.innerHTML =
-      '<div class="product-modal__image"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" /></div>' +
+      '<div class="product-modal__image"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" width="320" height="320" /></div>' +
       '<div class="product-modal__details">' +
         '<p class="eyebrow">Product details · 產品詳情</p>' +
         '<h2 id="productModalTitle">' + esc(p.name) + '</h2>' +
@@ -639,7 +685,7 @@
       var card = document.querySelector('[data-product-id="' + productId + '"]');
       var target = card || document.getElementById("menu");
       if (!target) return;
-      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      smartScroll(target, { block: "center" });
       if (card) {
         card.classList.add("product--spotlight");
         card.focus({ preventScroll: true });
@@ -654,6 +700,8 @@
     modal.classList.remove("product-modal--open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
+    if (previousModalFocus && previousModalFocus.focus) previousModalFocus.focus({ preventScroll: true });
+    previousModalFocus = null;
   }
 
   /* ---------- Footer branch contacts ---------- */
@@ -663,9 +711,9 @@
     BRANCHES.forEach(function (b) {
       var c = el("div", "footer-branch");
       c.innerHTML =
-        '<p class="footer-branch__name">' + b.heart + " " + b.name + "</p>" +
-        '<p class="footer-branch__addr">' + b.addrEn + "</p>" +
-        (b.phone ? '<p class="footer-branch__phone">☏ ' + b.phone + "</p>" : '<p class="footer-branch__phone">Pre-order: IG / WhatsApp 6812 8098</p>');
+        '<p class="footer-branch__name">' + esc(b.heart + " " + b.name) + "</p>" +
+        '<p class="footer-branch__addr">' + esc(b.addrEn) + "</p>" +
+        (b.phone ? '<p class="footer-branch__phone">☏ ' + esc(b.phone) + "</p>" : '<p class="footer-branch__phone">Pre-order: IG / WhatsApp 6812 8098</p>');
       wrap.appendChild(c);
     });
   }
@@ -680,7 +728,7 @@
       a.href = "https://www.instagram.com/deesses_bakery/";
       a.target = "_blank";
       a.rel = "noopener";
-      a.innerHTML = '<img loading="lazy" src="' + src + '" alt="DÉESSES Bakery Instagram preview" />';
+      a.innerHTML = '<img loading="lazy" width="320" height="320" src="' + esc(src) + '" alt="DÉESSES Bakery Instagram preview" />';
       grid.appendChild(a);
     });
   }
@@ -727,56 +775,12 @@
         var target = document.querySelector(id);
         if (target) {
           e.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          smartScroll(target, { block: "start" });
           target.setAttribute("tabindex", "-1");
           target.focus({ preventScroll: true });
         }
       });
     });
-  }
-
-  /* ---------- Swipeable hero product preview ---------- */
-  function wireHeroPreview() {
-    var viewport = document.querySelector("[data-hero-preview]");
-    if (!viewport) return;
-    var slides = Array.from(viewport.querySelectorAll(".hero-preview__slide"));
-    var prev = document.querySelector("[data-hero-prev]");
-    var next = document.querySelector("[data-hero-next]");
-    var dotsWrap = document.querySelector("[data-hero-dots]");
-    var active = 0;
-
-    function slideWidth() {
-      var gap = parseFloat(window.getComputedStyle(viewport).columnGap || window.getComputedStyle(viewport).gap) || 0;
-      return slides[0] ? slides[0].getBoundingClientRect().width + gap : 0;
-    }
-    function setActive(index, shouldScroll) {
-      if (!slides.length) return;
-      active = (index + slides.length) % slides.length;
-      if (shouldScroll) viewport.scrollTo({ left: active * slideWidth(), behavior: "smooth" });
-      if (dotsWrap) {
-        Array.from(dotsWrap.children).forEach(function (dot, i) {
-          dot.classList.toggle("hero-preview__dot--on", i === active);
-        });
-      }
-    }
-
-    if (dotsWrap && !dotsWrap.children.length) {
-      slides.forEach(function (_, i) {
-        var dot = el("button", "hero-preview__dot" + (i === 0 ? " hero-preview__dot--on" : ""));
-        dot.type = "button";
-        dot.setAttribute("aria-label", "Show product preview " + (i + 1));
-        dot.addEventListener("click", function () { setActive(i, true); });
-        dotsWrap.appendChild(dot);
-      });
-    }
-    if (prev) prev.addEventListener("click", function () { setActive(active - 1, true); });
-    if (next) next.addEventListener("click", function () { setActive(active + 1, true); });
-    viewport.addEventListener("scroll", function () {
-      window.requestAnimationFrame(function () {
-        var width = slideWidth() || 1;
-        setActive(Math.round(viewport.scrollLeft / width), false);
-      });
-    }, { passive: true });
   }
 
   function wireHeroSearch() {
@@ -788,11 +792,11 @@
         activeSearch = input.value.trim().toLowerCase();
         renderMenu();
         var menu = document.getElementById("menu");
-        if (menu) menu.scrollIntoView({ behavior: "smooth", block: "start" });
+        smartScroll(menu, { block: "start" });
       });
       input.addEventListener("input", function () {
         activeSearch = input.value.trim().toLowerCase();
-        if (document.activeElement === input && activeSearch.length >= 2) renderMenu();
+        if (document.activeElement === input && (activeSearch.length >= 2 || activeSearch.length === 0)) renderMenu();
       });
     }
     document.querySelectorAll("[data-hero-filter]").forEach(function (link) {
@@ -801,6 +805,23 @@
         if (input) input.value = "";
         selectCategory(link.getAttribute("data-hero-filter"));
       });
+    });
+  }
+
+  function wireMobileNav() {
+    var toggle = document.querySelector("[data-nav-toggle]");
+    var links = document.getElementById("primaryNavLinks");
+    if (!toggle || !links) return;
+    function setOpen(open) {
+      document.body.setAttribute("data-nav-open", open ? "true" : "false");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      links.classList.toggle("nav__links--open", open);
+    }
+    toggle.addEventListener("click", function () {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+    links.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setOpen(false); });
     });
   }
 
@@ -818,8 +839,8 @@
   renderMenu();
   renderFooterBranches();
   renderSocialGrid();
-  wireHeroPreview();
   wireHeroSearch();
+  wireMobileNav();
   wireSignatureProducts();
   wireAnchors();
   onScroll();

@@ -5,12 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DÉESSES Bakery — French Cakes, Pastries & Bakery · Hong Kong</title>
   <meta name="description" content="DÉESSES Bakery — a Hong Kong bakery brand with branches in Kai Tak (Artemis), Kennedy Town, Tin Shui Wai and Sheung Shui. French-style cakes, handmade croissants and natural sourdough. Static demo site." />
+  <meta name="theme-color" content="#fbf3e4" />
+  <link rel="canonical" href="https://sloppy0726.github.io/deesses-bakery-demo/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="DÉESSES Bakery — French Cakes, Pastries & Bakery · Hong Kong" />
+  <meta property="og:description" content="Choose a DÉESSES Bakery branch, browse cakes, pastries and sourdough, then pre-order by WhatsApp." />
+  <meta property="og:image" content="https://sloppy0726.github.io/deesses-bakery-demo/assets/unicorn.jpg" />
+  <meta property="og:url" content="https://sloppy0726.github.io/deesses-bakery-demo/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DÉESSES Bakery — Hong Kong bakery demo" />
+  <meta name="twitter:description" content="Browse branch-specific cakes, pastries and bakery items, then send a prefilled WhatsApp enquiry." />
+  <meta name="twitter:image" content="https://sloppy0726.github.io/deesses-bakery-demo/assets/unicorn.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23fbf3e4'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='38'%3E%E2%9D%80%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="assets/unicorn.jpg" />
+  <link rel="preload" as="image" href="assets/unicorn.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=streamlined-order-flow-1" />
+  <link rel="stylesheet" href="styles.css?v=fable-fixes-1" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "name": "DÉESSES Bakery",
+    "url": "https://sloppy0726.github.io/deesses-bakery-demo/",
+    "image": "https://sloppy0726.github.io/deesses-bakery-demo/assets/unicorn.jpg",
+    "telephone": "+85268128098",
+    "sameAs": ["https://www.instagram.com/deesses_bakery/"],
+    "servesCuisine": ["French pastry", "Bakery", "Cake"],
+    "department": [
+      {"@type":"Bakery","name":"Artemis by Deesses Bakery — Kai Tak","telephone":"+85268128981","address":{"@type":"PostalAddress","streetAddress":"Shop B132C, B1/F, AIRSIDE, 2 Concorde Road","addressLocality":"Kai Tak","addressRegion":"Hong Kong","addressCountry":"HK"}},
+      {"@type":"Bakery","name":"DÉESSES Bakery — Kennedy Town","address":{"@type":"PostalAddress","streetAddress":"G/F, Luen Wai Building, Belcher's Street","addressLocality":"Kennedy Town","addressRegion":"Hong Kong","addressCountry":"HK"}},
+      {"@type":"Bakery","name":"DÉESSES Bakery — Tin Shui Wai","telephone":"+85268128908","address":{"@type":"PostalAddress","streetAddress":"Shop 10, G/F, Wetland Seasons Bay, 1 Wetland Park Road","addressLocality":"Tin Shui Wai","addressRegion":"Hong Kong","addressCountry":"HK"}},
+      {"@type":"Bakery","name":"DÉESSES Bakery — Sheung Shui","telephone":"+85268128980","address":{"@type":"PostalAddress","streetAddress":"Shop 512, 5/F, Sheung Shui Plaza","addressLocality":"Sheung Shui","addressRegion":"Hong Kong","addressCountry":"HK"}}
+    ]
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#menu">Skip to menu · 跳到餐單</a>
   <!-- Sticky glass navigation -->
   <header class="nav" id="nav">
     <nav class="nav__inner" aria-label="Primary">
@@ -18,7 +51,11 @@
         <span class="nav__mark" aria-hidden="true">❀</span>
         <span class="nav__name">DÉESSES<small>Bakery</small></span>
       </a>
-      <ul class="nav__links">
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="primaryNavLinks" data-nav-toggle>
+        <span class="sr-only">Open navigation</span>
+        <span aria-hidden="true"></span>
+      </button>
+      <ul class="nav__links" id="primaryNavLinks">
         <li><a href="#branches">Branches · 分店</a></li>
         <li><a href="#signature">Artemis · 啟德</a></li>
         <li><a href="#menu">Menu · 餐單</a></li>
@@ -36,23 +73,23 @@
     <section class="hero hero--gallery" id="hero">
       <div class="hero-gallery" aria-hidden="true">
         <article class="hero-gallery__tile hero-gallery__tile--one">
-          <img src="assets/unicorn.jpg" alt="" decoding="async" />
+          <img src="assets/unicorn.jpg" alt="" width="320" height="320" decoding="async" fetchpriority="high" />
           <span><strong>Celebration Cakes</strong><small>生日 · 派對 · 節日</small></span>
         </article>
         <article class="hero-gallery__tile hero-gallery__tile--two">
-          <img src="assets/croissant.jpg" alt="" decoding="async" />
+          <img src="assets/croissant.jpg" alt="" width="320" height="320" decoding="async" loading="lazy" />
           <span><strong>French Pastries</strong><small>牛角酥 · 圓酥</small></span>
         </article>
         <article class="hero-gallery__tile hero-gallery__tile--three">
-          <img src="assets/mini.jpg" alt="" decoding="async" />
+          <img src="assets/mini.jpg" alt="" width="320" height="320" decoding="async" loading="lazy" />
           <span><strong>Mini Cakes</strong><small>散水餅 · 分享盒</small></span>
         </article>
         <article class="hero-gallery__tile hero-gallery__tile--four">
-          <img src="assets/sourdough.jpg" alt="" decoding="async" />
+          <img src="assets/sourdough.jpg" alt="" width="320" height="320" decoding="async" loading="lazy" />
           <span><strong>Bakery</strong><small>酸種包 · 貝果</small></span>
         </article>
         <article class="hero-gallery__tile hero-gallery__tile--five">
-          <img src="assets/rose.jpg" alt="" decoding="async" />
+          <img src="assets/rose.jpg" alt="" width="320" height="320" decoding="async" loading="lazy" />
           <span><strong>Seasonal Gifts</strong><small>玫瑰 · 香橙 · 限定</small></span>
         </article>
       </div>
@@ -60,7 +97,7 @@
       <div class="hero-center">
         <p class="eyebrow">DÉESSES · Artemis by Deesses Bakery · 香港</p>
         <h1 class="hero__title">Goddess-made<br />cakes &amp; pastries.</h1>
-        <p class="hero__zh">法式蛋糕 · 手工牛角酥 · 天然酸種包</p>
+        <p class="hero__zh" lang="zh-Hant">法式蛋糕 · 手工牛角酥 · 天然酸種包</p>
         <form class="hero-search" role="search" aria-label="Search DÉESSES menu" data-hero-search>
           <label class="sr-only" for="heroSearchInput">Search menu</label>
           <input id="heroSearchInput" type="search" placeholder="Search menu · 搜尋蛋糕 / croissant / sourdough" autocomplete="off" />
@@ -164,7 +201,7 @@
           <p>@deesses_bakery</p>
           <span class="order-card__hint">Send a direct message · 私訊落單</span>
         </a>
-        <a class="order-card order-card--wa" href="https://wa.me/85268128098" target="_blank" rel="noopener">
+        <a class="order-card order-card--wa" href="https://wa.me/85268128098?text=%E4%BD%A0%E5%A5%BD%20D%C3%89ESSES%20Bakery%EF%BC%8C%E6%88%91%E6%83%B3%E6%9F%A5%E8%A9%A2%2F%E9%A0%90%E8%A8%82%E7%94%A2%E5%93%81%E5%8F%8A%E5%8F%96%E8%B2%A8%E5%AE%89%E6%8E%92%E3%80%82" target="_blank" rel="noopener">
           <span class="order-card__icon order-card__icon--wa" aria-hidden="true">✆</span>
           <h3>WhatsApp</h3>
           <p>6812&nbsp;8098</p>
@@ -190,7 +227,7 @@
             Open Instagram · 前往 Instagram
           </a>
         </div>
-        <div class="social__grid" id="socialGrid" aria-hidden="true">
+        <div class="social__grid" id="socialGrid" aria-label="Instagram preview tiles">
           <!-- preview tiles injected -->
         </div>
       </div>
@@ -225,6 +262,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=streamlined-order-flow-1"></script>
+  <script src="script.js?v=fable-fixes-1"></script>
 </body>
 </html>

@@ -56,10 +56,9 @@ No prices were invented.
 
 ## ⚠️ Images are temporary
 
-The product and Instagram-preview thumbnails use **public Instagram CDN URLs as temporary
-preview references** (defined in the `IMG` map at the top of `script.js`). They are for
-demo/preview only, may expire, and **must be replaced with approved, licensed assets before
-client delivery**.
+The product and Instagram-preview thumbnails use **local temporary preview files** in `assets/`
+(defined in the `IMG` map at the top of `script.js`). They are for demo/preview only and
+**must be replaced with approved, licensed assets before client delivery**.
 
 ## Files
 
@@ -79,7 +78,7 @@ client delivery**.
 - **Scroll-driven theme** — page warms through dawn → midday → golden → dusk on scroll.
 - **Bilingual labels** — Traditional Chinese + English throughout.
 - **Responsive & mobile-first** — fluid type and grids that collapse gracefully.
-- **Accessible & reduced-motion aware** — honours `prefers-reduced-motion`; smooth anchor focus.
+- **Accessible & reduced-motion aware** — semantic cards, modal focus management, mobile navigation, and reduced-motion-aware scrolling.
 
 ## Running it
 
