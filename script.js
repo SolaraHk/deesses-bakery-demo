@@ -320,24 +320,40 @@
     return branchName(p.branches[0]);
   }
 
+  function orderSummaryLines(p, branch, extras) {
+    extras = extras || {};
+    var lines = [
+      "產品/Product: " + p.name,
+      "分店/Branch: " + (branch ? branch.name : "To be confirmed"),
+      "款式/Option: " + (extras.variant || "To be confirmed"),
+      "尺寸/Size: " + (extras.size || p.size || "To be confirmed"),
+      "數量/Quantity: " + (extras.quantity || "1"),
+      "取貨日期/Pickup date: " + (extras.pickupDate || "To be confirmed")
+    ];
+    if (p.cat === "cake") {
+      lines.push("蠟燭/Candles: " + (extras.candles ? "Yes" : "No / to be confirmed"));
+      lines.push("蛋糕牌/Message card: " + (extras.messageText || "None / to be confirmed"));
+    }
+    if (extras.remarks) lines.push("備註/Remarks: " + extras.remarks);
+    return lines;
+  }
+
   function productWhatsAppUrl(p, branch, extras) {
     extras = extras || {};
-    var addOns = extras.addOns && extras.addOns.length ? extras.addOns.join(", ") : "No extra add-ons selected";
-    var messageText = extras.messageText || "";
-    var lines = [
-      "你好 DÉESSES Bakery，我想立即預訂/查詢：" + p.name,
-      "產品/Product: " + p.name,
-      "分店/Branch: " + (branch ? branch.name + " — " + branch.addrEn : "To be confirmed"),
-      "款式/Flavour: " + (extras.variant || "To be confirmed"),
-      "尺寸/Size: " + (extras.size || p.size || "To be confirmed"),
-      "價錢/Price: " + p.price,
-      "取貨日期/Pickup date: " + (extras.pickupDate || "To be confirmed"),
-      "數量/Quantity: " + (extras.quantity || "1"),
-      "加購/Options: " + addOns,
-      "蛋糕牌/Message card: " + (messageText || "None / to be confirmed"),
-      "備註/Remarks: " + (extras.remarks || "")
-    ];
+    var lines = ["你好 DÉESSES Bakery，我想查詢/預訂：" + p.name]
+      .concat(orderSummaryLines(p, branch, extras))
+      .concat([
+        "價錢/Price: " + p.price,
+        "請確認供應、最終價錢及取貨安排，謝謝。"
+      ]);
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
+  }
+
+  function renderOrderSummary(p, branch, extras) {
+    return orderSummaryLines(p, branch, extras).map(function (line) {
+      var parts = line.split(": ");
+      return '<div><span>' + esc(parts[0]) + '</span><strong>' + esc(parts.slice(1).join(": ")) + '</strong></div>';
+    }).join("");
   }
 
   function detailOptions(p) {
@@ -376,36 +392,27 @@
 
   function orderConfigurator(p) {
     var sizeChoices = defaultSizeChoices(p).filter(function (value, index, arr) { return value && arr.indexOf(value) === index; });
-    var addonItems = p.cat === "cake" ? [
-      { label: "蛋糕牌 / Message plaque", price: "+$TBC", checked: true },
-      { label: "蠟燭 / Candles", price: "+$TBC", checked: false },
-      { label: "加配裝飾 / Extra decoration", price: "+$TBC", checked: false },
-      { label: "禮盒包裝 / Gift packaging", price: "+$TBC", checked: false }
-    ] : [
-      { label: "禮盒包裝 / Gift packaging", price: "+$TBC", checked: false },
-      { label: "切開/分裝 / Cut or packed separately", price: "+$TBC", checked: false }
-    ];
-
-    return '<div class="product-modal__section product-modal__config"><span>Choose before WhatsApp · 先揀好設定</span>' +
+    var cakeFields = p.cat === "cake"
+      ? '<label class="product-modal__toggle"><input type="checkbox" data-order-field="candles"> Add candles · 需要蠟燭</label>' +
+        '<input class="product-modal__field" data-message-card type="text" placeholder="Cake plaque wording · 蛋糕牌寫字（可留空）" />'
+      : '';
+    return '<div class="product-modal__section product-modal__config"><span>Step 2 · Choose order details · 選擇設定</span>' +
       '<div class="product-modal__form-grid">' +
-        '<label class="product-modal__control">款式/Flavour<select data-order-field="variant">' + optionTags(p.options || [p.name]) + '</select></label>' +
+        '<label class="product-modal__control">款式/Option<select data-order-field="variant">' + optionTags(p.options || [p.name]) + '</select></label>' +
         '<label class="product-modal__control">尺寸/Size<select data-order-field="size">' + optionTags(sizeChoices) + '</select></label>' +
         '<label class="product-modal__control">數量/Quantity<select data-order-field="quantity"><option>1</option><option>2</option><option>3</option><option>4</option><option>6</option><option>12</option></select></label>' +
         '<label class="product-modal__control">取貨日期/Pickup date<input data-order-field="pickupDate" type="date" /></label>' +
-      '</div>' +
-      '<div class="product-modal__addon-grid">' + addonItems.map(function (item) {
-        return '<label class="product-modal__addon"><input type="checkbox" data-addon="' + esc(item.label + " " + item.price) + '"' + (item.checked ? ' checked' : '') + '> ' + esc(item.label) + ' <small>' + esc(item.price) + '</small></label>';
-      }).join("") + '</div>' +
-      (p.cat === "cake" ? '<input class="product-modal__field" data-message-card type="text" placeholder="Cake plaque wording · 蛋糕牌寫字，例如：Happy Birthday Matthew" />' : '') +
-      '<input class="product-modal__field" data-order-field="remarks" type="text" placeholder="Remarks · 備註，例如：少甜 / separate bags / call before pickup" />' +
-      '<p class="product-modal__fine">WhatsApp message will update automatically based on these selections. · WhatsApp 訊息會按以上選擇自動整合。</p>' +
+      '</div>' + cakeFields +
+      '<input class="product-modal__field" data-order-field="remarks" type="text" placeholder="Remarks · 備註（可留空）" />' +
+      '<p class="product-modal__fine">Only the main order details are shown here. Other special requests can go in remarks or be confirmed in WhatsApp.</p>' +
     '</div>';
   }
 
   function collectOrderExtras(modal) {
     function val(name) {
       var field = modal.querySelector('[data-order-field="' + name + '"]');
-      return field ? field.value : "";
+      if (!field) return "";
+      return field.type === "checkbox" ? field.checked : field.value;
     }
     return {
       variant: val("variant"),
@@ -413,7 +420,7 @@
       quantity: val("quantity"),
       pickupDate: val("pickupDate"),
       remarks: val("remarks"),
-      addOns: Array.from(modal.querySelectorAll("[data-addon]:checked")).map(function (input) { return input.getAttribute("data-addon"); }),
+      candles: val("candles"),
       messageText: (modal.querySelector("[data-message-card]") || {}).value || ""
     };
   }
@@ -424,8 +431,10 @@
     var currentBranch = branchName((modal.querySelector(".product-modal__branch-choice--on") || {}).getAttribute && modal.querySelector(".product-modal__branch-choice--on").getAttribute("data-order-branch")) || getActiveBranchForOrder(product);
 
     function refreshOrderUrl() {
-      if (!orderBtn) return;
-      orderBtn.href = productWhatsAppUrl(product, currentBranch, collectOrderExtras(modal));
+      var extras = collectOrderExtras(modal);
+      if (orderBtn) orderBtn.href = productWhatsAppUrl(product, currentBranch, extras);
+      var summary = modal.querySelector("[data-order-summary]");
+      if (summary) summary.innerHTML = renderOrderSummary(product, currentBranch, extras);
     }
 
     modal.querySelectorAll("[data-order-branch]").forEach(function (btn) {
@@ -440,7 +449,7 @@
         });
       });
     });
-    modal.querySelectorAll("[data-addon], [data-message-card], [data-order-field]").forEach(function (control) {
+    modal.querySelectorAll("[data-message-card], [data-order-field]").forEach(function (control) {
       control.addEventListener("input", refreshOrderUrl);
       control.addEventListener("change", refreshOrderUrl);
     });
@@ -548,19 +557,16 @@
         '<p class="eyebrow">Product details · 產品詳情</p>' +
         '<h2 id="productModalTitle">' + esc(p.name) + '</h2>' +
         '<p class="product-modal__desc">' + esc(p.desc) + '</p>' +
-        '<div class="product-modal__branch-note">Ordering branch: <strong>' + esc(branch ? branch.name : "To be confirmed") + '</strong></div>' +
-        '<div class="product-modal__section product-modal__pickup"><span>Pickup branch · 取貨分店</span><div class="product-modal__branch-choices">' + detailBranchChoices(p, branch ? branch.id : p.branches[0]) + '</div></div>' +
-        '<a class="btn btn--primary product-modal__order" href="' + orderUrl + '" target="_blank" rel="noopener">Order now on WhatsApp · WhatsApp 自動填訊息</a>' +
-        '<div class="product-modal__specs">' +
+        '<div class="product-modal__specs product-modal__specs--compact">' +
           '<div><span>Price · 價錢</span><strong>' + esc(p.price) + '</strong></div>' +
-          '<div><span>Size · 尺寸</span><strong>' + esc(p.size || "To be confirmed") + '</strong></div>' +
-          '<div><span>Serves · 份量</span><strong>' + esc(p.serves || "To be confirmed") + '</strong></div>' +
           '<div><span>Lead time · 預訂</span><strong>' + esc(p.lead || "Ask in branch") + '</strong></div>' +
         '</div>' +
-        '<div class="product-modal__section"><span>Product presets · 產品預設</span><div class="product-modal__pills">' + detailOptions(p) + '</div></div>' +
+        '<div class="product-modal__branch-note">Step 1 · Pickup branch: <strong>' + esc(branch ? branch.name : "To be confirmed") + '</strong></div>' +
+        '<div class="product-modal__section product-modal__pickup"><div class="product-modal__branch-choices">' + detailBranchChoices(p, branch ? branch.id : p.branches[0]) + '</div></div>' +
         orderConfigurator(p) +
-        '<div class="product-modal__section"><span>Available at · 供應分店</span><div class="product-modal__branches">' + detailBranches(p) + '</div></div>' +
-        '<p class="product-modal__fine">The WhatsApp button opens a pre-filled message. Please confirm exact price, size, pickup date and availability with the shop.</p>' +
+        '<div class="product-modal__section product-modal__review"><span>Step 3 · Review WhatsApp enquiry · 檢查訊息</span><div class="product-modal__summary" data-order-summary></div></div>' +
+        '<a class="btn btn--primary product-modal__order" href="' + orderUrl + '" target="_blank" rel="noopener">Send configured enquiry · 發送已選設定</a>' +
+        '<p class="product-modal__fine">This is an enquiry, not payment checkout. The shop will confirm availability, exact price and pickup arrangement in WhatsApp.</p>' +
       '</div>';
     modal.classList.add("product-modal--open");
     bindOrderBranchChoices(modal, p);
