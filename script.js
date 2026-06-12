@@ -322,19 +322,20 @@
 
   function productWhatsAppUrl(p, branch, extras) {
     extras = extras || {};
-    var addOns = extras.addOns && extras.addOns.length ? extras.addOns.join(", ") : "To be confirmed";
+    var addOns = extras.addOns && extras.addOns.length ? extras.addOns.join(", ") : "No extra add-ons selected";
     var messageText = extras.messageText || "";
     var lines = [
       "你好 DÉESSES Bakery，我想立即預訂/查詢：" + p.name,
       "產品/Product: " + p.name,
       "分店/Branch: " + (branch ? branch.name + " — " + branch.addrEn : "To be confirmed"),
-      "尺寸/Size: " + (p.size || "To be confirmed"),
+      "款式/Flavour: " + (extras.variant || "To be confirmed"),
+      "尺寸/Size: " + (extras.size || p.size || "To be confirmed"),
       "價錢/Price: " + p.price,
-      "取貨日期/Pickup date: ",
-      "數量/Quantity: 1",
+      "取貨日期/Pickup date: " + (extras.pickupDate || "To be confirmed"),
+      "數量/Quantity: " + (extras.quantity || "1"),
       "加購/Options: " + addOns,
-      "蛋糕牌/Message card: " + messageText,
-      "備註/Remarks: "
+      "蛋糕牌/Message card: " + (messageText || "None / to be confirmed"),
+      "備註/Remarks: " + (extras.remarks || "")
     ];
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
   }
@@ -361,23 +362,57 @@
     }).join("");
   }
 
-  function cakeAddOns(p) {
-    if (p.cat !== "cake") return "";
-    var items = [
-      { label: "蛋糕牌 / Message plaque", price: "+$TBC" },
-      { label: "寫字 / Custom wording", price: "+$TBC" },
-      { label: "蠟燭 / Candles", price: "+$TBC" },
-      { label: "加配裝飾 / Extra decoration", price: "+$TBC" }
+  function optionTags(options) {
+    return (options || []).map(function (x) {
+      return '<option value="' + esc(x) + '">' + esc(x) + '</option>';
+    }).join("");
+  }
+
+  function defaultSizeChoices(p) {
+    if (p.cat === "cake") return [p.size || "Standard cake", "4 inch · 2–3 people", "5 inch · 4–6 people", "6 inch · 6–8 people"];
+    if (p.cat === "pastry") return [p.size || "Single pastry", "Single item · 單件", "Box of 4 · 四件裝", "Box of 6 · 六件裝"];
+    return [p.size || "Single item", "Single item · 單件", "Half dozen · 半打", "One dozen · 一打"];
+  }
+
+  function orderConfigurator(p) {
+    var sizeChoices = defaultSizeChoices(p).filter(function (value, index, arr) { return value && arr.indexOf(value) === index; });
+    var addonItems = p.cat === "cake" ? [
+      { label: "蛋糕牌 / Message plaque", price: "+$TBC", checked: true },
+      { label: "蠟燭 / Candles", price: "+$TBC", checked: false },
+      { label: "加配裝飾 / Extra decoration", price: "+$TBC", checked: false },
+      { label: "禮盒包裝 / Gift packaging", price: "+$TBC", checked: false }
+    ] : [
+      { label: "禮盒包裝 / Gift packaging", price: "+$TBC", checked: false },
+      { label: "切開/分裝 / Cut or packed separately", price: "+$TBC", checked: false }
     ];
-    return '<div class="product-modal__section"><span>Pre-order add-ons · 預訂加購</span><div class="product-modal__addon-grid">' +
-      items.map(function (item) {
-        return '<label class="product-modal__addon"><input type="checkbox" data-addon="' + esc(item.label + " " + item.price) + '"> ' + esc(item.label) + ' <small>' + esc(item.price) + '</small></label>';
-      }).join("") +
-      '</div><input class="product-modal__field" data-message-card type="text" placeholder="Message on cake plaque · 例如：Happy Birthday Matthew" /></div>';
+
+    return '<div class="product-modal__section product-modal__config"><span>Choose before WhatsApp · 先揀好設定</span>' +
+      '<div class="product-modal__form-grid">' +
+        '<label class="product-modal__control">款式/Flavour<select data-order-field="variant">' + optionTags(p.options || [p.name]) + '</select></label>' +
+        '<label class="product-modal__control">尺寸/Size<select data-order-field="size">' + optionTags(sizeChoices) + '</select></label>' +
+        '<label class="product-modal__control">數量/Quantity<select data-order-field="quantity"><option>1</option><option>2</option><option>3</option><option>4</option><option>6</option><option>12</option></select></label>' +
+        '<label class="product-modal__control">取貨日期/Pickup date<input data-order-field="pickupDate" type="date" /></label>' +
+      '</div>' +
+      '<div class="product-modal__addon-grid">' + addonItems.map(function (item) {
+        return '<label class="product-modal__addon"><input type="checkbox" data-addon="' + esc(item.label + " " + item.price) + '"' + (item.checked ? ' checked' : '') + '> ' + esc(item.label) + ' <small>' + esc(item.price) + '</small></label>';
+      }).join("") + '</div>' +
+      (p.cat === "cake" ? '<input class="product-modal__field" data-message-card type="text" placeholder="Cake plaque wording · 蛋糕牌寫字，例如：Happy Birthday Matthew" />' : '') +
+      '<input class="product-modal__field" data-order-field="remarks" type="text" placeholder="Remarks · 備註，例如：少甜 / separate bags / call before pickup" />' +
+      '<p class="product-modal__fine">WhatsApp message will update automatically based on these selections. · WhatsApp 訊息會按以上選擇自動整合。</p>' +
+    '</div>';
   }
 
   function collectOrderExtras(modal) {
+    function val(name) {
+      var field = modal.querySelector('[data-order-field="' + name + '"]');
+      return field ? field.value : "";
+    }
     return {
+      variant: val("variant"),
+      size: val("size"),
+      quantity: val("quantity"),
+      pickupDate: val("pickupDate"),
+      remarks: val("remarks"),
       addOns: Array.from(modal.querySelectorAll("[data-addon]:checked")).map(function (input) { return input.getAttribute("data-addon"); }),
       messageText: (modal.querySelector("[data-message-card]") || {}).value || ""
     };
@@ -405,7 +440,7 @@
         });
       });
     });
-    modal.querySelectorAll("[data-addon], [data-message-card]").forEach(function (control) {
+    modal.querySelectorAll("[data-addon], [data-message-card], [data-order-field]").forEach(function (control) {
       control.addEventListener("input", refreshOrderUrl);
       control.addEventListener("change", refreshOrderUrl);
     });
@@ -522,8 +557,8 @@
           '<div><span>Serves · 份量</span><strong>' + esc(p.serves || "To be confirmed") + '</strong></div>' +
           '<div><span>Lead time · 預訂</span><strong>' + esc(p.lead || "Ask in branch") + '</strong></div>' +
         '</div>' +
-        '<div class="product-modal__section"><span>Options · 可選項目</span><div class="product-modal__pills">' + detailOptions(p) + '</div></div>' +
-        cakeAddOns(p) +
+        '<div class="product-modal__section"><span>Product presets · 產品預設</span><div class="product-modal__pills">' + detailOptions(p) + '</div></div>' +
+        orderConfigurator(p) +
         '<div class="product-modal__section"><span>Available at · 供應分店</span><div class="product-modal__branches">' + detailBranches(p) + '</div></div>' +
         '<p class="product-modal__fine">The WhatsApp button opens a pre-filled message. Please confirm exact price, size, pickup date and availability with the shop.</p>' +
       '</div>';

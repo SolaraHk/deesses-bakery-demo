@@ -380,7 +380,11 @@ section { padding: clamp(64px, 11vw, 132px) clamp(20px, 6vw, 64px); }
 .product-modal__branch { background: rgba(231,169,60,0.16); color: var(--crust); }
 .product-modal__addon { background: rgba(37,211,102,0.10); color: #15723f; border-color: rgba(37,211,102,0.16); }
 .product-modal__addon input { accent-color: var(--whatsapp); margin-right: 5px; }
-.product-modal__field { width: 100%; margin-top: 10px; border-radius: 18px; border: 1px solid rgba(58,38,20,0.1); background: rgba(255,255,255,0.72); padding: 12px 14px; color: var(--espresso); font: inherit; }
+.product-modal__config { padding: 14px; border-radius: 22px; background: rgba(255,255,255,0.62); border: 1px solid rgba(138,79,158,0.13); }
+.product-modal__form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.product-modal__control { display: grid; gap: 6px; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: #8a6f4d; font-weight: 800; }
+.product-modal__control select, .product-modal__control input, .product-modal__field { width: 100%; border-radius: 18px; border: 1px solid rgba(58,38,20,0.1); background: rgba(255,255,255,0.78); padding: 12px 14px; color: var(--espresso); font: inherit; text-transform: none; letter-spacing: 0; font-weight: 600; }
+.product-modal__field { margin-top: 10px; }
 .product-modal__branch-choice {
   font-family: inherit; cursor: pointer; background: rgba(255,255,255,0.76); color: #6f5536;
   transition: transform 0.2s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
