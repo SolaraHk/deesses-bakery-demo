@@ -223,6 +223,7 @@
   var nav = document.getElementById("nav");
   var activeBranch = "all";
   var activeCategory = "all";
+  var activeSearch = "";
 
   function el(tag, cls, html) {
     var n = document.createElement(tag);
@@ -319,16 +320,21 @@
     return branchName(p.branches[0]);
   }
 
-  function productWhatsAppUrl(p, branch) {
+  function productWhatsAppUrl(p, branch, extras) {
+    extras = extras || {};
+    var addOns = extras.addOns && extras.addOns.length ? extras.addOns.join(", ") : "To be confirmed";
+    var messageText = extras.messageText || "";
     var lines = [
-      "你好 DÉESSES Bakery，我想訂購/查詢：" + p.name,
+      "你好 DÉESSES Bakery，我想立即預訂/查詢：" + p.name,
       "產品/Product: " + p.name,
       "分店/Branch: " + (branch ? branch.name + " — " + branch.addrEn : "To be confirmed"),
       "尺寸/Size: " + (p.size || "To be confirmed"),
       "價錢/Price: " + p.price,
       "取貨日期/Pickup date: ",
       "數量/Quantity: 1",
-      "備註/Message card: "
+      "加購/Options: " + addOns,
+      "蛋糕牌/Message card: " + messageText,
+      "備註/Remarks: "
     ];
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
   }
@@ -355,20 +361,55 @@
     }).join("");
   }
 
+  function cakeAddOns(p) {
+    if (p.cat !== "cake") return "";
+    var items = [
+      { label: "蛋糕牌 / Message plaque", price: "+$TBC" },
+      { label: "寫字 / Custom wording", price: "+$TBC" },
+      { label: "蠟燭 / Candles", price: "+$TBC" },
+      { label: "加配裝飾 / Extra decoration", price: "+$TBC" }
+    ];
+    return '<div class="product-modal__section"><span>Pre-order add-ons · 預訂加購</span><div class="product-modal__addon-grid">' +
+      items.map(function (item) {
+        return '<label class="product-modal__addon"><input type="checkbox" data-addon="' + esc(item.label + " " + item.price) + '"> ' + esc(item.label) + ' <small>' + esc(item.price) + '</small></label>';
+      }).join("") +
+      '</div><input class="product-modal__field" data-message-card type="text" placeholder="Message on cake plaque · 例如：Happy Birthday Matthew" /></div>';
+  }
+
+  function collectOrderExtras(modal) {
+    return {
+      addOns: Array.from(modal.querySelectorAll("[data-addon]:checked")).map(function (input) { return input.getAttribute("data-addon"); }),
+      messageText: (modal.querySelector("[data-message-card]") || {}).value || ""
+    };
+  }
+
   function bindOrderBranchChoices(modal, product) {
     var orderBtn = modal.querySelector(".product-modal__order");
     var branchNote = modal.querySelector(".product-modal__branch-note strong");
+    var currentBranch = branchName((modal.querySelector(".product-modal__branch-choice--on") || {}).getAttribute && modal.querySelector(".product-modal__branch-choice--on").getAttribute("data-order-branch")) || getActiveBranchForOrder(product);
+
+    function refreshOrderUrl() {
+      if (!orderBtn) return;
+      orderBtn.href = productWhatsAppUrl(product, currentBranch, collectOrderExtras(modal));
+    }
+
     modal.querySelectorAll("[data-order-branch]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var branch = branchName(btn.getAttribute("data-order-branch"));
         if (!branch || !orderBtn) return;
-        orderBtn.href = productWhatsAppUrl(product, branch);
+        currentBranch = branch;
+        refreshOrderUrl();
         if (branchNote) branchNote.textContent = branch.name;
         modal.querySelectorAll("[data-order-branch]").forEach(function (other) {
           other.classList.toggle("product-modal__branch-choice--on", other === btn);
         });
       });
     });
+    modal.querySelectorAll("[data-addon], [data-message-card]").forEach(function (control) {
+      control.addEventListener("input", refreshOrderUrl);
+      control.addEventListener("change", refreshOrderUrl);
+    });
+    refreshOrderUrl();
   }
 
   /* ---------- Menu ---------- */
@@ -381,7 +422,9 @@
     var items = PRODUCTS.filter(function (p) {
       var catOk = activeCategory === "all" || p.cat === activeCategory;
       var brOk = activeBranch === "all" || p.branches.indexOf(activeBranch) !== -1;
-      return catOk && brOk;
+      var searchText = (p.name + " " + p.desc + " " + p.price + " " + (p.options || []).join(" ")).toLowerCase();
+      var searchOk = !activeSearch || searchText.indexOf(activeSearch) !== -1;
+      return catOk && brOk && searchOk;
     });
 
     if (activeBranch === "kaitak") {
@@ -429,6 +472,7 @@
             '<span class="product__price">' + p.price + "</span>" +
             '<span class="product__avail">' + avail + "</span>" +
             '<span class="product__open">View details · 查看詳情 →</span>' +
+            '<span class="product__order-hint">Pre-order now · 立即預訂</span>' +
           "</div>" +
         "</div>";
       card.addEventListener("click", function () { openProductModal(p); });
@@ -479,6 +523,7 @@
           '<div><span>Lead time · 預訂</span><strong>' + esc(p.lead || "Ask in branch") + '</strong></div>' +
         '</div>' +
         '<div class="product-modal__section"><span>Options · 可選項目</span><div class="product-modal__pills">' + detailOptions(p) + '</div></div>' +
+        cakeAddOns(p) +
         '<div class="product-modal__section"><span>Available at · 供應分店</span><div class="product-modal__branches">' + detailBranches(p) + '</div></div>' +
         '<p class="product-modal__fine">The WhatsApp button opens a pre-filled message. Please confirm exact price, size, pickup date and availability with the shop.</p>' +
       '</div>';
@@ -621,6 +666,31 @@
     }, { passive: true });
   }
 
+  function wireHeroSearch() {
+    var form = document.querySelector("[data-hero-search]");
+    var input = document.getElementById("heroSearchInput");
+    if (form && input) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        activeSearch = input.value.trim().toLowerCase();
+        renderMenu();
+        var menu = document.getElementById("menu");
+        if (menu) menu.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      input.addEventListener("input", function () {
+        activeSearch = input.value.trim().toLowerCase();
+        if (document.activeElement === input && activeSearch.length >= 2) renderMenu();
+      });
+    }
+    document.querySelectorAll("[data-hero-filter]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        activeSearch = "";
+        if (input) input.value = "";
+        selectCategory(link.getAttribute("data-hero-filter"));
+      });
+    });
+  }
+
   /* ---------- Init ---------- */
   renderBranches();
   renderFilters();
@@ -628,6 +698,7 @@
   renderFooterBranches();
   renderSocialGrid();
   wireHeroPreview();
+  wireHeroSearch();
   wireAnchors();
   onScroll();
 })();

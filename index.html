@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=hero-centered-peek-1" />
+  <link rel="stylesheet" href="styles.css?v=visual-order-flow-1" />
 </head>
 <body>
   <!-- Sticky glass navigation -->
@@ -33,73 +33,49 @@
 
   <main id="top">
     <!-- Hero -->
-    <section class="hero" id="hero">
-      <div class="hero__glow" aria-hidden="true"></div>
-      <div class="hero__inner">
-        <div class="hero__content">
-          <p class="eyebrow">DÉESSES · Artemis by Deesses Bakery · 香港</p>
-          <h1 class="hero__title">Goddess-made<br />cakes &amp; pastries.</h1>
-          <p class="hero__zh">法式蛋糕 · 手工牛角酥 · 天然酸種包</p>
-          <p class="hero__lede">
-            A Hong Kong bakery brand of four neighbourhood counters — from the pink-and-purple
-            gift counter of <strong>Artemis at AIRSIDE, Kai Tak</strong> to the wetlands of
-            <strong>Tin Shui Wai</strong>. Slow-folded croissants, additive-free sourdough,
-            and French-style cakes baked fresh daily.
-          </p>
-          <div class="hero__actions">
-            <a href="#branches" class="btn btn--primary">Choose your branch · 選擇分店</a>
-            <a href="#menu" class="btn btn--ghost">Browse the menu · 看餐單</a>
-          </div>
-          <ul class="hero__stats" aria-label="Instagram at a glance">
-            <li><strong>436</strong><span>Posts · 帖文</span></li>
-            <li><strong>~6,250</strong><span>Followers · 追蹤者</span></li>
-            <li><strong>4</strong><span>Branches · 分店</span></li>
-          </ul>
-        </div>
+    <section class="hero hero--gallery" id="hero">
+      <div class="hero-gallery" aria-hidden="true">
+        <article class="hero-gallery__tile hero-gallery__tile--one">
+          <img src="assets/unicorn.jpg" alt="" decoding="async" />
+          <span><strong>Celebration Cakes</strong><small>生日 · 派對 · 節日</small></span>
+        </article>
+        <article class="hero-gallery__tile hero-gallery__tile--two">
+          <img src="assets/croissant.jpg" alt="" decoding="async" />
+          <span><strong>French Pastries</strong><small>牛角酥 · 圓酥</small></span>
+        </article>
+        <article class="hero-gallery__tile hero-gallery__tile--three">
+          <img src="assets/mini.jpg" alt="" decoding="async" />
+          <span><strong>Mini Cakes</strong><small>散水餅 · 分享盒</small></span>
+        </article>
+        <article class="hero-gallery__tile hero-gallery__tile--four">
+          <img src="assets/sourdough.jpg" alt="" decoding="async" />
+          <span><strong>Bakery</strong><small>酸種包 · 貝果</small></span>
+        </article>
+        <article class="hero-gallery__tile hero-gallery__tile--five">
+          <img src="assets/rose.jpg" alt="" decoding="async" />
+          <span><strong>Seasonal Gifts</strong><small>玫瑰 · 香橙 · 限定</small></span>
+        </article>
+      </div>
 
-        <!-- Right-side swipeable product preview using temporary demo assets -->
-        <div class="hero__visual">
-          <div class="hero-preview" aria-label="DÉESSES Bakery product preview carousel">
-            <div class="hero-preview__viewport" data-hero-preview>
-              <article class="hero-preview__slide">
-                <img src="assets/unicorn.jpg" alt="Déesses Unicorn cake preview" />
-                <div class="hero-preview__bubble">
-                  <span>Signature cake</span>
-                  <strong>Déesses Unicorn · 獨角獸蛋糕</strong>
-                  <p>Celebration cake preview for the bakery range.</p>
-                </div>
-              </article>
-              <article class="hero-preview__slide">
-                <img src="assets/croissant.jpg" alt="Croissant preview" />
-                <div class="hero-preview__bubble">
-                  <span>Pastry</span>
-                  <strong>Croissants · 牛角酥</strong>
-                  <p>Daily folded pastries, including Artemis signature ideas.</p>
-                </div>
-              </article>
-              <article class="hero-preview__slide">
-                <img src="assets/mini.jpg" alt="Mini cakes preview" />
-                <div class="hero-preview__bubble">
-                  <span>Party box</span>
-                  <strong>Mini Cakes · 散水餅</strong>
-                  <p>Small bite-size cakes for office sharing and gifting.</p>
-                </div>
-              </article>
-              <article class="hero-preview__slide">
-                <img src="assets/rose.jpg" alt="Rose cake preview" />
-                <div class="hero-preview__bubble">
-                  <span>Seasonal</span>
-                  <strong>Rose Cake · 玫瑰蛋糕</strong>
-                  <p>Elegant seasonal cake preview for campaign moments.</p>
-                </div>
-              </article>
-            </div>
-            <div class="hero-preview__dots" data-hero-dots aria-label="Product preview slides"></div>
-            <p class="hero-preview__fine">Temporary preview photos · replace with approved assets before delivery.</p>
-          </div>
+      <div class="hero-center">
+        <p class="eyebrow">DÉESSES · Artemis by Deesses Bakery · 香港</p>
+        <h1 class="hero__title">Goddess-made<br />cakes &amp; pastries.</h1>
+        <p class="hero__zh">法式蛋糕 · 手工牛角酥 · 天然酸種包</p>
+        <form class="hero-search" role="search" aria-label="Search DÉESSES menu" data-hero-search>
+          <label class="sr-only" for="heroSearchInput">Search menu</label>
+          <input id="heroSearchInput" type="search" placeholder="Search menu · 搜尋蛋糕 / croissant / sourdough" autocomplete="off" />
+          <button type="submit">Search · 搜尋</button>
+        </form>
+        <div class="hero-category-nav" aria-label="Quick menu categories">
+          <a href="#branches">Choose branch · 選擇分店</a>
+          <a href="#menu" data-hero-filter="cake">Cakes · 蛋糕</a>
+          <a href="#menu" data-hero-filter="pastry">Pastries · 酥點</a>
+          <a href="#menu" data-hero-filter="bakery">Bakery · 麵包</a>
+          <a href="#order">Pre-order · 立即預訂</a>
         </div>
       </div>
-      <div class="hero__scrim" aria-hidden="true"></div>
+
+      <p class="hero__fine">Unofficial preview using temporary images · replace with approved assets before delivery.</p>
     </section>
 
     <!-- Branches -->
@@ -249,6 +225,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=artemis-filter-priority-1"></script>
+  <script src="script.js?v=visual-order-flow-1"></script>
 </body>
 </html>
