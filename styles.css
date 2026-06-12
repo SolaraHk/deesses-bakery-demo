@@ -299,6 +299,15 @@ section { padding: clamp(64px, 11vw, 132px) clamp(20px, 6vw, 64px); }
 }
 .product:hover, .product:focus-visible { transform: translateY(-6px); box-shadow: 0 26px 52px -30px rgba(138, 79, 158, 0.5); outline: none; }
 .product:focus-visible { border-color: var(--plum); }
+.product--spotlight {
+  border-color: var(--plum);
+  box-shadow: 0 0 0 5px rgba(138, 79, 158, 0.16), 0 28px 58px -30px rgba(138, 79, 158, 0.7);
+  animation: productSpotlight 1.25s ease-in-out 1;
+}
+@keyframes productSpotlight {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-8px) scale(1.018); }
+}
 .product__media { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--lilac); }
 .product__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
 .product:hover .product__media img { transform: scale(1.05); }
@@ -417,13 +426,19 @@ section { padding: clamp(64px, 11vw, 132px) clamp(20px, 6vw, 64px); }
 .signature__lead { margin: 22px auto 0; max-width: 640px; color: #e9cfe0; font-size: 1.08rem; }
 .signature__lead strong { color: #fff; }
 .signature__list { list-style: none; margin: 34px auto 32px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; max-width: 720px; text-align: left; }
-.signature__list li {
-  display: flex; align-items: center; gap: 12px;
+.signature__list li { min-width: 0; }
+.signature__product {
+  width: 100%; min-height: 100%; display: flex; align-items: center; gap: 12px;
   border: 1px solid rgba(246, 214, 230, 0.2); border-radius: var(--radius-sm);
-  padding: 16px 18px; background: rgba(246, 214, 230, 0.05); font-size: 0.96rem;
+  padding: 16px 18px; background: rgba(246, 214, 230, 0.05); color: inherit; font: inherit;
+  text-align: left; cursor: pointer; transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
-.signature__list span { font-size: 1.4rem; }
-.signature__list em { margin-left: auto; font-style: normal; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blush); font-weight: 700; }
+.signature__product:hover, .signature__product:focus-visible {
+  transform: translateY(-2px); border-color: rgba(246, 214, 230, 0.55); background: rgba(246, 214, 230, 0.12);
+  outline: none;
+}
+.signature__product span { font-size: 1.4rem; }
+.signature__product em { margin-left: auto; font-style: normal; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blush); font-weight: 700; }
 
 /* ---- Order ---- */
 .order__cards { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }

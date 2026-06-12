@@ -178,6 +178,7 @@
       branches: ALL_IDS
     },
     {
+      id: "pistachio-mochi-croissant",
       name: "Pistachio Mochi Croissant · 開心果麻糬牛角酥",
       cat: "pastry",
       img: IMG.croissant,
@@ -187,6 +188,48 @@
       serves: "1 person",
       lead: "Reserve same day if available · 可即日查詢預留",
       options: ["Pistachio filling", "Chewy mochi", "Artemis Kai Tak pickup"],
+      signature: true,
+      branches: ["kaitak"]
+    },
+    {
+      id: "50cm-sausage-pastry",
+      name: "50cm Sausage Pastry · 50cm 腸仔酥",
+      cat: "pastry",
+      img: IMG.croissant,
+      desc: "Artemis signature long sausage pastry — a fun sharing bake from the Kai Tak counter.",
+      price: "Ask in branch · 門市查詢",
+      size: "50cm signature pastry · 50cm 招牌酥點",
+      serves: "2–4 people sharing · 2–4人分享",
+      lead: "Reserve same day if available · 可即日查詢預留",
+      options: ["50cm sausage pastry", "Cut for sharing", "Artemis Kai Tak pickup"],
+      signature: true,
+      branches: ["kaitak"]
+    },
+    {
+      id: "mini-rainbow-croissants",
+      name: "Mini Rainbow Croissants · 迷你彩虹牛角酥",
+      cat: "pastry",
+      img: IMG.croissant,
+      desc: "Colourful mini croissants from Artemis — designed for gifting, photos and sharing boxes.",
+      price: "Ask in branch · 門市查詢",
+      size: "Mini croissant box · 迷你牛角酥盒",
+      serves: "Sharing box · 分享裝",
+      lead: "Reserve before pickup · 建議先預留",
+      options: ["Rainbow mini croissants", "Gift box", "Artemis Kai Tak pickup"],
+      signature: true,
+      branches: ["kaitak"]
+    },
+    {
+      id: "bear-cake",
+      name: "Bear Cake · 小熊蛋糕",
+      cat: "cake",
+      img: IMG.unicorn,
+      desc: "Cute bear-themed celebration cake from the Artemis signature counter.",
+      price: "Ask in branch · 門市查詢",
+      size: "Celebration cake · 慶祝蛋糕",
+      serves: "Ask in branch · 門市查詢",
+      lead: "Reserve 2–3 days ahead · 建議提前2–3日預訂",
+      options: ["Bear cake design", "Birthday message card", "Artemis Kai Tak pickup"],
       signature: true,
       branches: ["kaitak"]
     },
@@ -318,6 +361,11 @@
   function getActiveBranchForOrder(p) {
     if (activeBranch !== "all" && p.branches.indexOf(activeBranch) !== -1) return branchName(activeBranch);
     return branchName(p.branches[0]);
+  }
+
+  function findProductById(id) {
+    for (var i = 0; i < PRODUCTS.length; i++) if (PRODUCTS[i].id === id) return PRODUCTS[i];
+    return null;
   }
 
   function orderSummaryLines(p, branch, extras) {
@@ -487,6 +535,7 @@
     items.forEach(function (p) {
       var card = el("button", "product");
       card.type = "button";
+      if (p.id) card.setAttribute("data-product-id", p.id);
       card.setAttribute("aria-label", "View details for " + p.name);
       var badge = "";
       if (p.signature) badge = '<span class="product__badge product__badge--sig">Signature · 招牌</span>';
@@ -574,6 +623,29 @@
     document.body.classList.add("modal-open");
     var closeBtn = modal.querySelector(".product-modal__close");
     if (closeBtn) closeBtn.focus();
+  }
+
+  function showProductFromSignature(productId) {
+    var product = findProductById(productId);
+    if (!product) return;
+    activeSearch = "";
+    var searchInput = document.getElementById("heroSearchInput");
+    if (searchInput) searchInput.value = "";
+    activeBranch = "kaitak";
+    activeCategory = product.cat;
+    syncChips();
+    renderMenu();
+    window.setTimeout(function () {
+      var card = document.querySelector('[data-product-id="' + productId + '"]');
+      var target = card || document.getElementById("menu");
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (card) {
+        card.classList.add("product--spotlight");
+        card.focus({ preventScroll: true });
+        window.setTimeout(function () { card.classList.remove("product--spotlight"); }, 1800);
+      }
+    }, 60);
   }
 
   function closeProductModal() {
@@ -732,6 +804,14 @@
     });
   }
 
+  function wireSignatureProducts() {
+    document.querySelectorAll("[data-signature-product]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        showProductFromSignature(btn.getAttribute("data-signature-product"));
+      });
+    });
+  }
+
   /* ---------- Init ---------- */
   renderBranches();
   renderFilters();
@@ -740,6 +820,7 @@
   renderSocialGrid();
   wireHeroPreview();
   wireHeroSearch();
+  wireSignatureProducts();
   wireAnchors();
   onScroll();
 })();
