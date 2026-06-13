@@ -40,6 +40,13 @@ test('mobile navigation has a replacement when desktop links collapse', () => {
   assert.match(js, /data-nav-toggle|nav__toggle/, 'JS should wire the mobile nav toggle');
 });
 
+test('product photo areas open details directly and remain accessible', () => {
+  assert.match(js, /product__media product__media-button/, 'product media/photo area should be rendered as a clickable button');
+  assert.match(js, /mediaButton[\s\S]*openProductModal\(p, mediaButton\)/, 'media/photo button should open the same product modal');
+  assert.match(js, /aria-label="View details for /, 'media/photo button should expose an accessible details label');
+  assert.match(css, /product__media:focus-visible/, 'media/photo button should have a visible keyboard focus style');
+});
+
 test('product modal traps and restores focus', () => {
   assert.match(js, /lastModalTrigger|previousFocus|previousModalFocus|modalTrigger/, 'opening modal should store the trigger/previous focus');
   assert.match(js, /trapModalFocus[\s\S]*focusable[\s\S]*shiftKey/, 'modal should trap Tab and Shift+Tab within the dialog');

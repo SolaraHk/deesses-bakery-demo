@@ -576,11 +576,11 @@
       for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === p.cat) cat = CATEGORIES[i];
 
       card.innerHTML =
-        '<div class="product__media">' +
+        '<button class="product__media product__media-button" type="button" aria-label="View details for ' + esc(p.name) + '">' +
           badge +
           '<span class="product__cat">' + esc(cat ? cat.emoji + " " + cat.label : "") + "</span>" +
           '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" width="320" height="320" loading="lazy" decoding="async" />' +
-        "</div>" +
+        "</button>" +
         '<div class="product__body">' +
           '<div class="product__head"><h3>' + esc(p.name) + "</h3></div>" +
           "<p class=\"product__desc\">" + esc(p.desc) + "</p>" +
@@ -591,6 +591,8 @@
             '<span class="product__order-hint">Pre-order now · 立即預訂</span>' +
           "</div>" +
         "</div>";
+      var mediaButton = card.querySelector(".product__media-button");
+      if (mediaButton) mediaButton.addEventListener("click", function () { openProductModal(p, mediaButton); });
       var detailsButton = card.querySelector(".product__open");
       if (detailsButton) detailsButton.addEventListener("click", function () { openProductModal(p, detailsButton); });
       grid.appendChild(card);
