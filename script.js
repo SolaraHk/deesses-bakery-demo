@@ -575,26 +575,31 @@
       var cat = null;
       for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === p.cat) cat = CATEGORIES[i];
 
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "View details for " + p.name);
       card.innerHTML =
-        '<button class="product__media product__media-button" type="button" aria-label="View details for ' + esc(p.name) + '">' +
+        '<div class="product__media" aria-hidden="true">' +
           badge +
           '<span class="product__cat">' + esc(cat ? cat.emoji + " " + cat.label : "") + "</span>" +
-          '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" width="320" height="320" loading="lazy" decoding="async" />' +
-        "</button>" +
+          '<img src="' + esc(p.img) + '" alt="" width="320" height="320" loading="lazy" decoding="async" />' +
+        "</div>" +
         '<div class="product__body">' +
           '<div class="product__head"><h3>' + esc(p.name) + "</h3></div>" +
           "<p class=\"product__desc\">" + esc(p.desc) + "</p>" +
           '<div class="product__foot">' +
             '<span class="product__price">' + esc(p.price) + "</span>" +
             '<span class="product__avail">' + avail + "</span>" +
-            '<button type="button" class="product__open">View details · 查看詳情 →</button>' +
+            '<span class="product__open" aria-hidden="true">View details · 查看詳情 →</span>' +
             '<span class="product__order-hint">Pre-order now · 立即預訂</span>' +
           "</div>" +
         "</div>";
-      var mediaButton = card.querySelector(".product__media-button");
-      if (mediaButton) mediaButton.addEventListener("click", function () { openProductModal(p, mediaButton); });
-      var detailsButton = card.querySelector(".product__open");
-      if (detailsButton) detailsButton.addEventListener("click", function () { openProductModal(p, detailsButton); });
+      card.addEventListener("click", function () { openProductModal(p, card); });
+      card.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        openProductModal(p, card);
+      });
       grid.appendChild(card);
     });
   }

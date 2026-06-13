@@ -16,14 +16,13 @@ function test(name, fn) {
   }
 }
 
-test('branch and product cards are not invalid nested interactive buttons', () => {
+test('branch and product cards avoid invalid nested interactive controls', () => {
   assert.doesNotMatch(js, /el\("button", "branch-card"\)/, 'branch-card should not be rendered as a <button> wrapper');
   assert.doesNotMatch(js, /el\("button", "product"\)/, 'product card should not be rendered as a <button> wrapper');
   assert.doesNotMatch(js, /onclick="event\.stopPropagation\(\)"/, 'generated inline onclick workaround should be removed');
   assert.match(js, /class="branch-card__cta"/, 'branch cards should use an explicit CTA button instead of a button wrapper');
-  assert.match(js, /class="product__open"/, 'product cards should use an explicit details button instead of making the whole article a pseudo-button');
-  assert.doesNotMatch(js, /card\.setAttribute\("role", "button"\)/, 'product articles should not be masqueraded as buttons');
-  assert.doesNotMatch(js, /card\.setAttribute\("tabindex", "0"\)/, 'product articles should not use tabindex when an inner button is available');
+  assert.doesNotMatch(js, /<button[^>]+class="product__open"/, 'product cards should not contain a nested details button when the whole card opens details');
+  assert.doesNotMatch(js, /product__media product__media-button/, 'product media should not be a nested button inside the clickable product card');
 });
 
 test('social preview links are not hidden from assistive tech', () => {
@@ -40,15 +39,17 @@ test('mobile navigation has a replacement when desktop links collapse', () => {
   assert.match(js, /data-nav-toggle|nav__toggle/, 'JS should wire the mobile nav toggle');
 });
 
-test('product photo areas open details directly and remain accessible', () => {
-  assert.match(js, /product__media product__media-button/, 'product media/photo area should be rendered as a clickable button');
-  assert.match(js, /mediaButton[\s\S]*openProductModal\(p, mediaButton\)/, 'media/photo button should open the same product modal');
-  assert.match(js, /aria-label="View details for /, 'media/photo button should expose an accessible details label');
-  assert.match(css, /product__media:focus-visible/, 'media/photo button should have a visible keyboard focus style');
+test('entire product cards open details and remain keyboard accessible', () => {
+  assert.match(js, /card\.setAttribute\("role", "button"\)/, 'product card should expose one full-card click target');
+  assert.match(js, /card\.setAttribute\("tabindex", "0"\)/, 'product card should be keyboard focusable');
+  assert.match(js, /card\.addEventListener\("click"[\s\S]*openProductModal\(p, card\)/, 'clicking anywhere on the product card should open the modal');
+  assert.match(js, /card\.addEventListener\("keydown"[\s\S]*e\.key !== "Enter"[\s\S]*e\.key !== " "[\s\S]*openProductModal\(p, card\)/, 'Enter and Space should open the product modal from the focused card');
+  assert.match(css, /\.product:focus-visible/, 'full-card product button should have a visible keyboard focus style');
 });
 
 test('selected product modal branch buttons keep light text while focused or pressed', () => {
-  assert.match(css, /product-modal__branch-choice--on:hover[\s\S]*product-modal__branch-choice--on:focus[\s\S]*color:\s*#fff\s*!important[\s\S]*-webkit-text-fill-color:\s*#fff/, 'selected branch choices should keep white text on hover/focus/active');
+  assert.match(css, /product-modal__branch-choice--on\s*\{[\s\S]*color:\s*#fff\s*!important[\s\S]*-webkit-text-fill-color:\s*#fff\s*!important/, 'selected branch choices should force white text at rest');
+  assert.match(css, /product-modal__branch-choice--on:hover[\s\S]*product-modal__branch-choice--on:focus[\s\S]*color:\s*#fff\s*!important[\s\S]*-webkit-text-fill-color:\s*#fff\s*!important/, 'selected branch choices should keep white text on hover/focus/active');
   assert.match(css, /product-modal__branch-choice:focus-visible/, 'branch choices should have explicit focus styling instead of relying on browser defaults');
 });
 
