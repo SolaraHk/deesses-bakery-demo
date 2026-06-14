@@ -25,10 +25,11 @@ test('branch and product cards avoid invalid nested interactive controls', () =>
   assert.doesNotMatch(js, /product__media product__media-button/, 'product media should not be a nested button inside the clickable product card');
 });
 
-test('top-left brand mark uses the Instagram icon', () => {
-  assert.match(html, /class="nav__mark ig-mark ig-mark--brand"/, 'top-left nav mark should use the Instagram icon styling');
+test('top-left brand mark uses the real DÉESSES Instagram profile logo', () => {
+  assert.match(html, /<img class="nav__mark nav__logo" src="assets\/deesses-instagram-logo\.jpg" alt="DÉESSES Bakery logo" width="36" height="36"/, 'top-left nav mark should use the downloaded DÉESSES Instagram profile logo asset');
+  assert.doesNotMatch(html, /class="nav__mark ig-mark ig-mark--brand"/, 'top-left nav mark should not use the generic Instagram glyph');
   assert.doesNotMatch(html, /class="nav__mark"[^>]*>❀</, 'top-left nav mark should not use the old flower glyph');
-  assert.match(css, /\.ig-mark--brand[\s\S]*radial-gradient[\s\S]*#d62976[\s\S]*#4f5bd5/, 'brand Instagram icon should use Instagram-style gradient styling');
+  assert.match(css, /\.nav__logo[\s\S]*border-radius:\s*50%[\s\S]*object-fit:\s*cover/, 'brand logo image should be styled as a circular profile icon');
 });
 
 test('social preview links are not hidden from assistive tech', () => {
