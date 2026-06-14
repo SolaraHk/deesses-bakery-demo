@@ -43,7 +43,7 @@
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#menu">Skip to menu · 跳到餐單</a>
+  <a class="skip-link" href="#menu" data-i18n="skipMenu">Skip to menu</a>
   <!-- Sticky glass navigation -->
   <header class="nav" id="nav">
     <nav class="nav__inner" aria-label="Primary">
@@ -56,12 +56,16 @@
         <span aria-hidden="true"></span>
       </button>
       <ul class="nav__links" id="primaryNavLinks">
-        <li><a href="#branches">Branches · 分店</a></li>
-        <li><a href="#signature">Artemis · 啟德</a></li>
-        <li><a href="#craft">Craft · 製作</a></li>
-        <li><a href="#menu">Menu · 餐單</a></li>
-        <li><a href="#order">Order · 訂購</a></li>
+        <li><a href="#branches" data-i18n="branches">Branches</a></li>
+        <li><a href="#signature">Artemis</a></li>
+        <li><a href="#craft" data-i18n="craft">Craft</a></li>
+        <li><a href="#menu" data-i18n="menu">Menu</a></li>
+        <li><a href="#order" data-i18n="order">Order</a></li>
       </ul>
+      <div class="language-switch" aria-label="Language" data-i18n-aria="languageLabel">
+        <button type="button" data-language="en" aria-pressed="false"><span>EN</span></button>
+        <button type="button" data-language="zh" aria-pressed="false"><span>繁</span></button>
+      </div>
       <a href="https://www.instagram.com/deesses_bakery/" class="nav__cta" target="_blank" rel="noopener">
         <span class="ig-mark" aria-hidden="true"></span>
         @deesses_bakery
@@ -96,33 +100,33 @@
       </div>
 
       <div class="hero-center">
-        <p class="eyebrow">DÉESSES · Artemis by Deesses Bakery · 香港</p>
-        <h1 class="hero__title">Goddess-made<br />cakes &amp; pastries.</h1>
-        <p class="hero__zh" lang="zh-Hant">法式蛋糕 · 手工牛角酥 · 天然酸種包</p>
-        <form class="hero-search" role="search" aria-label="Search DÉESSES menu" data-hero-search>
-          <label class="sr-only" for="heroSearchInput">Search menu</label>
-          <input id="heroSearchInput" type="search" placeholder="Search menu · 搜尋蛋糕 / croissant / sourdough" autocomplete="off" />
-          <button type="submit">Search · 搜尋</button>
+        <p class="eyebrow" data-i18n="heroEyebrow">DÉESSES · Artemis by Deesses Bakery · Hong Kong</p>
+        <h1 class="hero__title" data-i18n="heroTitle">Goddess-made<br />cakes &amp; pastries.</h1>
+        <p class="hero__zh" lang="zh-Hant" data-i18n="heroSub">French cakes · handmade croissants · natural sourdough</p>
+        <form class="hero-search" role="search" aria-label="Search DÉESSES menu" data-i18n-aria="searchMenu" data-hero-search>
+          <label class="sr-only" for="heroSearchInput" data-i18n="searchMenu">Search menu</label>
+          <input id="heroSearchInput" type="search" placeholder="Search menu" data-i18n-placeholder="searchMenu" autocomplete="off" />
+          <button type="submit" data-i18n="searchButton">Search</button>
         </form>
         <div class="hero-category-nav" aria-label="Quick menu categories">
-          <a href="#branches">Choose branch · 選擇分店</a>
-          <a href="#craft">Cake craft · 蛋糕層次</a>
-          <a href="#menu" data-hero-filter="cake">Cakes · 蛋糕</a>
-          <a href="#menu" data-hero-filter="pastry">Pastries · 酥點</a>
-          <a href="#menu" data-hero-filter="bakery">Bakery · 麵包</a>
-          <a href="#order">Pre-order · 立即預訂</a>
+          <a href="#branches" data-i18n="chooseBranch">Choose branch</a>
+          <a href="#craft" data-i18n="cakeCraft">Cake craft</a>
+          <a href="#menu" data-hero-filter="cake" data-i18n="cakes">Cakes</a>
+          <a href="#menu" data-hero-filter="pastry" data-i18n="pastries">Pastries</a>
+          <a href="#menu" data-hero-filter="bakery" data-i18n="bakery">Bakery</a>
+          <a href="#order" data-i18n="preOrder">Pre-order</a>
         </div>
       </div>
 
-      <p class="hero__fine">Unofficial preview using temporary images · replace with approved assets before delivery.</p>
+      <p class="hero__fine" data-i18n="heroFine">Unofficial preview using temporary images · replace with approved assets before delivery.</p>
     </section>
 
     <!-- Branches -->
     <section class="branches" id="branches">
       <div class="section__head">
-        <p class="eyebrow">Choose Your Branch · 選擇分店</p>
-        <h2>Four counters, one brand.</h2>
-        <p class="section__sub">
+        <p class="eyebrow" data-i18n="branchEyebrow">Choose Your Branch</p>
+        <h2 data-i18n="branchTitle">Four counters, one brand.</h2>
+        <p class="section__sub" data-i18n="branchSub">
           Tap <strong>Artemis at Kai Tak</strong> to jump into the purple signature counter first;
           the other branch cards take you straight to their filtered menu.
         </p>
@@ -135,9 +139,9 @@
     <!-- Signature -->
     <section class="signature" id="signature">
       <div class="signature__inner">
-        <p class="eyebrow eyebrow--light">Artemis · 啟德招牌</p>
+        <p class="eyebrow eyebrow--light" data-i18n="signatureEyebrow">Artemis · Kai Tak signature</p>
         <h2>Artemis<span class="signature__by"> by Deesses Bakery</span></h2>
-        <p class="signature__lead">
+        <p class="signature__lead" data-i18n="signatureLead">
           At <strong>AIRSIDE, Kai Tak</strong>, Artemis pairs high-quality bread baked fresh daily
           with an elegant, gift-ready vibe — a stronger pink-and-purple, Instagram aesthetic and a
           handful of signature bakes.
@@ -148,7 +152,7 @@
           <li><button type="button" class="signature__product" data-signature-product="mini-rainbow-croissants"><span>🌈</span> Mini rainbow croissants · 迷你彩虹牛角酥</button></li>
           <li><button type="button" class="signature__product" data-signature-product="bear-cake"><span>🧸</span> Bear cake · 小熊蛋糕</button></li>
         </ul>
-        <a href="#menu" class="btn btn--primary">View Artemis products · 睇啟德產品</a>
+        <a href="#menu" class="btn btn--primary" data-i18n="viewArtemis">View Artemis products</a>
       </div>
     </section>
 
@@ -157,18 +161,18 @@
     <section class="craft" id="craft">
       <div class="craft__inner">
         <div class="craft__copy">
-          <p class="eyebrow">Cake craft · 蛋糕層次</p>
-          <h2>Tap to pull the celebration cake apart.</h2>
-          <p class="section__sub">
+          <p class="eyebrow" data-i18n="cakeCraft">Cake craft</p>
+          <h2 data-i18n="craftTitle">Tap to pull the celebration cake apart.</h2>
+          <p class="section__sub" data-i18n="craftSub">
             A playful exploded-view moment shows how celebration cakes come together — candle, berries, cream, sponge and plate —
             before everything snaps back into a gift-ready finish.
           </p>
           <div class="craft__controls" aria-label="Cake assembly controls">
-            <button type="button" class="btn btn--primary" data-cake-action="explode">拆開 · Explode</button>
-            <button type="button" class="btn btn--ghost" data-cake-action="assemble">組裝 · Assemble</button>
-            <button type="button" class="btn btn--ghost" data-cake-action="replay">Replay</button>
+            <button type="button" class="btn btn--primary" data-cake-action="explode" data-i18n="explode">Explode</button>
+            <button type="button" class="btn btn--ghost" data-cake-action="assemble" data-i18n="assemble">Assemble</button>
+            <button type="button" class="btn btn--ghost" data-cake-action="replay" data-i18n="replay">Replay</button>
           </div>
-          <p class="craft__status" id="cakeStatus" aria-live="polite">Cake assembled · 蛋糕已組裝</p>
+          <p class="craft__status" id="cakeStatus" aria-live="polite" data-i18n="cakeAssembled">Cake assembled</p>
         </div>
 
         <div class="craft__panel">
@@ -207,21 +211,21 @@
     <!-- Menu -->
     <section class="menu" id="menu">
       <div class="section__head">
-        <p class="eyebrow">The Menu · 餐單</p>
-        <h2>Cakes, pastries &amp; bakery.</h2>
-        <p class="section__sub">
+        <p class="eyebrow" data-i18n="menuEyebrow">The Menu</p>
+        <h2 data-i18n="menuTitle">Cakes, pastries &amp; bakery.</h2>
+        <p class="section__sub" data-i18n="menuSub">
           Filter by category and by branch. Prices marked
-          <em>“from public posts · 售價或有變動”</em> come from older social posts and may have changed.
+          <em>“from public posts”</em> come from older social posts and may have changed.
         </p>
       </div>
 
       <div class="filters" role="group" aria-label="Menu filters">
         <div class="filters__row" id="categoryFilters" aria-label="Filter by category">
-          <span class="filters__label">Category · 分類</span>
+          <span class="filters__label" data-i18n="category">Category</span>
           <!-- chips injected -->
         </div>
         <div class="filters__row" id="branchFilters" aria-label="Filter by branch">
-          <span class="filters__label">Branch · 分店</span>
+          <span class="filters__label" data-i18n="branch">Branch</span>
           <!-- chips injected -->
         </div>
       </div>
@@ -229,11 +233,11 @@
       <div class="menu__grid" id="menuGrid" aria-live="polite">
         <!-- Product cards injected by script.js -->
       </div>
-      <p class="menu__empty" id="menuEmpty" hidden>No items match this filter. · 沒有符合的產品。</p>
+      <p class="menu__empty" id="menuEmpty" hidden data-i18n="noItems">No items match this filter.</p>
 
-      <p class="note">
+      <p class="note" data-i18n="noteAssets">
         Images are temporary local preview files and should be replaced with
-        approved assets before delivery. Seasonal prices (e.g. festive cakes) are past examples,
+        approved assets before delivery. Seasonal prices are past examples,
         not current pricing.
       </p>
     </section>
@@ -241,11 +245,11 @@
     <!-- Order -->
     <section class="order" id="order">
       <div class="section__head">
-        <p class="eyebrow">Pre-order · 訂購方法</p>
-        <h2>Reserve before you visit.</h2>
-        <p class="section__sub">
+        <p class="eyebrow" data-i18n="orderEyebrow">Pre-order</p>
+        <h2 data-i18n="orderTitle">Reserve before you visit.</h2>
+        <p class="section__sub" data-i18n="orderSub">
           Cakes and festive bakes are made to order in limited daily batches —
-          message ahead to reserve. · 蛋糕及節日產品每日限量製作，請提前預訂。
+          message ahead to reserve.
         </p>
       </div>
       <div class="order__cards">
@@ -253,32 +257,32 @@
           <span class="order-card__icon ig-mark ig-mark--lg" aria-hidden="true"></span>
           <h3>Instagram DM</h3>
           <p>@deesses_bakery</p>
-          <span class="order-card__hint">Send a direct message · 私訊落單</span>
+          <span class="order-card__hint" data-i18n="dmHint">Send a direct message</span>
         </a>
         <a class="order-card order-card--wa" href="https://wa.me/85268128098?text=%E4%BD%A0%E5%A5%BD%20D%C3%89ESSES%20Bakery%EF%BC%8C%E6%88%91%E6%83%B3%E6%9F%A5%E8%A9%A2%2F%E9%A0%90%E8%A8%82%E7%94%A2%E5%93%81%E5%8F%8A%E5%8F%96%E8%B2%A8%E5%AE%89%E6%8E%92%E3%80%82" target="_blank" rel="noopener">
           <span class="order-card__icon order-card__icon--wa" aria-hidden="true">✆</span>
           <h3>WhatsApp</h3>
           <p>6812&nbsp;8098</p>
-          <span class="order-card__hint">Message to pre-order · WhatsApp 訂購</span>
+          <span class="order-card__hint" data-i18n="waHint">Message to pre-order</span>
         </a>
       </div>
-      <p class="note">Pre-order channel per the brand's public Instagram bio. Availability and lead times vary by branch and season.</p>
+      <p class="note" data-i18n="orderNote">Pre-order channel per the brand's public Instagram bio. Availability and lead times vary by branch and season.</p>
     </section>
 
     <!-- Instagram social proof -->
     <section class="social" id="social">
       <div class="social__inner">
         <div class="social__text">
-          <p class="eyebrow">Follow · 追蹤我們</p>
+          <p class="eyebrow" data-i18n="follow">Follow</p>
           <h2>@deesses_bakery</h2>
-          <p class="social__lead">
+          <p class="social__lead" data-i18n="socialLead">
             <strong>DÉESSES</strong> — Artemis by Deesses Bakery. Bakery. New flavours, seasonal
             cakes and branch updates land on Instagram first.
           </p>
-          <p class="social__counts"><strong>436</strong> posts · <strong>~6,250</strong> followers</p>
+          <p class="social__counts" data-i18n="socialCounts"><strong>436</strong> posts · <strong>~6,250</strong> followers</p>
           <a href="https://www.instagram.com/deesses_bakery/" class="btn btn--primary" target="_blank" rel="noopener">
             <span class="ig-mark" aria-hidden="true"></span>
-            Open Instagram · 前往 Instagram
+            <span data-i18n="openInstagram">Open Instagram</span>
           </a>
         </div>
         <div class="social__grid" id="socialGrid" aria-label="Instagram preview tiles">
@@ -293,7 +297,7 @@
       <div class="footer__top">
         <div>
           <p class="footer__brand">DÉESSES Bakery</p>
-          <p class="footer__tag">Artemis by Deesses Bakery · 香港</p>
+          <p class="footer__tag" data-i18n="footerTag">Artemis by Deesses Bakery · Hong Kong</p>
         </div>
         <a href="https://www.instagram.com/deesses_bakery/" class="footer__ig" target="_blank" rel="noopener">
           <span class="ig-mark" aria-hidden="true"></span>
@@ -305,7 +309,7 @@
         <!-- compact branch contacts injected -->
       </div>
 
-      <p class="footer__fine">
+      <p class="footer__fine" data-i18n="footerFine">
         <strong>Static demo site.</strong> This is an unofficial design demo built for presentation.
         Branch names, addresses, phone numbers and the pre-order contact are taken from the brand's
         public Instagram bio and public listings (OpenRice / AIRSIDE) for illustration. Seasonal

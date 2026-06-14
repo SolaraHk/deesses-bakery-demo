@@ -66,6 +66,142 @@
 
   var ALL_IDS = BRANCHES.map(function (b) { return b.id; });
   var WHATSAPP_NUMBER = "85268128098";
+  var LANGUAGE_KEYS = ["en", "zh"];
+  var LANGUAGE_STORAGE_KEY = "deesses-bakery-language";
+  var LANGUAGES = [
+    { code: "en", label: "EN", name: "English" },
+    { code: "zh", label: "繁", name: "繁體中文" }
+  ];
+  var COPY = {
+    en: {
+      languageLabel: "Language",
+      openNav: "Open navigation",
+      skipMenu: "Skip to menu",
+      searchMenu: "Search menu",
+      searchButton: "Search",
+      chooseBranch: "Choose branch",
+      cakeCraft: "Cake craft",
+      cakes: "Cakes",
+      pastries: "Pastries",
+      bakery: "Bakery",
+      preOrder: "Pre-order",
+      branches: "Branches",
+      craft: "Craft",
+      menu: "Menu",
+      order: "Order",
+      heroEyebrow: "DÉESSES · Artemis by Deesses Bakery · Hong Kong",
+      heroTitle: "Goddess-made<br />cakes & pastries.",
+      heroSub: "French cakes · handmade croissants · natural sourdough",
+      heroFine: "Unofficial preview using temporary images · replace with approved assets before delivery.",
+      branchEyebrow: "Choose Your Branch",
+      branchTitle: "Four counters, one brand.",
+      branchSub: "Tap <strong>Artemis at Kai Tak</strong> to jump into the purple signature counter first; the other branch cards take you straight to their filtered menu.",
+      signatureEyebrow: "Artemis · Kai Tak signature",
+      signatureLead: "At <strong>AIRSIDE, Kai Tak</strong>, Artemis pairs high-quality bread baked fresh daily with an elegant, gift-ready vibe — a stronger pink-and-purple, Instagram aesthetic and a handful of signature bakes.",
+      viewArtemis: "View Artemis products",
+      craftTitle: "Tap to pull the celebration cake apart.",
+      craftSub: "A playful exploded-view moment shows how celebration cakes come together — candle, berries, cream, sponge and plate — before everything snaps back into a gift-ready finish.",
+      explode: "Explode",
+      assemble: "Assemble",
+      replay: "Replay",
+      cakeAssembled: "Cake assembled",
+      cakeExploded: "Cake exploded view",
+      menuEyebrow: "The Menu",
+      menuTitle: "Cakes, pastries & bakery.",
+      menuSub: "Filter by category and by branch. Prices marked <em>“from public posts”</em> come from older social posts and may have changed.",
+      category: "Category",
+      branch: "Branch",
+      noItems: "No items match this filter.",
+      noteAssets: "Images are temporary local preview files and should be replaced with approved assets before delivery. Seasonal prices are past examples, not current pricing.",
+      orderEyebrow: "Pre-order",
+      orderTitle: "Reserve before you visit.",
+      orderSub: "Cakes and festive bakes are made to order in limited daily batches — message ahead to reserve.",
+      dmHint: "Send a direct message",
+      waHint: "Message to pre-order",
+      orderNote: "Pre-order channel per the brand's public Instagram bio. Availability and lead times vary by branch and season.",
+      follow: "Follow",
+      socialLead: "<strong>DÉESSES</strong> — Artemis by Deesses Bakery. Bakery. New flavours, seasonal cakes and branch updates land on Instagram first.",
+      socialCounts: "<strong>436</strong> posts · <strong>~6,250</strong> followers",
+      openInstagram: "Open Instagram",
+      footerTag: "Artemis by Deesses Bakery · Hong Kong",
+      footerFine: "<strong>Static demo site.</strong> This is an unofficial design demo built for presentation. Branch names, addresses, phone numbers and the pre-order contact are taken from the brand's public Instagram bio and public listings (OpenRice / AIRSIDE) for illustration. Seasonal prices shown are drawn from older public posts and may have changed. Product images are temporary local preview files and should be replaced with approved assets before client delivery. Please confirm all hours, pricing and availability with the business directly.",
+      all: "All",
+      allBranches: "All branches",
+      signature: "Signature",
+      seasonal: "Seasonal",
+      allBranchAvail: "All branches",
+      selectedBranchAvail: "selected branch(es)",
+      viewDetails: "View details",
+      preOrderNow: "Pre-order now",
+      enterArtemis: "Enter Artemis →",
+      viewMenu: "View menu →",
+      preorderVia: "Pre-order via IG / WhatsApp"
+    },
+    zh: {
+      languageLabel: "語言",
+      openNav: "開啟選單",
+      skipMenu: "跳到餐單",
+      searchMenu: "搜尋餐單",
+      searchButton: "搜尋",
+      chooseBranch: "選擇分店",
+      cakeCraft: "蛋糕層次",
+      cakes: "蛋糕",
+      pastries: "酥點",
+      bakery: "麵包",
+      preOrder: "立即預訂",
+      branches: "分店",
+      craft: "製作",
+      menu: "餐單",
+      order: "訂購",
+      heroEyebrow: "DÉESSES · Artemis by Deesses Bakery · 香港",
+      heroTitle: "女神系<br />蛋糕與法式酥點",
+      heroSub: "法式蛋糕 · 手工牛角酥 · 天然酸種包",
+      heroFine: "非官方網站示意 · 圖片為臨時預覽素材，交付前請換成正式授權圖片。",
+      branchEyebrow: "選擇分店",
+      branchTitle: "四間分店，一個品牌。",
+      branchSub: "點選 <strong>啟德 Artemis</strong> 可先看紫調招牌專櫃；其他分店卡會直接帶你到已篩選餐單。",
+      signatureEyebrow: "Artemis · 啟德招牌",
+      signatureLead: "位於 <strong>AIRSIDE 啟德</strong> 的 Artemis，每日新鮮焗製高質麵包，配合更精緻、送禮感的粉紫 Instagram 風格及多款招牌產品。",
+      viewArtemis: "睇啟德產品",
+      craftTitle: "點一下，拆開睇蛋糕層次。",
+      craftSub: "用互動拆解效果展示慶祝蛋糕如何由蠟燭、莓果、忌廉、蛋糕胚和底碟組成，再合成送禮完成品。",
+      explode: "拆開",
+      assemble: "組裝",
+      replay: "重播",
+      cakeAssembled: "蛋糕已組裝",
+      cakeExploded: "蛋糕已拆開睇層次",
+      menuEyebrow: "餐單",
+      menuTitle: "蛋糕、酥點與麵包。",
+      menuSub: "可按分類和分店篩選。標示 <em>「公開帖文參考」</em> 的價錢來自較早前社交帖文，或已更改。",
+      category: "分類",
+      branch: "分店",
+      noItems: "沒有符合的產品。",
+      noteAssets: "圖片為臨時本地預覽素材，交付前請換成正式授權圖片。節日價錢屬過往示例，並非現行定價。",
+      orderEyebrow: "訂購方法",
+      orderTitle: "到店前先預留。",
+      orderSub: "蛋糕及節日產品每日限量製作，建議提前私訊預訂。",
+      dmHint: "私訊落單",
+      waHint: "WhatsApp 訂購",
+      orderNote: "預訂渠道按品牌公開 Instagram 簡介整理；供應、預訂時間及取貨安排會因分店及季節而不同。",
+      follow: "追蹤我們",
+      socialLead: "<strong>DÉESSES</strong> — Artemis by Deesses Bakery。新口味、節日蛋糕和分店消息會率先在 Instagram 更新。",
+      socialCounts: "<strong>436</strong> 篇帖文 · <strong>約 6,250</strong> 位追蹤者",
+      openInstagram: "前往 Instagram",
+      footerTag: "Artemis by Deesses Bakery · 香港",
+      footerFine: "<strong>靜態網站示意。</strong> 這是非官方設計示範網站。分店名稱、地址、電話和預訂聯絡方式取自品牌公開 Instagram 簡介及公開列表（OpenRice / AIRSIDE）作展示用途。節日價錢來自較早前公開帖文，或已更改。產品圖片為臨時本地預覽素材，交付客戶前請換成正式授權圖片。所有營業時間、價錢及供應請直接向店舖確認。",
+      all: "全部",
+      allBranches: "所有分店",
+      signature: "招牌",
+      seasonal: "節日限定",
+      allBranchAvail: "全線供應",
+      selectedBranchAvail: "指定分店",
+      viewDetails: "查看詳情",
+      preOrderNow: "立即預訂",
+      enterArtemis: "進入啟德專櫃 →",
+      viewMenu: "看餐單 →",
+      preorderVia: "經 IG / WhatsApp 預訂"
+    }
+  };
 
   function esc(value) {
     return String(value == null ? "" : value)
@@ -92,12 +228,69 @@
     return local.toISOString().slice(0, 10);
   }
 
+  function getInitialLanguage() {
+    var requested = new URLSearchParams(window.location.search).get("lang");
+    if (LANGUAGE_KEYS.indexOf(requested) !== -1) return requested;
+    try {
+      var saved = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+      if (LANGUAGE_KEYS.indexOf(saved) !== -1) return saved;
+    } catch (e) {}
+    var browserLanguages = [navigator.language].concat(navigator.languages || []).filter(Boolean);
+    return browserLanguages.some(function (lang) { return String(lang).toLowerCase().indexOf("zh") === 0; }) ? "zh" : "en";
+  }
+
+  var currentLanguage = getInitialLanguage();
+
+  function tx(key) {
+    return (COPY[currentLanguage] && COPY[currentLanguage][key]) || COPY.en[key] || key;
+  }
+
+  function localizeStatic() {
+    document.documentElement.lang = currentLanguage === "zh" ? "zh-Hant-HK" : "en";
+    document.querySelectorAll("[data-i18n]").forEach(function (node) {
+      var key = node.getAttribute("data-i18n");
+      node.innerHTML = tx(key);
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (node) {
+      node.setAttribute("aria-label", tx(node.getAttribute("data-i18n-aria")));
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (node) {
+      node.setAttribute("placeholder", tx(node.getAttribute("data-i18n-placeholder")));
+    });
+    var toggleLabel = document.querySelector("[data-nav-toggle] .sr-only");
+    if (toggleLabel) toggleLabel.textContent = tx("openNav");
+    window.__deessesLanguage = currentLanguage;
+  }
+
+  function syncLanguageButtons() {
+    document.querySelectorAll("[data-language]").forEach(function (btn) {
+      var on = btn.getAttribute("data-language") === currentLanguage;
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function setLanguage(lang) {
+    if (LANGUAGE_KEYS.indexOf(lang) === -1 || lang === currentLanguage) return;
+    currentLanguage = lang;
+    try { window.localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage); } catch (e) {}
+    localizeStatic();
+    syncLanguageButtons();
+    renderBranches();
+    renderFilters();
+    renderMenu();
+    renderFooterBranches();
+    var status = document.getElementById("cakeStatus");
+    var craft = document.getElementById("craft");
+    if (status && craft) status.textContent = craft.getAttribute("data-cake-mode") === "exploded" ? tx("cakeExploded") : tx("cakeAssembled");
+  }
+
 
   /* ---------- Categories ---------- */
   var CATEGORIES = [
-    { id: "cake",   label: "Cake · 蛋糕",   emoji: "🎂" },
-    { id: "pastry", label: "Pastry · 酥點", emoji: "🧁" },
-    { id: "bakery", label: "Bakery · 麵包", emoji: "🥯" }
+    { id: "cake",   labelEn: "Cake",   labelZh: "蛋糕", emoji: "🎂" },
+    { id: "pastry", labelEn: "Pastry", labelZh: "酥點", emoji: "🧁" },
+    { id: "bakery", labelEn: "Bakery", labelZh: "麵包", emoji: "🥯" }
   ];
 
   /* ---------- Products ----------
@@ -301,13 +494,14 @@
   function renderBranches() {
     var grid = document.getElementById("branchGrid");
     if (!grid) return;
+    grid.innerHTML = "";
     BRANCHES.forEach(function (b) {
       var card = el("article", "branch-card");
       card.setAttribute("data-branch", b.id);
       card.setAttribute("aria-current", "false");
       var phone = b.phone
         ? '<a class="branch-card__phone" href="tel:+852' + esc(b.phone.replace(/\s/g, "")) + '">☏ ' + esc(b.phone) + "</a>"
-        : '<span class="branch-card__phone branch-card__phone--none">Pre-order via IG / WhatsApp</span>';
+        : '<span class="branch-card__phone branch-card__phone--none">' + esc(tx("preorderVia")) + '</span>';
       card.innerHTML =
         '<span class="branch-card__heart" aria-hidden="true">' + esc(b.heart) + "</span>" +
         '<h3 class="branch-card__name">' + esc(b.name) + "</h3>" +
@@ -316,7 +510,7 @@
         '<p class="branch-card__addr branch-card__addr--en">' + esc(b.addrEn) + "</p>" +
         '<p class="branch-card__note">' + esc(b.note) + "</p>" +
         phone +
-        '<button type="button" class="branch-card__cta">' + (b.id === "kaitak" ? "Enter Artemis · 進入啟德專櫃 →" : "View menu · 看餐單 →") + '</button>';
+        '<button type="button" class="branch-card__cta">' + (b.id === "kaitak" ? tx("enterArtemis") : tx("viewMenu")) + '</button>';
       function activateBranchCard() {
         var nextBranch = activeBranch === b.id ? "all" : b.id;
         selectBranch(nextBranch);
@@ -336,6 +530,12 @@
     var catRow = document.getElementById("categoryFilters");
     var brRow = document.getElementById("branchFilters");
     if (!catRow || !brRow) return;
+    catRow.querySelectorAll("button").forEach(function (node) { node.remove(); });
+    brRow.querySelectorAll("button").forEach(function (node) { node.remove(); });
+    var catLabel = catRow.querySelector(".filters__label");
+    var brLabel = brRow.querySelector(".filters__label");
+    if (catLabel) catLabel.textContent = tx("category");
+    if (brLabel) brLabel.textContent = tx("branch");
 
     function chip(row, key, label, onClick, group) {
       var c = el("button", "chip", label);
@@ -348,12 +548,12 @@
       return c;
     }
 
-    chip(catRow, "all", "All · 全部", function () { selectCategory("all"); }, "cat");
+    chip(catRow, "all", tx("all"), function () { selectCategory("all"); }, "cat");
     CATEGORIES.forEach(function (c) {
-      chip(catRow, c.id, c.emoji + " " + c.label, function () { selectCategory(c.id); }, "cat");
+      chip(catRow, c.id, c.emoji + " " + (currentLanguage === "zh" ? c.labelZh : c.labelEn), function () { selectCategory(c.id); }, "cat");
     });
 
-    chip(brRow, "all", "All branches · 所有分店", function () { selectBranch("all"); }, "br");
+    chip(brRow, "all", tx("allBranches"), function () { selectBranch("all"); }, "br");
     BRANCHES.forEach(function (b) {
       chip(brRow, b.id, b.heart + " " + b.name, function () { selectBranch(b.id); }, "br");
     });
@@ -561,16 +761,16 @@
       var card = el("article", "product");
       if (p.id) card.setAttribute("data-product-id", p.id);
       var badge = "";
-      if (p.signature) badge = '<span class="product__badge product__badge--sig">Signature · 招牌</span>';
-      else if (p.seasonal) badge = '<span class="product__badge product__badge--season">Seasonal · 節日</span>';
+      if (p.signature) badge = '<span class="product__badge product__badge--sig">' + esc(tx("signature")) + '</span>';
+      else if (p.seasonal) badge = '<span class="product__badge product__badge--season">' + esc(tx("seasonal")) + '</span>';
 
       var hearts = p.branches.map(function (id) {
         var b = branchName(id);
         return b ? '<span title="' + esc(b.name) + '">' + esc(b.heart) + "</span>" : "";
       }).join("");
       var avail = p.branches.length === ALL_IDS.length
-        ? '<span class="product__avail-all">All branches · 全線供應</span>'
-        : '<span class="product__avail-some">' + hearts + " selected · 指定分店</span>";
+        ? '<span class="product__avail-all">' + esc(tx("allBranchAvail")) + '</span>'
+        : '<span class="product__avail-some">' + hearts + " " + esc(tx("selectedBranchAvail")) + "</span>";
 
       var cat = null;
       for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === p.cat) cat = CATEGORIES[i];
@@ -581,7 +781,7 @@
       card.innerHTML =
         '<div class="product__media" aria-hidden="true">' +
           badge +
-          '<span class="product__cat">' + esc(cat ? cat.emoji + " " + cat.label : "") + "</span>" +
+          '<span class="product__cat">' + esc(cat ? cat.emoji + " " + (currentLanguage === "zh" ? cat.labelZh : cat.labelEn) : "") + "</span>" +
           '<img src="' + esc(p.img) + '" alt="" width="320" height="320" loading="lazy" decoding="async" />' +
         "</div>" +
         '<div class="product__body">' +
@@ -590,8 +790,8 @@
           '<div class="product__foot">' +
             '<span class="product__price">' + esc(p.price) + "</span>" +
             '<span class="product__avail">' + avail + "</span>" +
-            '<span class="product__open" aria-hidden="true">View details · 查看詳情 →</span>' +
-            '<span class="product__order-hint">Pre-order now · 立即預訂</span>' +
+            '<span class="product__open" aria-hidden="true">' + esc(tx("viewDetails")) + ' →</span>' +
+            '<span class="product__order-hint">' + esc(tx("preOrderNow")) + '</span>' +
           "</div>" +
         "</div>";
       card.addEventListener("click", function () { openProductModal(p, card); });
@@ -715,6 +915,7 @@
   function renderFooterBranches() {
     var wrap = document.getElementById("footerBranches");
     if (!wrap) return;
+    wrap.innerHTML = "";
     BRANCHES.forEach(function (b) {
       var c = el("div", "footer-branch");
       c.innerHTML =
@@ -832,6 +1033,15 @@
     });
   }
 
+  function wireLanguageSwitch() {
+    document.querySelectorAll("[data-language]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setLanguage(btn.getAttribute("data-language"));
+      });
+    });
+    syncLanguageButtons();
+  }
+
   function wireCakeAssembly() {
     var craft = document.getElementById("craft");
     if (!craft) return;
@@ -853,7 +1063,7 @@
       craft.setAttribute("data-cake-mode", mode);
       if (buttons.explode) buttons.explode.disabled = mode === "exploded";
       if (buttons.assemble) buttons.assemble.disabled = mode === "assembled";
-      if (status) status.textContent = mode === "exploded" ? "Cake exploded view · 已拆開睇層次" : "Cake assembled · 蛋糕已組裝";
+      if (status) status.textContent = mode === "exploded" ? tx("cakeExploded") : tx("cakeAssembled");
       window.__cakeAssemblyStatus = { mode: mode, pieces: craft.querySelectorAll(".cake-piece").length };
     }
     if (buttons.explode) buttons.explode.addEventListener("click", function () { setMode("exploded"); });
@@ -928,6 +1138,7 @@
   }
 
   /* ---------- Init ---------- */
+  localizeStatic();
   renderBranches();
   renderFilters();
   renderMenu();
@@ -935,6 +1146,7 @@
   renderSocialGrid();
   wireHeroSearch();
   wireMobileNav();
+  wireLanguageSwitch();
   wireCakeAssembly();
   wireSignatureProducts();
   wireScrollReveal();
