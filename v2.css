@@ -492,7 +492,52 @@
 }
 .v2-craft__copy h2 { font-size: clamp(2.35rem, 4.8vw, 4rem); }
 .v2-craft__copy p { color: var(--v2-muted); max-width: 48ch; margin: 12px 0 18px; }
-.v2-cake-panel { border-radius: 16px; background: linear-gradient(135deg, #fff8f2, #fde8e8); border: 1px solid var(--v2-line); box-shadow: var(--v2-shadow); }
+.v2-cake-panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(12px, 2vw, 18px);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8f4d7, #fff7ea 46%, #f7ead4);
+  border: 1px solid rgba(183, 163, 99, 0.32);
+  box-shadow: var(--v2-shadow);
+}
+.v2-cake-placeholder {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #f8f4d7;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7), 0 18px 42px rgba(116, 97, 48, 0.15);
+}
+.v2-cake-placeholder img {
+  display: block;
+  width: 100%;
+  height: min(680px, 68vw);
+  min-height: 500px;
+  object-fit: cover;
+  object-position: center center;
+  transition: transform 0.72s cubic-bezier(.2,.8,.2,1), filter 0.72s ease;
+}
+.v2-cake-placeholder figcaption {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #665829;
+  background: rgba(255, 251, 230, 0.78);
+  border: 1px solid rgba(255,255,255,0.72);
+  box-shadow: 0 10px 24px rgba(116, 97, 48, 0.12);
+  font: 800 0.78rem/1 "Manrope", sans-serif;
+}
+.v2-site .craft[data-cake-mode="exploded"] .v2-cake-placeholder img { transform: scale(1.035); filter: saturate(1.04) contrast(1.02); }
+.v2-site .craft[data-cake-replay="true"] .v2-cake-placeholder img { animation: cakePlaceholderPulse 2.8s cubic-bezier(.2,.8,.2,1) infinite; }
+.v2-cake-stage--legacy { position: absolute !important; width: 1px; height: 1px; min-height: 0 !important; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
+@keyframes cakePlaceholderPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
 .v2-site .cake-stage {
   position: relative;
   min-height: 360px;

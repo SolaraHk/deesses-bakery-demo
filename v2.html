@@ -9,13 +9,14 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23fff7f2'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='34'%3E%E2%99%A1%3C/text%3E%3C/svg%3E" />
   <link rel="apple-touch-icon" href="assets/deesses-instagram-logo.jpg" />
   <link rel="preload" as="image" href="assets/front-page-bakery-scene.jpg" />
+  <link rel="preload" as="image" href="assets/deconstructed-cake-placeholder.jpg" />
   <link rel="preload" as="image" href="assets/mini.jpg" />
   <link rel="preload" as="image" href="assets/strawberry.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=brand-logo-1" />
-  <link rel="stylesheet" href="v2.css?v=concept-3" />
+  <link rel="stylesheet" href="v2.css?v=concept-4" />
 </head>
 <body class="v2-site">
   <a class="skip-link" href="#menu" data-i18n="skipMenu">Skip to menu</a>
@@ -186,8 +187,8 @@
 
     <section class="craft v2-craft" id="craft" data-cake-mode="assembled">
       <div class="craft__copy v2-craft__copy">
-        <h2>Interactive cake craft</h2>
-        <p>The V1 cake assembly interaction stays available for explaining layers and customization.</p>
+        <h2>Layer-by-layer cake craft</h2>
+        <p>This placeholder uses the supplied pistachio mochi cake layer guide while the custom animation is refined.</p>
         <div class="craft__controls" aria-label="Cake assembly controls">
           <button class="v2-button v2-button--ghost" type="button" data-cake-action="explode">Explode</button>
           <button class="v2-button v2-button--ghost" type="button" data-cake-action="assemble">Assemble</button>
@@ -196,7 +197,11 @@
         <p class="craft__status" id="cakeStatus" aria-live="polite">Cake assembled</p>
       </div>
       <div class="craft__panel v2-cake-panel">
-        <div class="cake-stage" aria-label="Animated exploded-view celebration cake">
+        <figure class="v2-cake-placeholder">
+          <img src="assets/deconstructed-cake-placeholder.jpg" alt="DÉESSES pistachio mochi cake layer guide placeholder showing pistachio cream, whipped cream, vanilla sponge, mochi filling and pistachio crumble" width="1024" height="1280" loading="lazy" />
+          <figcaption>Placeholder layer guide · Pistachio mochi cake</figcaption>
+        </figure>
+        <div class="cake-stage v2-cake-stage--legacy" aria-hidden="true" aria-label="Animated exploded-view celebration cake">
           <div class="cake-piece cake-piece--candle">✦</div>
           <div class="cake-piece cake-piece--berries"></div>
           <div class="cake-piece cake-piece--cream"></div>
