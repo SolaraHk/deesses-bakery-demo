@@ -55,9 +55,11 @@ test('mobile top bar stays inside narrow viewports', () => {
 
 test('Pineapple-style floating social menu keeps Instagram reachable on mobile', () => {
   assert.match(html, /class="social-float"[\s\S]*data-social-trigger[\s\S]*class="social-menu"[\s\S]*https:\/\/www\.instagram\.com\/deesses_bakery\/[\s\S]*https:\/\/wa\.me\/85268128098/, 'floating social menu should expose Instagram and WhatsApp like Pineapple reference');
-  assert.match(html, /class="social-trigger__avatar"[\s\S]*assets\/deesses-instagram-logo\.jpg[\s\S]*class="social-menu__avatar"/, 'floating social trigger should use the real DÉESSES Instagram logo instead of a plain CSS glyph');
-  assert.match(css, /\.social-trigger\s*\{[\s\S]*radial-gradient\([\s\S]*linear-gradient\(135deg,\s*#ff7eb8[\s\S]*#5f2c82/, 'floating social trigger should have a polished IG-inspired gradient treatment');
-  assert.match(css, /\.social-trigger__avatar, \.social-menu__avatar[\s\S]*border-radius:\s*50%[\s\S]*object-fit:\s*cover/, 'floating social trigger/menu should present the logo as a polished circular avatar');
+  assert.match(html, /class="social-trigger__ig"[\s\S]*viewBox="0 0 24 24"[\s\S]*class="social-trigger__label"/, 'floating social trigger should use an Instagram-style glyph rather than the business logo');
+  assert.match(html, /class="social-menu__ig"[\s\S]*viewBox="0 0 24 24"/, 'Instagram menu row should use a matching Instagram glyph');
+  assert.doesNotMatch(html, /class="social-trigger__avatar"[\s\S]*deesses-instagram-logo\.jpg/, 'floating social trigger should not put the business/profile logo on the button');
+  assert.match(css, /\.social-trigger\s*\{[\s\S]*min-width:\s*104px[\s\S]*linear-gradient\(135deg,\s*#5b2a86[\s\S]*#f77737/, 'floating social trigger should follow the Pineapple-style pill button with an IG-inspired gradient');
+  assert.match(css, /\.social-trigger__ig\s*\{[\s\S]*width:\s*21px[\s\S]*drop-shadow/, 'floating social trigger should make the Instagram glyph visible and polished');
   assert.match(css, /\.social-float\s*\{\s*position:\s*fixed;[\s\S]*bottom:\s*max\(10px,\s*env\(safe-area-inset-bottom\)\)/, 'social menu should float from the lower-right corner');
   assert.match(css, /\.social-float:hover \.social-menu[\s\S]*\.social-float:focus-within \.social-menu[\s\S]*\.social-float\.social-float--open \.social-menu[\s\S]*opacity:\s*1[\s\S]*pointer-events:\s*auto/, 'social menu should expand on hover, focus, and tap-open state');
   assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*\.social-trigger\s*\{[\s\S]*width:\s*48px[\s\S]*height:\s*48px/, 'mobile floating social trigger should collapse to a compact round button');

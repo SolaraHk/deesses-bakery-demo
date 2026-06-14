@@ -185,28 +185,26 @@ section { padding: clamp(64px, 11vw, 132px) clamp(20px, 6vw, 64px); }
 .nav__links a:hover { color: var(--accent-2); }
 .social-float { position: fixed; right: clamp(10px, 2vw, 22px); bottom: max(10px, env(safe-area-inset-bottom)); z-index: 95; }
 .social-trigger {
-  border: 0; cursor: pointer; min-width: 112px; height: 54px; padding: 6px 16px 6px 7px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  border: 0; cursor: pointer; min-width: 104px; height: 48px; padding: 0 18px 0 14px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   position: relative; overflow: hidden; isolation: isolate; border-radius: 999px; color: #fff;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255,255,255,0.82) 0 7%, transparent 8%),
-    linear-gradient(135deg, #ff7eb8 0%, #f65f9a 34%, #8a4f9e 72%, #5f2c82 100%);
-  box-shadow: 0 18px 42px rgba(138,79,158,0.28), inset 0 1px 0 rgba(255,255,255,0.42);
-  font: inherit; font-weight: 850; letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #5b2a86 0%, #c13584 38%, #e1306c 68%, #f77737 100%);
+  box-shadow: 0 16px 38px rgba(193,53,132,0.24), inset 0 1px 0 rgba(255,255,255,0.32);
+  font: inherit; font-weight: 850; letter-spacing: -0.01em; opacity: 0.94;
   transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease), opacity 0.18s var(--ease);
 }
 .social-trigger::before {
   content: ""; position: absolute; inset: 1px; z-index: -1; border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 46%, rgba(255,232,246,0.16));
+  background: radial-gradient(circle at 22% 18%, rgba(255,255,255,0.42) 0 13%, transparent 28%);
 }
-.social-trigger__halo {
-  position: absolute; inset: -12px auto auto -16px; width: 62px; height: 62px; border-radius: 50%;
-  background: rgba(255,255,255,0.22); filter: blur(2px); pointer-events: none;
+.social-trigger__ig {
+  width: 21px; height: 21px; flex: none; display: block; color: currentColor;
+  filter: drop-shadow(0 1px 8px rgba(63, 18, 65, 0.22));
 }
-.social-trigger__avatar, .social-menu__avatar {
-  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; flex: none;
-  background: #fff; border: 2px solid rgba(255,255,255,0.82); box-shadow: 0 8px 20px rgba(70,34,72,0.24);
+.social-trigger__ig rect, .social-trigger__ig circle,
+.social-menu__ig svg rect, .social-menu__ig svg circle {
+  fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
 }
-.social-trigger__avatar img, .social-menu__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.social-trigger__ig .social-trigger__ig-dot, .social-menu__ig svg circle:last-child { fill: currentColor; stroke: none; }
 .social-trigger__label { position: relative; text-shadow: 0 1px 12px rgba(62,22,58,0.26); }
 .social-menu {
   position: absolute; right: 0; bottom: calc(100% + 10px); width: min(314px, calc(100vw - 32px)); padding: 10px;
@@ -219,12 +217,12 @@ section { padding: clamp(64px, 11vw, 132px) clamp(20px, 6vw, 64px); }
 .social-float:hover .social-trigger, .social-float:focus-within .social-trigger, .social-float.social-float--open .social-trigger { transform: translateY(-1px); box-shadow: 0 20px 52px rgba(138,79,158,0.32); }
 .social-menu a { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: center; padding: 10px; border-radius: 18px; color: var(--text); }
 .social-menu a:hover, .social-menu a:focus { background: rgba(246,214,230,0.24); outline: none; }
-.social-menu .ig-mark, .social-menu__avatar, .social-icon {
+.social-menu .ig-mark, .social-menu__ig, .social-icon {
   width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--rose), var(--plum)); color: #fff;
   box-shadow: 0 10px 22px rgba(138,79,158,0.16);
 }
-.social-menu__avatar { padding: 0; background: #fff; border: 2px solid rgba(255,255,255,0.88); }
-.social-menu__avatar img { border-radius: inherit; }
+.social-menu__ig { background: linear-gradient(135deg, #5b2a86, #c13584 42%, #f77737); }
+.social-menu__ig svg { width: 19px; height: 19px; display: block; }
 .social-menu span { display: grid; gap: 2px; }
 .social-menu strong { font-size: 0.95rem; }
 .social-menu small { color: var(--muted); font-weight: 700; line-height: 1.25; }
