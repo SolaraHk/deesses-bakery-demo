@@ -53,6 +53,12 @@ test('mobile top bar stays inside narrow viewports', () => {
   assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*\.nav__cta\s*\{\s*display:\s*none;\s*\}/, 'desktop Instagram CTA should be hidden from the cramped mobile top bar');
 });
 
+test('Instagram remains reachable from the opened mobile navigation', () => {
+  assert.match(html, /class="nav__mobile-instagram"[\s\S]*https:\/\/www\.instagram\.com\/deesses_bakery\/[\s\S]*@deesses_bakery/, 'mobile nav should include the Instagram link moved out of the cramped top bar');
+  assert.match(css, /\.nav__mobile-instagram\s*\{\s*display:\s*none;\s*\}/, 'mobile Instagram link should stay hidden on desktop');
+  assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*\.nav__mobile-instagram\s*\{\s*display:\s*block;\s*\}/, 'mobile Instagram link should appear inside the opened mobile menu');
+});
+
 test('entire product cards open details and remain keyboard accessible', () => {
   assert.match(js, /card\.setAttribute\("role", "button"\)/, 'product card should expose one full-card click target');
   assert.match(js, /card\.setAttribute\("tabindex", "0"\)/, 'product card should be keyboard focusable');

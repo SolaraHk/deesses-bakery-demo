@@ -183,6 +183,7 @@ section { padding: clamp(64px, 11vw, 132px) clamp(20px, 6vw, 64px); }
 .nav__links { display: flex; gap: 26px; list-style: none; margin: 0 auto 0 18px; padding: 0; font-size: 0.92rem; font-weight: 500; }
 .nav__links a { color: var(--muted); transition: color 0.25s var(--ease); }
 .nav__links a:hover { color: var(--accent-2); }
+.nav__mobile-instagram { display: none; }
 .language-switch {
   display: inline-flex; align-items: center; gap: 4px; padding: 4px; border: 1px solid var(--hairline);
   border-radius: 999px; background: rgba(255,255,255,0.68); box-shadow: 0 12px 30px rgba(83,49,75,0.08);
@@ -631,8 +632,15 @@ body[data-nav-open="true"] .nav__toggle span[aria-hidden="true"]::after { opacit
     box-shadow: 0 24px 54px -32px rgba(58,38,20,0.52);
   }
   body[data-nav-open="true"] .nav__links, .nav__links--open { display: flex; }
-  .nav__links a { display: block; padding: 12px 14px; border-radius: 14px; }
+  .nav__links a { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; }
   .nav__links a:hover { background: rgba(246,214,230,0.28); }
+  .nav__mobile-instagram { display: block; }
+  .nav__mobile-instagram a {
+    justify-content: center; margin-top: 6px;
+    background: linear-gradient(120deg, var(--rose), var(--plum)); color: #fff;
+    font-weight: 700; box-shadow: 0 14px 30px rgba(138,79,158,0.18);
+  }
+  .nav__mobile-instagram .ig-mark { background: currentColor; }
   .hero { min-height: 86vh; min-height: 86svh; padding-top: 76px; }
   .craft::before { inset: 10px; border-radius: 24px; }
   .craft__panel { min-height: 420px; border-radius: 26px; }
