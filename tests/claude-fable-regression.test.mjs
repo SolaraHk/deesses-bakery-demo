@@ -115,9 +115,11 @@ test('README reflects local assets and implemented features', () => {
   assert.doesNotMatch(readFileSync(new URL('../README.md', import.meta.url), 'utf8'), /reveal-on-scroll/i, 'README should not advertise missing reveal-on-scroll');
 });
 
-test('hero intro panel stays translucent so the opening gallery remains visible', () => {
-  assert.match(css, /\.hero-center\s*\{[\s\S]*width:\s*min\(720px,\s*100%\)[\s\S]*background:\s*linear-gradient\(180deg,\s*rgba\(255,250,244,0\.38\),\s*rgba\(255,250,244,0\.16\)\)/, 'hero text panel should be narrower and more transparent than the previous big opaque box');
-  assert.match(css, /\.hero-center\s*\{[\s\S]*backdrop-filter:\s*blur\(8px\)\s*saturate\(120%\)/, 'hero glass should use a lighter blur so background imagery reads through');
+test('hero intro panel stays bright while the opening gallery remains visible', () => {
+  assert.match(css, /\.hero\s*\{[\s\S]*background:\s*linear-gradient\(180deg,\s*#fff6ee[\s\S]*#fffaf4/, 'hero section should open on a brighter pastry-toned base rather than a near-black slab');
+  assert.match(css, /\.hero--gallery::before\s*\{[\s\S]*rgba\(83,\s*49,\s*75,\s*0\.24\)/, 'hero gallery overlay should be much lighter than the previous dark wash');
+  assert.match(css, /\.hero-gallery__tile img\s*\{[\s\S]*brightness\(1\.18\)/, 'hero gallery images should be lifted so the front page does not feel too dark');
+  assert.match(css, /\.hero-center\s*\{[\s\S]*width:\s*min\(720px,\s*100%\)[\s\S]*background:\s*linear-gradient\(180deg,\s*rgba\(255,250,244,0\.68\),\s*rgba\(255,250,244,0\.38\)\)/, 'hero text panel should be brighter but still translucent enough to show the gallery');
   assert.match(css, /\.hero-category-nav a\s*\{[\s\S]*background:\s*rgba\(255,255,255,0\.28\)/, 'hero quick links should be translucent, not solid chips');
 });
 
