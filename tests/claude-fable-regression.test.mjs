@@ -119,8 +119,8 @@ test('hero intro panel stays bright while the opening gallery remains visible', 
   assert.match(css, /\.hero\s*\{[\s\S]*background:\s*linear-gradient\(180deg,\s*#fff6ee[\s\S]*#fffaf4/, 'hero section should open on a brighter pastry-toned base rather than a near-black slab');
   assert.match(css, /\.hero--gallery::before\s*\{[\s\S]*rgba\(83,\s*49,\s*75,\s*0\.24\)/, 'hero gallery overlay should be much lighter than the previous dark wash');
   assert.match(css, /\.hero-gallery__tile img\s*\{[\s\S]*brightness\(1\.18\)/, 'hero gallery images should be lifted so the front page does not feel too dark');
-  assert.match(css, /\.hero-center\s*\{[\s\S]*width:\s*min\(720px,\s*100%\)[\s\S]*padding:\s*clamp\(10px,\s*2\.4vw,\s*22px\)/, 'hero content should stay readable without using a visible framed panel');
-  assert.match(css, /\.hero-category-nav a\s*\{[\s\S]*background:\s*rgba\(255,255,255,0\.28\)/, 'hero quick links should be translucent, not solid chips');
+  assert.match(css, /\.hero-center\s*\{[\s\S]*width:\s*min\(860px,\s*100%\)[\s\S]*padding:\s*clamp\(10px,\s*2\.4vw,\s*22px\)/, 'hero content should stay readable without using a visible framed panel');
+  assert.match(css, /\.hero-category-nav a\s*\{[\s\S]*background:\s*rgba\(255,255,255,0\.42\)/, 'hero quick links should stay translucent but easier to read');
 });
 
 test('Pineapple-style EN/Traditional Chinese language switch is available', () => {
@@ -155,7 +155,7 @@ test('cake assembly animation and Dribbble-inspired design cues are implemented 
 
 test('GSAP taste motion layer is loaded progressively and respects reduced motion', () => {
   assert.match(html, /gsap@3\.12\.5\/dist\/gsap\.min\.js" defer/, 'GSAP should be loaded as a deferred progressive enhancement');
-  assert.match(html, /script\.js\?v=front-frame-removed-1" defer/, 'site script should be cache-busted for the GSAP/taste update');
+  assert.match(html, /script\.js\?v=hero-readability-1" defer/, 'site script should be cache-busted for the GSAP/taste update');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'GSAP motion initializer missing');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'GSAP should disable itself for reduced-motion users or when the CDN fails');
   assert.match(js, /var tiles = Array\.prototype\.slice\.call\(document\.querySelectorAll\("\.hero-gallery__tile"\)\)[\s\S]*var center = document\.querySelector\("\.hero-center"\)|var center = document\.querySelector\("\.hero-center"\)[\s\S]*var tiles = Array\.prototype\.slice\.call\(document\.querySelectorAll\("\.hero-gallery__tile"\)\)/, 'GSAP intro should collect the hero gallery and panel elements');
@@ -169,6 +169,8 @@ test('design taste refinements keep the page polished without adding clutter', (
   assert.match(css, /\.section__sub\s*\{[\s\S]*max-width:\s*62ch/, 'body copy should have a restrained readable line length');
   assert.match(css, /\.hero::after\s*\{[\s\S]*radial-gradient\(closest-side at 50% 100%/, 'hero should have a subtle grounded glow rather than extra decorative clutter');
   assert.doesNotMatch(css, /\.hero-center::before|\.hero-center[\s\S]{0,260}border:\s*1px solid|\.hero-center[\s\S]{0,260}backdrop-filter/, 'front-page hero content should not have a visible framed panel');
+  assert.match(css, /@media \(min-width:\s*1024px\)\s*\{[\s\S]*\.hero__title\s*\{[\s\S]*font-size:\s*clamp\(5\.7rem,\s*9\.8vw,\s*7\.75rem\)/, 'desktop hero title should scale up without making the mobile hero oversized');
+  assert.match(css, /\.hero__title\s*\{[\s\S]*text-shadow:\s*0 1px 0 rgba\(255,250,244,0\.92\)/, 'hero title should carry a readable light lift without adding a panel');
   assert.match(css, /\.branch-card[\s\S]*linear-gradient\(180deg, rgba\(255,255,255,0\.96\), var\(--surface\)\)/, 'branch cards should use subtle depth instead of flat slabs');
   assert.match(css, /\.product__media img[\s\S]*transition:\s*transform 0\.75s var\(--ease\), filter 0\.75s var\(--ease\)/, 'product imagery should feel smoother and intentional');
 });
