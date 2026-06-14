@@ -26,7 +26,7 @@ test('branch and product cards avoid invalid nested interactive controls', () =>
 });
 
 test('top-left brand mark uses the real DÉESSES Instagram profile logo', () => {
-  assert.match(html, /<img class="nav__mark nav__logo" src="assets\/deesses-instagram-logo\.jpg" alt="DÉESSES Bakery logo" width="36" height="36"/, 'top-left nav mark should use the downloaded DÉESSES Instagram profile logo asset');
+  assert.match(html, /<img class="nav__mark nav__logo" src="assets\/deesses-instagram-logo\.jpg" alt="DÉESSES Bakery logo" width="48" height="48"/, 'top-left nav mark should use the enlarged downloaded DÉESSES Instagram profile logo asset');
   assert.doesNotMatch(html, /class="nav__mark ig-mark ig-mark--brand"/, 'top-left nav mark should not use the generic Instagram glyph');
   assert.doesNotMatch(html, /class="nav__mark"[^>]*>❀</, 'top-left nav mark should not use the old flower glyph');
   assert.match(css, /\.nav__logo[\s\S]*border-radius:\s*50%[\s\S]*object-fit:\s*cover/, 'brand logo image should be styled as a circular profile icon');
