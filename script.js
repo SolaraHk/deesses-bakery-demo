@@ -501,7 +501,7 @@
     if (params.branch && params.branch !== "all") q.set("branch", params.branch);
     if (params.search) q.set("q", params.search);
     var query = q.toString();
-    return "v2-menu.html" + (query ? "?" + query : "") + "#menu";
+    return "menu.html" + (query ? "?" + query : "") + "#menu";
   }
 
   function goToMenu(params) {
