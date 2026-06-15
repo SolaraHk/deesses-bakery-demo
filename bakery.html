@@ -9,14 +9,13 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23fff7f2'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='34'%3E%E2%99%A1%3C/text%3E%3C/svg%3E" />
   <link rel="apple-touch-icon" href="assets/deesses-instagram-logo.jpg" />
   <link rel="preload" as="image" href="assets/front-page-bakery-scene.jpg" />
-  <link rel="preload" as="image" href="assets/deconstructed-cake-placeholder.jpg" />
   <link rel="preload" as="image" href="assets/mini.jpg" />
   <link rel="preload" as="image" href="assets/strawberry.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=brand-logo-1" />
-  <link rel="stylesheet" href="site.css?v=concept-10" />
+  <link rel="stylesheet" href="site.css?v=concept-11" />
 </head>
 <body class="site menu-page category-page category-page--bakery" data-category-page="bakery">
   <header class="nav site-nav" id="nav">
@@ -34,13 +33,13 @@
         <li><a href="cakes.html" data-hero-filter="cake">Cakes</a></li>
         <li><a href="pastries.html" data-hero-filter="pastry">Pastries</a></li>
         <li><a href="bakery.html" data-hero-filter="bakery">Bakery</a></li>
-        <li><a href="#order" data-i18n="order">Order</a></li>
+        <li><a href="cakes.html#order" data-i18n="order">Order</a></li>
       </ul>
       <div class="language-switch site-language" aria-label="Language" data-i18n-aria="languageLabel">
         <button type="button" data-language="en" aria-pressed="false"><span>EN</span></button>
         <button type="button" data-language="zh" aria-pressed="false"><span>繁</span></button>
       </div>
-      <a href="#order" class="nav__cta site-order-pill">Order Now <span aria-hidden="true">♡</span></a>
+      <a href="cakes.html#order" class="nav__cta site-order-pill">Order Now <span aria-hidden="true">♡</span></a>
     </nav>
   </header>
 
@@ -93,71 +92,6 @@
       <p class="menu__empty site-empty" id="menuEmpty" hidden>No items match this filter.</p>
     </section>
 
-    <section class="order site-order" id="order">
-      <aside class="site-inspiration-card">
-        <img src="assets/rose.jpg" alt="Pink celebration cake inspiration" width="420" height="520" loading="lazy" />
-        <div>
-          <h3>Need inspiration?</h3>
-          <p>Browse the gallery first, then send your cake idea through WhatsApp or Instagram DM.</p>
-          <a class="site-button site-button--ghost" href="index.html#social">View Cake Gallery</a>
-        </div>
-      </aside>
-      <form class="site-custom-form" data-custom-order>
-        <p class="site-script">Custom Cake Order</p>
-        <h2>Design your perfect cake.</h2>
-        <div class="site-form-grid">
-          <label>Cake type<select name="cakeType"><option>Celebration Cake</option><option>Fruit Cake</option><option>Seasonal Gift</option><option>Custom Order</option></select></label>
-          <label>Size<select name="size"><option>6 inch (serves 6-8)</option><option>4 inch</option><option>5 inch</option><option>8 inch</option></select></label>
-          <label>Flavour<select name="flavour"><option>Vanilla and Strawberry</option><option>White Peach</option><option>Rose Raspberry</option><option>Chocolate</option></select></label>
-          <label>Pickup date<input name="pickupDate" type="date" /></label>
-        </div>
-        <fieldset class="site-radio-row">
-          <legend>Pickup or delivery</legend>
-          <label><input type="radio" name="method" value="Pickup" checked /> Pickup</label>
-          <label><input type="radio" name="method" value="Delivery" /> Delivery</label>
-        </fieldset>
-        <label>Message on cake<input name="message" type="text" placeholder="Happy Birthday" /></label>
-        <label>Additional notes<textarea name="notes" rows="3" placeholder="Allergies, colours, character theme"></textarea></label>
-        <button class="site-button site-button--primary site-submit" type="submit">Send Custom Order</button>
-      </form>
-      <aside class="site-order-info">
-        <h3>Ordering Information</h3>
-        <ul>
-          <li><strong>Order lead time</strong><span>Please order at least 48 hours in advance.</span></li>
-          <li><strong>Pickup and confirmation</strong><span>The shop confirms availability, branch and final price.</span></li>
-          <li><strong>Delivery</strong><span>Delivery may be available by request for selected areas.</span></li>
-          <li><strong>Questions?</strong><span>Message the team before ordering.</span></li>
-        </ul>
-        <a class="site-button site-button--primary" href="https://wa.me/85268128098" target="_blank" rel="noopener">Order via WhatsApp</a>
-        <a class="site-button site-button--ghost" href="https://www.instagram.com/deesses_bakery/" target="_blank" rel="noopener">Send IG DM</a>
-      </aside>
-    </section>
-
-    <section class="craft site-craft" id="craft" data-cake-mode="assembled">
-      <div class="craft__copy site-craft__copy">
-        <h2>Layer-by-layer cake craft</h2>
-        <p>This placeholder uses the supplied pistachio mochi cake layer guide while the custom animation is refined.</p>
-        <div class="craft__controls" aria-label="Cake assembly controls">
-          <button class="site-button site-button--ghost" type="button" data-cake-action="explode">Explode</button>
-          <button class="site-button site-button--ghost" type="button" data-cake-action="assemble">Assemble</button>
-          <button class="site-button site-button--primary" type="button" data-cake-action="replay">Replay</button>
-        </div>
-        <p class="craft__status" id="cakeStatus" aria-live="polite">Cake assembled</p>
-      </div>
-      <div class="craft__panel site-cake-panel">
-        <figure class="site-cake-placeholder">
-          <img src="assets/deconstructed-cake-placeholder.jpg" alt="DÉESSES pistachio mochi cake layer guide placeholder showing pistachio cream, whipped cream, vanilla sponge, mochi filling and pistachio crumble" width="1024" height="1280" loading="lazy" />
-          <figcaption>Placeholder layer guide · Pistachio mochi cake</figcaption>
-        </figure>
-        <div class="cake-stage site-cake-stage--legacy" aria-hidden="true" aria-label="Animated exploded-view celebration cake">
-          <div class="cake-piece cake-piece--candle">✦</div>
-          <div class="cake-piece cake-piece--berries"></div>
-          <div class="cake-piece cake-piece--cream"></div>
-          <div class="cake-piece cake-piece--sponge"></div>
-          <div class="cake-piece cake-piece--plate"></div>
-        </div>
-      </div>
-    </section>
 
     <section class="site-how" id="how-it-works">
       <h2>How ordering works</h2>
@@ -197,33 +131,5 @@
   </footer>
 
   <script src="script.js?v=brand-logo-1"></script>
-  <script>
-    (function () {
-      var form = document.querySelector('[data-custom-order]');
-      if (!form) return;
-      var date = form.querySelector('input[name="pickupDate"]');
-      if (date) {
-        var now = new Date();
-        var local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-        date.min = local.toISOString().slice(0, 10);
-      }
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        var data = new FormData(form);
-        var lines = [
-          '你好 DÉESSES Bakery，我想查詢自訂蛋糕：',
-          'Cake type: ' + (data.get('cakeType') || ''),
-          'Size: ' + (data.get('size') || ''),
-          'Flavour: ' + (data.get('flavour') || ''),
-          'Pickup date: ' + (data.get('pickupDate') || 'To be confirmed'),
-          'Method: ' + (data.get('method') || 'Pickup'),
-          'Message: ' + (data.get('message') || 'None'),
-          'Notes: ' + (data.get('notes') || 'None'),
-          '請確認供應、最終價錢及取貨安排，謝謝。'
-        ];
-        window.open('https://wa.me/85268128098?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
-      });
-    })();
-  </script>
 </body>
 </html>

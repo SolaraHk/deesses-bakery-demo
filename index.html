@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=brand-logo-1" />
-  <link rel="stylesheet" href="site.css?v=concept-10" />
+  <link rel="stylesheet" href="site.css?v=concept-11" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -62,13 +62,13 @@
         <li><a href="cakes.html" data-hero-filter="cake">Cakes</a></li>
         <li><a href="pastries.html" data-hero-filter="pastry">Pastries</a></li>
         <li><a href="bakery.html" data-hero-filter="bakery">Bakery</a></li>
-        <li><a href="menu.html#order" data-i18n="order">Order</a></li>
+        <li><a href="cakes.html#order" data-i18n="order">Order</a></li>
       </ul>
       <div class="language-switch site-language" aria-label="Language" data-i18n-aria="languageLabel">
         <button type="button" data-language="en" aria-pressed="false"><span>EN</span></button>
         <button type="button" data-language="zh" aria-pressed="false"><span>繁</span></button>
       </div>
-      <a href="menu.html#order" class="nav__cta site-order-pill">Order Now <span aria-hidden="true">♡</span></a>
+      <a href="cakes.html#order" class="nav__cta site-order-pill">Order Now <span aria-hidden="true">♡</span></a>
     </nav>
   </header>
 
@@ -99,14 +99,14 @@
         <p class="site-script">Online Ordering</p>
         <h1 class="site-hero__title">Order Your<br />Sweet Moments</h1>
         <div class="site-flourish" aria-hidden="true"><span></span><strong>✦</strong><span></span></div>
-        <p class="site-hero__copy">Handcrafted cakes, pastries and bakery breads presented as a polished showcase before shoppers browse the full menu.</p>
+        <p class="site-hero__copy">Handcrafted cakes, pastries and bakery breads presented as clear category spotlights before shoppers choose the right collection.</p>
         <form class="hero-search site-search" role="search" aria-label="Search DÉESSES menu" data-i18n-aria="searchMenu" data-hero-search>
           <label class="sr-only" for="heroSearchInput" data-i18n="searchMenu">Search menu</label>
           <input id="heroSearchInput" type="search" placeholder="Search menu" data-i18n-placeholder="searchMenu" autocomplete="off" />
           <button type="submit" data-i18n="searchButton">Search</button>
         </form>
         <div class="site-hero__actions">
-          <a class="btn btn--primary site-button site-button--primary" href="menu.html#menu">Browse Menu <span aria-hidden="true">♡</span></a>
+          <a class="btn btn--primary site-button site-button--primary" href="#product-spotlight">View Product Spotlights <span aria-hidden="true">♡</span></a>
           <a class="btn btn--ghost site-button site-button--ghost" href="#how-it-works">How It Works</a>
         </div>
       </div>
@@ -138,36 +138,37 @@
     <section class="site-product-spotlight" id="product-spotlight" aria-labelledby="productSpotlightTitle">
       <div class="site-section-head site-product-spotlight__head">
         <p class="site-script">Product Spotlight</p>
-        <h2 id="productSpotlightTitle">A cake worth stopping for.</h2>
-        <p class="section__sub">Lead with one hero product, then guide shoppers into the full catalogue when they are ready to order.</p>
+        <h2 id="productSpotlightTitle">Choose a spotlight collection.</h2>
+        <p class="section__sub">Three clear product spotlights: celebration cakes, gift-ready pastries and everyday bakery breads. Pick the collection you want to view.</p>
       </div>
-      <div class="site-product-spotlight__stage" aria-label="Featured bakery products">
-        <a class="site-product-spotlight__hero" href="cakes.html?q=strawberry#menu">
-          <img src="assets/strawberry.jpg" alt="Strawberry celebration cake with cream and fruit" width="720" height="620" loading="lazy" />
-          <span class="site-product-spotlight__tag">Signature cake</span>
+      <div class="site-product-spotlight__grid" aria-label="Product spotlight categories">
+        <article class="site-product-spotlight__card site-product-spotlight__card--cake">
+          <img src="assets/strawberry.jpg" alt="Strawberry celebration cake with cream and fruit" width="520" height="460" loading="lazy" />
           <div>
-            <h3>Strawberry cream celebration cake</h3>
-            <p>Soft sponge, glossy fruit and a clean gift-box finish for birthday pre-orders.</p>
+            <span class="site-product-spotlight__tag">Cake spotlight</span>
+            <h3>Cakes</h3>
+            <p>Celebration cakes, mini cakes and seasonal cake picks for birthdays and gifting.</p>
+            <a class="site-button site-button--primary" href="cakes.html">View cakes</a>
           </div>
-        </a>
-        <div class="site-product-spotlight__rail">
-          <a href="pastries.html?q=mochi#menu">
-            <img src="assets/croissant.jpg" alt="Mochi croissants from DÉESSES Bakery" width="320" height="240" loading="lazy" />
-            <span>Mochi croissant</span>
-          </a>
-          <a href="cakes.html?q=mini#menu">
-            <img src="assets/mini.jpg" alt="Mini cakes and petite dessert selection" width="320" height="240" loading="lazy" />
-            <span>Mini cake set</span>
-          </a>
-          <a href="bakery.html?q=sourdough#menu">
-            <img src="assets/sourdough.jpg" alt="Fresh sourdough and bakery breads" width="320" height="240" loading="lazy" />
-            <span>Fresh bakery breads</span>
-          </a>
-        </div>
-      </div>
-      <div class="site-product-spotlight__actions">
-        <a class="site-button site-button--primary" href="cakes.html">View cake spotlight</a>
-        <a class="site-button site-button--ghost" href="menu.html#menu">Browse full menu</a>
+        </article>
+        <article class="site-product-spotlight__card site-product-spotlight__card--pastry">
+          <img src="assets/croissant.jpg" alt="Mochi croissants from DÉESSES Bakery" width="520" height="460" loading="lazy" />
+          <div>
+            <span class="site-product-spotlight__tag">Pastry spotlight</span>
+            <h3>Pastries</h3>
+            <p>Mochi croissants, petite pastries and polished gift-ready sweet bites.</p>
+            <a class="site-button site-button--primary" href="pastries.html">View pastries</a>
+          </div>
+        </article>
+        <article class="site-product-spotlight__card site-product-spotlight__card--bakery">
+          <img src="assets/sourdough.jpg" alt="Fresh sourdough and bakery breads" width="520" height="460" loading="lazy" />
+          <div>
+            <span class="site-product-spotlight__tag">Bakery spotlight</span>
+            <h3>Bakery</h3>
+            <p>Fresh breads and everyday bakery picks for shoppers who want something simple.</p>
+            <a class="site-button site-button--primary" href="bakery.html">View bakery</a>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -201,7 +202,7 @@
       <h2>How ordering works</h2>
       <ol>
         <li><strong>Choose</strong><span>Select products from cakes, pastries or bakery breads.</span></li>
-        <li><strong>Browse</strong><span>Open the full menu when a showcase item catches your eye.</span></li>
+        <li><strong>Browse</strong><span>Open the cakes, pastries or bakery page from the matching spotlight.</span></li>
         <li><strong>Confirm</strong><span>Send the WhatsApp enquiry from the menu page for shop confirmation.</span></li>
         <li><strong>Enjoy</strong><span>Pick up fresh bakes at your selected counter.</span></li>
       </ol>

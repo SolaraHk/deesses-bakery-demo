@@ -150,18 +150,18 @@ test('Pineapple-style scroll reveal animations are wired with reduced-motion sup
   assert.match(css, /prefers-reduced-motion:\s*reduce[\s\S]*\.reveal-on-scroll\s*\{[\s\S]*opacity:\s*1[\s\S]*transform:\s*none\s*!important[\s\S]*filter:\s*none/, 'reveal must be disabled for reduced motion');
 });
 
-test('cake craft placeholder controls are implemented accessibly', () => {
-  assert.match(html, /id="craft"/, 'craft section missing');
-  assert.match(html, /site-cake-placeholder[\s\S]*deconstructed-cake-placeholder\.jpg/, 'cake placeholder image missing');
-  assert.match(html, /data-cake-action="explode"/, 'explode control missing');
+test('cake craft placeholder appears only on the front page', () => {
+  assert.match(html, /id="craft"[\s\S]*Layer-by-layer cake craft[\s\S]*deconstructed-cake-placeholder\.jpg/, 'front page should keep the layer-by-layer cake craft section');
+  assert.match(html, /data-cake-action="explode"/, 'front-page craft section should keep accessible controls');
   assert.match(html, /aria-live="polite"[^>]*id="cakeStatus"|id="cakeStatus"[^>]*aria-live="polite"/, 'cake status should announce state changes');
-  assert.match(siteCss, /\.site-cake-placeholder[\s\S]*\.site-cake-placeholder img/, 'Cake placeholder styles missing');
+  assert.doesNotMatch(menuHtml + cakesHtml + pastriesHtml + bakeryHtml, /id="craft"|Layer-by-layer cake craft|deconstructed-cake-placeholder\.jpg/, 'layer-by-layer cake craft should not appear on menu or category pages');
+  assert.match(siteCss, /\.site-cake-placeholder[\s\S]*\.site-cake-placeholder img/, 'Cake placeholder styles should remain for the front-page craft section');
   assert.match(js, /wireCakeAssembly[\s\S]*__cakeAssemblyStatus/, 'cake assembly JS wiring/status missing');
 });
 
 test('root loads the current scripts and motion layer progressively', () => {
   assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the root');
-  assert.match(html, /site\.css\?v=concept-10/, 'root should load the current site stylesheet cache key');
+  assert.match(html, /site\.css\?v=concept-11/, 'root should load the current site stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
@@ -178,24 +178,26 @@ test('design taste refinements keep the page polished without adding clutter', (
   assert.match(css, /\.product__media img[\s\S]*transition:\s*transform 0\.75s var\(--ease\), filter 0\.75s var\(--ease\)/, 'product imagery should feel smoother and intentional');
 });
 
-test('Homepage separates the product catalogue from the front page like a bakery reference site', () => {
+test('Homepage separates category spotlights and cake-only custom ordering', () => {
   assert.doesNotMatch(html, /class="site-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'root homepage should not render the deleted quick category strip');
-  assert.doesNotMatch(homeCopy, /class="site-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'Homepage should not render the deleted quick category strip');
-  assert.doesNotMatch(siteCss, /\.site-category-dock/, 'deleted quick category strip CSS should not remain');
   assert.doesNotMatch(homeCopy, /class="skip-link"/, 'Homepage should not show a confusing skip-link pill in the visible UI');
   assert.doesNotMatch(menuHtml, /class="skip-link"/, 'Menu page should not show a confusing skip-link pill in the visible UI');
   assert.doesNotMatch(css + siteCss, /\.skip-link/, 'Skip-link styling should be removed when the control is removed');
-  assert.doesNotMatch(homeCopy, /id="menuGrid"/, 'Homepage should not render the full product grid');
-  assert.doesNotMatch(homeCopy, /id="branches"|id="branchGrid"|Choose a pickup branch/, 'Homepage should not render pickup branch selection');
-  assert.doesNotMatch(homeCopy, /id="order"|data-custom-order|Custom Cake Order|Design your perfect cake/, 'Homepage should not render the custom cake order flow');
-  assert.match(homeCopy, /href="menu\.html#order"[^>]*data-i18n="order"/, 'Homepage Order nav should send shoppers to the menu page order flow');
-  assert.match(homeCopy, /href="cakes\.html"[^>]*>Cakes[\s\S]*href="pastries\.html"[^>]*>Pastries[\s\S]*href="bakery\.html"[^>]*>Bakery/, 'Homepage top nav category links should open dedicated category pages, not the shared menu filter UI');
-  assert.match(homeCopy, /class="site-product-spotlight"[\s\S]*Product Spotlight[\s\S]*cakes\.html\?q=strawberry#menu[\s\S]*pastries\.html\?q=mochi#menu[\s\S]*bakery\.html\?q=sourdough#menu/, 'Homepage product spotlight should deep-link into dedicated category pages');
+  assert.doesNotMatch(homeCopy, /id="menuGrid"|id="branches"|id="branchGrid"|Choose a pickup branch/, 'Homepage should not render product grid or pickup branch selection');
+  assert.doesNotMatch(homeCopy, /id="order"|data-custom-order|Custom Cake Order|Design your perfect cake|custom cake/i, 'Homepage should not render or promote the custom cake order flow');
+  assert.doesNotMatch(homeCopy, /full menu|Browse full menu/i, 'Homepage should not imply there is a full menu');
+  assert.match(homeCopy, /href="cakes\.html#order"[^>]*data-i18n="order"/, 'Homepage Order nav should send shoppers to the cakes custom-order flow');
+  assert.match(homeCopy, /href="cakes\.html"[^>]*>Cakes[\s\S]*href="pastries\.html"[^>]*>Pastries[\s\S]*href="bakery\.html"[^>]*>Bakery/, 'Homepage top nav category links should open dedicated category pages');
+  assert.match(homeCopy, /class="site-product-spotlight"[\s\S]*Choose a spotlight collection[\s\S]*site-product-spotlight__card--cake[\s\S]*View cakes[\s\S]*site-product-spotlight__card--pastry[\s\S]*View pastries[\s\S]*site-product-spotlight__card--bakery[\s\S]*View bakery/, 'Homepage product spotlight should present three clear category sections with direct category buttons');
+  assert.doesNotMatch(homeCopy, /A cake worth stopping for|View cake spotlight|Browse full menu/, 'Old confusing single-product spotlight copy should be removed');
+  assert.match(siteCss, /\.site-product-spotlight__grid[\s\S]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)[\s\S]*\.site-product-spotlight__card/, 'Product spotlight should use a three-card category layout on desktop');
+
   assert.match(menuHtml, /<body class="site menu-page">/, 'separate product menu page should have the menu page body class');
-  assert.match(menuHtml, /href="cakes\.html"[^>]*>Cakes[\s\S]*href="pastries\.html"[^>]*>Pastries[\s\S]*href="bakery\.html"[^>]*>Bakery/, 'Menu top nav category links should open dedicated category pages');
   assert.match(menuHtml, /class="menu site-menu" id="menu"[\s\S]*id="categoryFilters"[\s\S]*id="branchFilters"[\s\S]*id="menuGrid"/, 'separate product menu page should keep filters and product grid');
-  assert.match(menuHtml, /id="branches"|id="branchFilters"/, 'Menu page should keep branch filtering/selection controls');
-  assert.match(menuHtml, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order/, 'Menu page should keep the custom cake order flow');
+  assert.doesNotMatch(menuHtml + pastriesHtml + bakeryHtml, /id="order"|href="#order"|data-custom-order|Custom Cake Order|Design your perfect cake|Send Custom Order/, 'Custom cake ordering should only appear on the cakes category page and other pages should not link to missing #order anchors');
+  assert.match(menuHtml + pastriesHtml + bakeryHtml, /href="cakes\.html#order"/, 'Non-cake pages should send Order links to the cakes custom-order flow');
+  assert.match(cakesHtml, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order[\s\S]*Send Custom Order/, 'Cakes page should keep the custom cake order flow');
+
   [
     ['cake', 'Cake Collection', cakesHtml],
     ['pastry', 'Pastry Collection', pastriesHtml],
@@ -205,19 +207,13 @@ test('Homepage separates the product catalogue from the front page like a bakery
     assert.doesNotMatch(page, /class="skip-link"|Skip to products|Skip to menu/, `${heading} page should not show a confusing skip-link pill`);
     assert.doesNotMatch(page, /id="categoryFilters"|Filter by category|>Category<|>分類</, `${heading} page should remove the category filter row entirely`);
     assert.doesNotMatch(page, />[^<]*\bonly\.[^<]*</i, `${heading} page should not use awkward "only" section headings`);
-    assert.doesNotMatch(page, /<p class="site-script">Shop (cakes|pastries|bakery)<\/p>\s*<h2>(Cakes|Pastries|Bakery)\.<\/h2>/, `${heading} page should not show duplicate shop/category headings`);
     assert.match(page, /<h2>Shop (cakes|pastries|bakery)<\/h2>/, `${heading} page should promote the shop label to the main section heading`);
     assert.match(page, new RegExp(`${heading}[\\s\\S]*id="branchFilters"`), `${heading} page should keep branch filtering`);
-    assert.match(page, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order/, `${heading} page should keep the order flow`);
   });
-  assert.match(siteCss, /\.site-product-spotlight__stage[\s\S]*grid-template-columns:\s*minmax\(0, 1\.35fr\) minmax\(280px, 0\.65fr\)/, 'homepage product spotlight should use an asymmetric featured-product layout on desktop');
   assert.match(siteCss, /\.category-page #menu \.site-section-head h2[\s\S]*font-family:\s*"Allura"[\s\S]*::after/, 'category shop headings should use a polished handwritten typography treatment');
   assert.match(siteCss, /\.site-menu-hero[\s\S]*\.menu-page \.site-menu/, 'menu page should have a dedicated compact menu hero');
   assert.match(js, /function menuUrl\(params\)/, 'JS should build filtered menu URLs for cross-page navigation');
   assert.match(js, /CATEGORY_ROUTES\s*=\s*\{ cake:\s*"cakes\.html", pastry:\s*"pastries\.html", bakery:\s*"bakery\.html" \}/, 'JS should map product categories to dedicated static pages');
-  assert.match(js, /var route = categoryRoute\(params\.cat\) \|\| "menu\.html"/, 'menu URL should route category requests to dedicated category pages');
-  assert.match(js, /q\.set\("branch", params\.branch\)/, 'menu URL should include branch filters');
-  assert.match(js, /q\.set\("q", params\.search\)/, 'menu URL should include search filters');
   assert.match(js, /function fixedCategoryPage\(\)[\s\S]*data-category-page|body\.getAttribute\("data-category-page"\)/, 'category pages should lock the active category from body data');
   assert.match(js, /if \(!brRow\) return/, 'filter rendering should still work on category pages without a category row');
   assert.match(js, /function applyInitialMenuParams\(\)[\s\S]*fixedCategoryPage\(\)[\s\S]*params\.get\("branch"\)[\s\S]*params\.get\("q"\)/, 'menu/category pages should read route/category plus branch/search params on load');
