@@ -157,7 +157,7 @@ test('cake craft placeholder controls are implemented accessibly', () => {
 
 test('V2 root loads the current scripts and motion layer progressively', () => {
   assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the V2 root');
-  assert.match(html, /v2\.css\?v=concept-6/, 'root should load the current V2 stylesheet cache key');
+  assert.match(html, /v2\.css\?v=concept-7/, 'root should load the current V2 stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
@@ -175,6 +175,9 @@ test('design taste refinements keep the page polished without adding clutter', (
 });
 
 test('V2 separates the product catalogue from the front page like a bakery reference site', () => {
+  assert.doesNotMatch(html, /class="v2-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'root homepage should not render the deleted quick category strip');
+  assert.doesNotMatch(v2Home, /class="v2-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'V2 backup homepage should not render the deleted quick category strip');
+  assert.doesNotMatch(v2Css, /\.v2-category-dock/, 'deleted quick category strip CSS should not remain');
   assert.doesNotMatch(v2Home, /id="menuGrid"/, 'V2 homepage should not render the full product grid');
   assert.match(v2Home, /class="v2-menu-gateway"[\s\S]*v2-menu\.html\?cat=cake#menu[\s\S]*v2-menu\.html\?cat=pastry#menu[\s\S]*v2-menu\.html\?cat=bakery#menu/, 'V2 homepage should use category gateway cards linking to the menu page');
   assert.match(v2Menu, /<body class="v2-site v2-menu-page">/, 'separate product menu page should have the menu page body class');

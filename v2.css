@@ -298,33 +298,6 @@
   border-width: 6px;
 }
 
-.v2-category-dock {
-  max-width: 1210px;
-  margin: -18px auto 0;
-  padding: 0 clamp(18px, 5vw, 56px);
-  position: relative;
-  z-index: 4;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  background: rgba(255, 253, 249, 0.96);
-  border: 1px solid var(--v2-line);
-  box-shadow: var(--v2-shadow);
-}
-.v2-category-dock a {
-  display: flex;
-  min-height: 84px;
-  align-items: center;
-  justify-content: center;
-  gap: 13px;
-  border-right: 1px solid var(--v2-line);
-  color: var(--v2-ink);
-  font-weight: 800;
-  font-size: 0.88rem;
-}
-.v2-category-dock a:last-child { border-right: 0; }
-.v2-category-dock span { color: var(--v2-rose); font-size: 1.5rem; }
-.v2-category-dock a:hover { background: rgba(253, 232, 232, 0.55); color: var(--v2-rose-dark); }
-
 .v2-section-head { text-align: center; margin-bottom: 28px; }
 .v2-section-head h2 { font-size: clamp(2.35rem, 4.8vw, 4.1rem); font-weight: 600; }
 .v2-section-head .section__sub { max-width: 60ch; color: var(--v2-muted); }
@@ -737,9 +710,6 @@
   .v2-hero__content { max-width: 650px; }
   .v2-hero__visual { min-height: 420px; }
   .v2-menu-hero { grid-template-columns: 1fr; margin-top: 92px; }
-  .v2-category-dock { grid-template-columns: repeat(2, 1fr); }
-  .v2-category-dock a:nth-child(even) { border-right: 0; }
-  .v2-category-dock a:last-child { grid-column: 1 / -1; border-top: 1px solid var(--v2-line); }
   .v2-signature,
   .v2-craft { grid-template-columns: 1fr; }
   .v2-social-grid { grid-template-columns: repeat(4, 1fr); }
@@ -764,8 +734,6 @@
   .v2-hero-photo--berry { width: 54vw; height: 44vw; left: 36%; bottom: 8%; }
   .v2-hero-photo--gift { width: 30vw; height: 42vw; right: 3%; top: 5%; }
   .v2-hero-photo--tart { width: 22vw; height: 22vw; left: 23%; bottom: 10%; }
-  .v2-category-dock { margin-top: 0; grid-template-columns: 1fr; padding: 0; border-left: 0; border-right: 0; }
-  .v2-category-dock a { min-height: 58px; border-right: 0; border-bottom: 1px solid var(--v2-line); }
   .v2-menu-gateway__cards,
   .v2-branch-grid,
   .v2-product-grid,
