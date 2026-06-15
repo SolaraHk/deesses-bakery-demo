@@ -32,10 +32,10 @@ test('branch and product cards avoid invalid nested interactive controls', () =>
 });
 
 test('top-left brand mark uses the real DÉESSES Instagram profile logo', () => {
-  assert.match(html, /<img class="nav__mark nav__logo site-brand__logo" src="assets\/deesses-instagram-logo\.jpg" alt="DÉESSES Bakery logo" width="54" height="54"/, 'top-left nav mark should use the enlarged downloaded DÉESSES Instagram profile logo asset');
+  assert.match(html, /<img class="nav__mark nav__logo site-brand__logo" src="assets\/deesses-instagram-logo-crop16\.jpg" alt="DÉESSES Bakery logo" width="68" height="68"/, 'top-left nav mark should use the enlarged cropped DÉESSES logo asset');
   assert.doesNotMatch(html, /class="nav__mark ig-mark ig-mark--brand"/, 'top-left nav mark should not use the generic Instagram glyph');
   assert.doesNotMatch(html, /class="nav__mark"[^>]*>❀</, 'top-left nav mark should not use the old flower glyph');
-  assert.match(siteCss, /\.site-brand__logo[\s\S]*box-shadow[\s\S]*object-fit:\s*cover/, 'Brand logo image should be styled as a noticeable profile icon');
+  assert.match(siteCss, /\.site-brand__logo[\s\S]*width:\s*64px[\s\S]*height:\s*64px[\s\S]*object-fit:\s*cover[\s\S]*box-shadow/, 'Brand logo image should be styled as a larger noticeable profile icon');
 });
 
 test('social preview links are not hidden from assistive tech', () => {
@@ -160,7 +160,7 @@ test('cake craft placeholder controls are implemented accessibly', () => {
 
 test('root loads the current scripts and motion layer progressively', () => {
   assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the root');
-  assert.match(html, /site\.css\?v=concept-9/, 'root should load the current site stylesheet cache key');
+  assert.match(html, /site\.css\?v=concept-10/, 'root should load the current site stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
