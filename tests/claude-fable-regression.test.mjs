@@ -198,6 +198,8 @@ test('Homepage separates the product catalogue from the front page like a bakery
     ['bakery', 'Bakery Collection', bakeryHtml]
   ].forEach(([cat, heading, page]) => {
     assert.match(page, new RegExp(`data-category-page="${cat}"`), `${heading} page should declare its fixed category`);
+    assert.match(page, /class="skip-link" href="#menu" data-i18n="skipProducts">Skip to products<\/a>/, `${heading} page should label the skip link as products, not another menu`);
+    assert.doesNotMatch(page, /data-i18n="skipMenu">Skip to menu<\/a>/, `${heading} page should not show confusing "Skip to menu" copy`);
     assert.match(page, new RegExp(`${heading}[\\s\\S]*id="categoryFilters"[^>]*hidden[^>]*aria-hidden="true"[\\s\\S]*id="branchFilters"`), `${heading} page should hide the all-category filter row but keep branch filtering`);
     assert.match(page, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order/, `${heading} page should keep the order flow`);
   });
