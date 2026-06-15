@@ -82,8 +82,7 @@
       socialWhatsappHint: "Message to pre-order",
       socialGalleryTitle: "Social gallery",
       socialGalleryHint: "Preview posts and updates",
-      skipMenu: "Skip to menu",
-      skipProducts: "Skip to products",
+
       searchMenu: "Search menu",
       searchButton: "Search",
       chooseBranch: "Choose branch",
@@ -153,8 +152,7 @@
       socialWhatsappHint: "WhatsApp 查詢預訂",
       socialGalleryTitle: "社交相集",
       socialGalleryHint: "查看帖文與最新消息",
-      skipMenu: "跳到餐單",
-      skipProducts: "跳到產品",
+
       searchMenu: "搜尋餐單",
       searchButton: "搜尋",
       chooseBranch: "選擇分店",

@@ -181,6 +181,9 @@ test('Homepage separates the product catalogue from the front page like a bakery
   assert.doesNotMatch(html, /class="site-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'root homepage should not render the deleted quick category strip');
   assert.doesNotMatch(homeCopy, /class="site-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'Homepage should not render the deleted quick category strip');
   assert.doesNotMatch(siteCss, /\.site-category-dock/, 'deleted quick category strip CSS should not remain');
+  assert.doesNotMatch(homeCopy, /class="skip-link"/, 'Homepage should not show a confusing skip-link pill in the visible UI');
+  assert.doesNotMatch(menuHtml, /class="skip-link"/, 'Menu page should not show a confusing skip-link pill in the visible UI');
+  assert.doesNotMatch(css + siteCss, /\.skip-link/, 'Skip-link styling should be removed when the control is removed');
   assert.doesNotMatch(homeCopy, /id="menuGrid"/, 'Homepage should not render the full product grid');
   assert.doesNotMatch(homeCopy, /id="branches"|id="branchGrid"|Choose a pickup branch/, 'Homepage should not render pickup branch selection');
   assert.doesNotMatch(homeCopy, /id="order"|data-custom-order|Custom Cake Order|Design your perfect cake/, 'Homepage should not render the custom cake order flow');
@@ -198,8 +201,7 @@ test('Homepage separates the product catalogue from the front page like a bakery
     ['bakery', 'Bakery Collection', bakeryHtml]
   ].forEach(([cat, heading, page]) => {
     assert.match(page, new RegExp(`data-category-page="${cat}"`), `${heading} page should declare its fixed category`);
-    assert.match(page, /class="skip-link" href="#menu" data-i18n="skipProducts">Skip to products<\/a>/, `${heading} page should label the skip link as products, not another menu`);
-    assert.doesNotMatch(page, /data-i18n="skipMenu">Skip to menu<\/a>/, `${heading} page should not show confusing "Skip to menu" copy`);
+    assert.doesNotMatch(page, /class="skip-link"|Skip to products|Skip to menu/, `${heading} page should not show a confusing skip-link pill`);
     assert.match(page, new RegExp(`${heading}[\\s\\S]*id="categoryFilters"[^>]*hidden[^>]*aria-hidden="true"[\\s\\S]*id="branchFilters"`), `${heading} page should hide the all-category filter row but keep branch filtering`);
     assert.match(page, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order/, `${heading} page should keep the order flow`);
   });

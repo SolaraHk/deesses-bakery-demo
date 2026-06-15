@@ -52,7 +52,7 @@
 }
 
 .site section { padding: clamp(46px, 7vw, 92px) clamp(18px, 5vw, 56px); }
-.site .skip-link { background: var(--site-ink-strong); color: #fff; }
+
 .site .reveal-on-scroll,
 .site .reveal-on-scroll.is-visible,
 .site .product.reveal-on-scroll,
