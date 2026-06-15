@@ -2,11 +2,11 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const homeCopy = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const menuHtml = readFileSync(new URL('../menu.html', import.meta.url), 'utf8');
+const v2Home = readFileSync(new URL('../v2.html', import.meta.url), 'utf8');
+const v2Menu = readFileSync(new URL('../v2-menu.html', import.meta.url), 'utf8');
 const js = readFileSync(new URL('../script.js', import.meta.url), 'utf8');
 const css = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
-const siteCss = readFileSync(new URL('../site.css', import.meta.url), 'utf8');
+const v2Css = readFileSync(new URL('../v2.css', import.meta.url), 'utf8');
 
 function test(name, fn) {
   try {
@@ -32,7 +32,7 @@ test('top-left brand mark uses the real DÉESSES Instagram profile logo', () => 
   assert.match(html, /<img class="nav__mark nav__logo v2-brand__logo" src="assets\/deesses-instagram-logo\.jpg" alt="DÉESSES Bakery logo" width="54" height="54"/, 'top-left nav mark should use the enlarged downloaded DÉESSES Instagram profile logo asset');
   assert.doesNotMatch(html, /class="nav__mark ig-mark ig-mark--brand"/, 'top-left nav mark should not use the generic Instagram glyph');
   assert.doesNotMatch(html, /class="nav__mark"[^>]*>❀</, 'top-left nav mark should not use the old flower glyph');
-  assert.match(siteCss, /\.v2-brand__logo[\s\S]*box-shadow[\s\S]*object-fit:\s*cover/, 'Brand logo image should be styled as a noticeable profile icon');
+  assert.match(v2Css, /\.v2-brand__logo[\s\S]*box-shadow[\s\S]*object-fit:\s*cover/, 'V2 brand logo image should be styled as a noticeable profile icon');
 });
 
 test('social preview links are not hidden from assistive tech', () => {
@@ -56,11 +56,11 @@ test('mobile top bar stays inside narrow viewports', () => {
   assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*\.nav__cta\s*\{\s*display:\s*none;\s*\}/, 'desktop Instagram CTA should be hidden from the cramped mobile top bar');
 });
 
-test('Floating social menu keeps Instagram reachable on mobile', () => {
+test('V2 floating social menu keeps Instagram reachable on mobile', () => {
   assert.match(html, /class="social-float v2-social-float"[\s\S]*data-social-trigger[\s\S]*class="social-menu"[\s\S]*https:\/\/www\.instagram\.com\/deesses_bakery\/[\s\S]*https:\/\/wa\.me\/85268128098/, 'floating social menu should expose Instagram and WhatsApp');
   assert.match(html, /class="v2-social-trigger__icon"[\s\S]*class="social-trigger__label"/, 'floating social trigger should expose an icon and label');
   assert.doesNotMatch(html, /class="social-trigger__avatar"[\s\S]*deesses-instagram-logo\.jpg/, 'floating social trigger should not put the business/profile logo on the button');
-  assert.match(siteCss, /\.v2-social-trigger\s*\{[\s\S]*linear-gradient\(135deg, #df8490, #c75d70\)/, 'Floating social trigger should use the Brand gradient');
+  assert.match(v2Css, /\.v2-social-trigger\s*\{[\s\S]*linear-gradient\(135deg, #df8490, #c75d70\)/, 'V2 floating social trigger should use the V2 brand gradient');
   assert.match(css, /\.social-float\s*\{\s*position:\s*fixed;[\s\S]*bottom:\s*max\(10px,\s*env\(safe-area-inset-bottom\)\)/, 'social menu should float from the lower-right corner');
   assert.match(css, /\.social-float:hover \.social-menu[\s\S]*\.social-float:focus-within \.social-menu[\s\S]*\.social-float\.social-float--open \.social-menu[\s\S]*opacity:\s*1[\s\S]*pointer-events:\s*auto/, 'social menu should expand on hover, focus, and tap-open state');
   assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*\.social-trigger\s*\{[\s\S]*width:\s*48px[\s\S]*height:\s*48px/, 'mobile floating social trigger should collapse to a compact round button');
@@ -124,10 +124,10 @@ test('hero intro panel stays bright while the opening gallery remains visible', 
   assert.match(css, /\.hero-category-nav a\s*\{[\s\S]*background:\s*rgba\(255,255,255,0\.42\)/, 'hero quick links should stay translucent but easier to read');
 });
 
-test('Root homepage is active with language switch available', () => {
-  assert.match(html, /<body class="v2-site">/, 'root index should render the active website');
+test('V2 root homepage is active with language switch available', () => {
+  assert.match(html, /<body class="v2-site">/, 'root index should now be the V2 website');
   assert.match(html, /class="language-switch v2-language"[\s\S]*data-language="en"[\s\S]*data-language="zh"/, 'nav language switch should expose EN and Traditional Chinese buttons');
-  assert.doesNotMatch(html, />legacy<|href="index\.html">legacy/i, 'root navigation should not expose a legacy version link');
+  assert.doesNotMatch(html, />V1<|href="index\.html">V1/, 'root V2 navigation should not expose a V1 link');
   assert.match(js, /LANGUAGE_STORAGE_KEY\s*=\s*"deesses-bakery-language"/, 'language preference should persist');
   assert.match(js, /function getInitialLanguage\(\)[\s\S]*new URLSearchParams\(window\.location\.search\)\.get\("lang"\)[\s\S]*localStorage\.getItem\(LANGUAGE_STORAGE_KEY\)/, 'language should initialize from ?lang= or saved preference');
   assert.match(js, /document\.documentElement\.lang\s*=\s*currentLanguage === "zh" \? "zh-Hant-HK" : "en"/, 'document lang should update for accessibility');
@@ -151,13 +151,13 @@ test('cake craft placeholder controls are implemented accessibly', () => {
   assert.match(html, /v2-cake-placeholder[\s\S]*deconstructed-cake-placeholder\.jpg/, 'cake placeholder image missing');
   assert.match(html, /data-cake-action="explode"/, 'explode control missing');
   assert.match(html, /aria-live="polite"[^>]*id="cakeStatus"|id="cakeStatus"[^>]*aria-live="polite"/, 'cake status should announce state changes');
-  assert.match(siteCss, /\.v2-cake-placeholder[\s\S]*\.v2-cake-placeholder img/, 'Cake placeholder styles missing');
+  assert.match(v2Css, /\.v2-cake-placeholder[\s\S]*\.v2-cake-placeholder img/, 'V2 cake placeholder styles missing');
   assert.match(js, /wireCakeAssembly[\s\S]*__cakeAssemblyStatus/, 'cake assembly JS wiring/status missing');
 });
 
-test('root loads the current scripts and motion layer progressively', () => {
-  assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the root');
-  assert.match(html, /site\.css\?v=site-1/, 'root should load the current site stylesheet cache key');
+test('V2 root loads the current scripts and motion layer progressively', () => {
+  assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the V2 root');
+  assert.match(html, /v2\.css\?v=concept-7/, 'root should load the current V2 stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
@@ -174,16 +174,16 @@ test('design taste refinements keep the page polished without adding clutter', (
   assert.match(css, /\.product__media img[\s\S]*transition:\s*transform 0\.75s var\(--ease\), filter 0\.75s var\(--ease\)/, 'product imagery should feel smoother and intentional');
 });
 
-test('Homepage separates the product catalogue from the front page like a bakery reference site', () => {
+test('V2 separates the product catalogue from the front page like a bakery reference site', () => {
   assert.doesNotMatch(html, /class="v2-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'root homepage should not render the deleted quick category strip');
-  assert.doesNotMatch(homeCopy, /class="v2-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'Homepage should not render the deleted quick category strip');
-  assert.doesNotMatch(siteCss, /\.v2-category-dock/, 'deleted quick category strip CSS should not remain');
-  assert.doesNotMatch(homeCopy, /id="menuGrid"/, 'Homepage should not render the full product grid');
-  assert.match(homeCopy, /class="v2-product-spotlight"[\s\S]*Product Spotlight[\s\S]*menu\.html\?cat=cake&q=strawberry#menu[\s\S]*menu\.html\?cat=pastry&q=mochi#menu[\s\S]*menu\.html\?cat=bakery&q=sourdough#menu/, 'Homepage should use a product spotlight section with filtered links to the menu page');
-  assert.match(menuHtml, /<body class="v2-site v2-menu-page">/, 'separate product menu page should have the menu page body class');
-  assert.match(menuHtml, /class="menu v2-menu" id="menu"[\s\S]*id="categoryFilters"[\s\S]*id="branchFilters"[\s\S]*id="menuGrid"/, 'separate product menu page should keep filters and product grid');
-  assert.match(siteCss, /\.v2-product-spotlight__stage[\s\S]*grid-template-columns:\s*minmax\(0, 1\.35fr\) minmax\(280px, 0\.65fr\)/, 'homepage product spotlight should use an asymmetric featured-product layout on desktop');
-  assert.match(siteCss, /\.v2-menu-hero[\s\S]*\.v2-menu-page \.v2-menu/, 'menu page should have a dedicated compact menu hero');
+  assert.doesNotMatch(v2Home, /class="v2-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'V2 backup homepage should not render the deleted quick category strip');
+  assert.doesNotMatch(v2Css, /\.v2-category-dock/, 'deleted quick category strip CSS should not remain');
+  assert.doesNotMatch(v2Home, /id="menuGrid"/, 'V2 homepage should not render the full product grid');
+  assert.match(v2Home, /class="v2-product-spotlight"[\s\S]*Product Spotlight[\s\S]*v2-menu\.html\?cat=cake&q=strawberry#menu[\s\S]*v2-menu\.html\?cat=pastry&q=mochi#menu[\s\S]*v2-menu\.html\?cat=bakery&q=sourdough#menu/, 'V2 homepage should use a product spotlight section with filtered links to the menu page');
+  assert.match(v2Menu, /<body class="v2-site v2-menu-page">/, 'separate product menu page should have the menu page body class');
+  assert.match(v2Menu, /class="menu v2-menu" id="menu"[\s\S]*id="categoryFilters"[\s\S]*id="branchFilters"[\s\S]*id="menuGrid"/, 'separate product menu page should keep filters and product grid');
+  assert.match(v2Css, /\.v2-product-spotlight__stage[\s\S]*grid-template-columns:\s*minmax\(0, 1\.35fr\) minmax\(280px, 0\.65fr\)/, 'homepage product spotlight should use an asymmetric featured-product layout on desktop');
+  assert.match(v2Css, /\.v2-menu-hero[\s\S]*\.v2-menu-page \.v2-menu/, 'menu page should have a dedicated compact menu hero');
   assert.match(js, /function menuUrl\(params\)/, 'JS should build filtered menu URLs for cross-page navigation');
   assert.match(js, /q\.set\("cat", params\.cat\)/, 'menu URL should include category filters');
   assert.match(js, /q\.set\("branch", params\.branch\)/, 'menu URL should include branch filters');

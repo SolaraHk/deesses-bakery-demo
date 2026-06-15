@@ -1,8 +1,8 @@
 # DÉESSES Bakery — Multi-Branch Brand Demo
 
-A static brand website for *DÉESSES Bakery* (Artemis by Deesses Bakery),
+A single-page, **static** brand website for *DÉESSES Bakery* (Artemis by Deesses Bakery),
 a Hong Kong bakery with four neighbourhood counters. No build step, no dependencies,
-no backend, just HTML, CSS and JavaScript.
+no backend — just `index.html`, `styles.css`, and `script.js`.
 
 > **Static demo site.** This is an unofficial design demo built for presentation. It is
 > not the official site. Branch details, contacts and seasonal prices are taken from the
@@ -15,11 +15,10 @@ A unified, mobile-first brand site that lets a customer **choose a branch** and 
 product menu** by category and branch. It pairs the bakery's warm golden palette with the
 pink-and-purple "goddess" gift aesthetic seen on the brand's Instagram.
 
-Sections: hero with ordering search, choose-your-branch grid, Artemis signature highlights,
-product spotlight, pre-order CTA (Instagram DM / WhatsApp), cake craft preview,
-Instagram social proof and footer with per-branch contacts and full disclaimer. The full
-product catalogue lives on `menu.html`. Labels are bilingual (Traditional Chinese + English)
-where helpful.
+Sections: hero with Instagram stats → choose-your-branch grid → filterable product menu →
+Artemis signature highlights → pre-order CTA (Instagram DM / WhatsApp) → Instagram social
+proof → footer with per-branch contacts and full disclaimer. Labels are bilingual
+(Traditional Chinese + English) where helpful.
 
 ## Branches (公開資料 / public facts)
 
@@ -63,20 +62,17 @@ The product and Instagram-preview thumbnails use **local temporary preview files
 
 ## Files
 
-| File         | Purpose                                                                 |
-|--------------|-------------------------------------------------------------------------|
-| `index.html` | Homepage: hero, branches, signature, product spotlight, order, social. |
-| `menu.html`  | Product catalogue with category, branch and search filters.            |
-| `styles.css` | Shared base styles, responsive rules and legacy-safe component tokens. |
-| `site.css`   | Current site concept styles, motion polish and page-specific layouts.  |
-| `script.js`  | Branch/product data, filter rendering, navigation and ordering flows.  |
-| `README.md`  | This file.                                                              |
+| File         | Purpose                                                             |
+|--------------|---------------------------------------------------------------------|
+| `index.html` | Page structure: hero, branches, menu, signature, order, social.     |
+| `styles.css` | Golden + pink/purple palette, layout, responsive rules, theme tokens.|
+| `script.js`  | Branch/product data, filter rendering, sticky-nav & scroll themes.  |
+| `README.md`  | This file.                                                          |
 
 ## Features
 
-- **Choose your branch** — four branch cards; tapping one opens the catalogue filtered to that branch.
-- **Product spotlight** — homepage showcase that highlights a featured cake and selected product links.
-- **Filterable menu** — category chips (🎂 cake / 🧁 pastry / 🥯 bakery) + branch chips on `menu.html`,
+- **Choose your branch** — four branch cards; tapping one filters the menu to that branch.
+- **Filterable menu** — category chips (🎂 cake / 🧁 pastry / 🥯 bakery) + branch chips,
   rendered live from data with availability hearts per item.
 - **Warm + goddess palette** — golden crust/honey/butter base with rose/plum gift accents.
 - **Scroll-driven theme** — page warms through dawn → midday → golden → dusk on scroll.
@@ -103,8 +99,8 @@ python -m http.server 8000
 
 - Branches, categories and products are plain data arrays at the top of `script.js` —
   edit `BRANCHES`, `CATEGORIES`, `PRODUCTS`, and the `IMG` map.
-- Shared palette and theme tokens live in `styles.css`; the active visual concept and
-  product spotlight styles live in `site.css`.
+- Palette and theme tokens live at the top of `styles.css` (`:root` and the
+  `body[data-theme="…"]` blocks).
 - Scroll themes are defined by the `themes` array in `script.js`.
 
 ## Disclaimer

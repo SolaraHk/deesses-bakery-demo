@@ -1,6 +1,6 @@
-/* DÉESSES Bakery active site styles
+/* DÉESSES Bakery V2 concept transfer
    Soft pink ordering storefront inspired by the supplied concept image.
-   Scoped to .v2-site for the current production concept. */
+   Scoped to .v2-site so V1 remains available at index.html. */
 
 .v2-site {
   --v2-ink: #6c513c;
