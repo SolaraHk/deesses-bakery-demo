@@ -179,10 +179,10 @@ test('V2 separates the product catalogue from the front page like a bakery refer
   assert.doesNotMatch(v2Home, /class="v2-category-dock hero-category-nav"|aria-label="Quick order categories"/, 'V2 backup homepage should not render the deleted quick category strip');
   assert.doesNotMatch(v2Css, /\.v2-category-dock/, 'deleted quick category strip CSS should not remain');
   assert.doesNotMatch(v2Home, /id="menuGrid"/, 'V2 homepage should not render the full product grid');
-  assert.match(v2Home, /class="v2-menu-gateway"[\s\S]*v2-menu\.html\?cat=cake#menu[\s\S]*v2-menu\.html\?cat=pastry#menu[\s\S]*v2-menu\.html\?cat=bakery#menu/, 'V2 homepage should use category gateway cards linking to the menu page');
+  assert.match(v2Home, /class="v2-product-spotlight"[\s\S]*Product Spotlight[\s\S]*v2-menu\.html\?cat=cake&q=strawberry#menu[\s\S]*v2-menu\.html\?cat=pastry&q=mochi#menu[\s\S]*v2-menu\.html\?cat=bakery&q=sourdough#menu/, 'V2 homepage should use a product spotlight section with filtered links to the menu page');
   assert.match(v2Menu, /<body class="v2-site v2-menu-page">/, 'separate product menu page should have the menu page body class');
   assert.match(v2Menu, /class="menu v2-menu" id="menu"[\s\S]*id="categoryFilters"[\s\S]*id="branchFilters"[\s\S]*id="menuGrid"/, 'separate product menu page should keep filters and product grid');
-  assert.match(v2Css, /\.v2-menu-gateway__cards[\s\S]*grid-template-columns:\s*repeat\(4/, 'homepage menu gateway should use Arome-style category tiles on desktop');
+  assert.match(v2Css, /\.v2-product-spotlight__stage[\s\S]*grid-template-columns:\s*minmax\(0, 1\.35fr\) minmax\(280px, 0\.65fr\)/, 'homepage product spotlight should use an asymmetric featured-product layout on desktop');
   assert.match(v2Css, /\.v2-menu-hero[\s\S]*\.v2-menu-page \.v2-menu/, 'menu page should have a dedicated compact menu hero');
   assert.match(js, /function menuUrl\(params\)/, 'JS should build filtered menu URLs for cross-page navigation');
   assert.match(js, /q\.set\("cat", params\.cat\)/, 'menu URL should include category filters');

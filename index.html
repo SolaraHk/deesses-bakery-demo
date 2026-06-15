@@ -146,19 +146,40 @@
       </div>
     </section>
 
-    <section class="v2-menu-gateway" id="menu-preview" aria-labelledby="menuGatewayTitle">
-      <div class="v2-section-head">
-        <p class="v2-script">Menu Preview</p>
-        <h2 id="menuGatewayTitle">Products have their own page.</h2>
-        <p class="section__sub">To keep the front page clean, cakes, pastries and bakery breads now live in a dedicated catalogue with filters and WhatsApp ordering.</p>
+    <section class="v2-product-spotlight" id="product-spotlight" aria-labelledby="productSpotlightTitle">
+      <div class="v2-section-head v2-product-spotlight__head">
+        <p class="v2-script">Product Spotlight</p>
+        <h2 id="productSpotlightTitle">A cake worth stopping for.</h2>
+        <p class="section__sub">Lead with one hero product, then guide shoppers into the full catalogue when they are ready to order.</p>
       </div>
-      <div class="v2-menu-gateway__cards" aria-label="Product categories">
-        <a href="v2-menu.html?cat=cake#menu"><img src="assets/strawberry.jpg" alt="" width="420" height="320" loading="lazy" /><span>訂購蛋糕</span><strong>Cakes</strong></a>
-        <a href="v2-menu.html?cat=pastry#menu"><img src="assets/croissant.jpg" alt="" width="420" height="320" loading="lazy" /><span>特快訂購</span><strong>Pastries</strong></a>
-        <a href="v2-menu.html?cat=bakery#menu"><img src="assets/sourdough.jpg" alt="" width="420" height="320" loading="lazy" /><span>麵包及包裝產品</span><strong>Bakery</strong></a>
-        <a href="v2-menu.html#menu"><img src="assets/mini.jpg" alt="" width="420" height="320" loading="lazy" /><span>所有產品</span><strong>Full menu</strong></a>
+      <div class="v2-product-spotlight__stage" aria-label="Featured bakery products">
+        <a class="v2-product-spotlight__hero" href="v2-menu.html?cat=cake&q=strawberry#menu">
+          <img src="assets/strawberry.jpg" alt="Strawberry celebration cake with cream and fruit" width="720" height="620" loading="lazy" />
+          <span class="v2-product-spotlight__tag">Signature cake</span>
+          <div>
+            <h3>Strawberry cream celebration cake</h3>
+            <p>Soft sponge, glossy fruit and a clean gift-box finish for birthday pre-orders.</p>
+          </div>
+        </a>
+        <div class="v2-product-spotlight__rail">
+          <a href="v2-menu.html?cat=pastry&q=mochi#menu">
+            <img src="assets/croissant.jpg" alt="Mochi croissants from DÉESSES Bakery" width="320" height="240" loading="lazy" />
+            <span>Mochi croissant</span>
+          </a>
+          <a href="v2-menu.html?cat=cake&q=mini#menu">
+            <img src="assets/mini.jpg" alt="Mini cakes and petite dessert selection" width="320" height="240" loading="lazy" />
+            <span>Mini cake set</span>
+          </a>
+          <a href="v2-menu.html?cat=bakery&q=sourdough#menu">
+            <img src="assets/sourdough.jpg" alt="Fresh sourdough and bakery breads" width="320" height="240" loading="lazy" />
+            <span>Fresh bakery breads</span>
+          </a>
+        </div>
       </div>
-      <a class="v2-button v2-button--primary v2-menu-gateway__cta" href="v2-menu.html#menu">Open product menu</a>
+      <div class="v2-product-spotlight__actions">
+        <a class="v2-button v2-button--primary" href="v2-menu.html?cat=cake#menu">View cake spotlight</a>
+        <a class="v2-button v2-button--ghost" href="v2-menu.html#menu">Browse full menu</a>
+      </div>
     </section>
 
     <section class="order v2-order" id="order">
