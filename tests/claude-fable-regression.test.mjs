@@ -202,7 +202,8 @@ test('Homepage separates the product catalogue from the front page like a bakery
   ].forEach(([cat, heading, page]) => {
     assert.match(page, new RegExp(`data-category-page="${cat}"`), `${heading} page should declare its fixed category`);
     assert.doesNotMatch(page, /class="skip-link"|Skip to products|Skip to menu/, `${heading} page should not show a confusing skip-link pill`);
-    assert.match(page, new RegExp(`${heading}[\\s\\S]*id="categoryFilters"[^>]*hidden[^>]*aria-hidden="true"[\\s\\S]*id="branchFilters"`), `${heading} page should hide the all-category filter row but keep branch filtering`);
+    assert.doesNotMatch(page, /id="categoryFilters"|Filter by category|>Category<|>分類</, `${heading} page should remove the category filter row entirely`);
+    assert.match(page, new RegExp(`${heading}[\\s\\S]*id="branchFilters"`), `${heading} page should keep branch filtering`);
     assert.match(page, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order/, `${heading} page should keep the order flow`);
   });
   assert.match(siteCss, /\.site-product-spotlight__stage[\s\S]*grid-template-columns:\s*minmax\(0, 1\.35fr\) minmax\(280px, 0\.65fr\)/, 'homepage product spotlight should use an asymmetric featured-product layout on desktop');
@@ -213,5 +214,6 @@ test('Homepage separates the product catalogue from the front page like a bakery
   assert.match(js, /q\.set\("branch", params\.branch\)/, 'menu URL should include branch filters');
   assert.match(js, /q\.set\("q", params\.search\)/, 'menu URL should include search filters');
   assert.match(js, /function fixedCategoryPage\(\)[\s\S]*data-category-page|body\.getAttribute\("data-category-page"\)/, 'category pages should lock the active category from body data');
+  assert.match(js, /if \(!brRow\) return/, 'filter rendering should still work on category pages without a category row');
   assert.match(js, /function applyInitialMenuParams\(\)[\s\S]*fixedCategoryPage\(\)[\s\S]*params\.get\("branch"\)[\s\S]*params\.get\("q"\)/, 'menu/category pages should read route/category plus branch/search params on load');
 });

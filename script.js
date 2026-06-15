@@ -604,11 +604,11 @@
   function renderFilters() {
     var catRow = document.getElementById("categoryFilters");
     var brRow = document.getElementById("branchFilters");
-    if (!catRow || !brRow) return;
+    if (!brRow) return;
     var fixedCat = fixedCategoryPage();
-    catRow.querySelectorAll("button").forEach(function (node) { node.remove(); });
+    if (catRow) catRow.querySelectorAll("button").forEach(function (node) { node.remove(); });
     brRow.querySelectorAll("button").forEach(function (node) { node.remove(); });
-    var catLabel = catRow.querySelector(".filters__label");
+    var catLabel = catRow ? catRow.querySelector(".filters__label") : null;
     var brLabel = brRow.querySelector(".filters__label");
     if (catLabel) catLabel.textContent = tx("category");
     if (brLabel) brLabel.textContent = tx("branch");
@@ -624,9 +624,11 @@
       return c;
     }
 
-    catRow.hidden = !!fixedCat;
-    catRow.setAttribute("aria-hidden", fixedCat ? "true" : "false");
-    if (!fixedCat) {
+    if (catRow) {
+      catRow.hidden = !!fixedCat;
+      catRow.setAttribute("aria-hidden", fixedCat ? "true" : "false");
+    }
+    if (catRow && !fixedCat) {
       chip(catRow, "all", tx("all"), function () { selectCategory("all"); }, "cat");
       CATEGORIES.forEach(function (c) {
         chip(catRow, c.id, c.emoji + " " + (currentLanguage === "zh" ? c.labelZh : c.labelEn), function () { selectCategory(c.id); }, "cat");
