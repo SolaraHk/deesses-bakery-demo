@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DÉESSES Bakery V2 - Online Ordering Concept</title>
-  <meta name="description" content="DÉESSES Bakery V2 ordering concept with cakes, pastries, bakery breads, branch filters and WhatsApp pre-order flow." />
+  <title>DÉESSES Bakery V2 - Product Menu</title>
+  <meta name="description" content="DÉESSES Bakery V2 product menu with cake, pastry and bakery category filters, branch availability and WhatsApp pre-order flow." />
   <meta name="theme-color" content="#fff7f2" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23fff7f2'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-size='34'%3E%E2%99%A1%3C/text%3E%3C/svg%3E" />
   <link rel="apple-touch-icon" href="assets/deesses-instagram-logo.jpg" />
@@ -18,12 +18,12 @@
   <link rel="stylesheet" href="styles.css?v=brand-logo-1" />
   <link rel="stylesheet" href="v2.css?v=concept-5" />
 </head>
-<body class="v2-site">
-  <a class="skip-link" href="#branches">Skip to content</a>
+<body class="v2-site v2-menu-page">
+  <a class="skip-link" href="#menu" data-i18n="skipMenu">Skip to menu</a>
 
   <header class="nav v2-nav" id="nav">
     <nav class="nav__inner v2-nav__inner" aria-label="Primary">
-      <a href="#top" class="nav__brand v2-brand">
+      <a href="v2.html" class="nav__brand v2-brand">
         <img class="nav__mark nav__logo v2-brand__logo" src="assets/deesses-instagram-logo.jpg" alt="DÉESSES Bakery logo" width="54" height="54" />
         <span class="nav__name v2-brand__name">DÉESSES<small>Bakery</small></span>
       </a>
@@ -33,12 +33,12 @@
       </button>
       <ul class="nav__links v2-nav__links" id="primaryNavLinks">
         <li><a href="index.html">V1</a></li>
-        <li><a href="#top">Home</a></li>
+        <li><a href="v2.html">Home</a></li>
         <li><a href="v2-menu.html?cat=cake#menu" data-hero-filter="cake">Cakes</a></li>
         <li><a href="v2-menu.html?cat=pastry#menu" data-hero-filter="pastry">Pastries</a></li>
         <li><a href="v2-menu.html?cat=bakery#menu" data-hero-filter="bakery">Bakery</a></li>
         <li><a href="#order" data-i18n="order">Order</a></li>
-        <li><a href="#branches" data-i18n="branches">Branches</a></li>
+        <li><a href="v2.html#branches" data-i18n="branches">Branches</a></li>
       </ul>
       <div class="language-switch v2-language" aria-label="Language" data-i18n-aria="languageLabel">
         <button type="button" data-language="en" aria-pressed="false"><span>EN</span></button>
@@ -62,7 +62,7 @@
         <span class="social-icon" aria-hidden="true">✆</span>
         <span><strong>WhatsApp</strong><small data-i18n="socialWhatsappHint">Message to pre-order</small></span>
       </a>
-      <a role="menuitem" href="#social">
+      <a role="menuitem" href="v2.html#social">
         <span class="social-icon" aria-hidden="true">✧</span>
         <span><strong data-i18n="socialGalleryTitle">Social gallery</strong><small data-i18n="socialGalleryHint">Preview posts and updates</small></span>
       </a>
@@ -70,76 +70,35 @@
   </aside>
 
   <main id="top">
-    <section class="hero v2-hero" id="hero">
-      <div class="v2-hero__content hero-center">
-        <p class="v2-script">Online Ordering</p>
-        <h1 class="v2-hero__title">Order Your<br />Sweet Moments</h1>
-        <div class="v2-flourish" aria-hidden="true"><span></span><strong>✦</strong><span></span></div>
-        <p class="v2-hero__copy">Handcrafted cakes, pastries and bakery breads. Pick your branch, choose favourites, then pre-order by WhatsApp.</p>
-        <form class="hero-search v2-search" role="search" aria-label="Search DÉESSES menu" data-i18n-aria="searchMenu" data-hero-search>
-          <label class="sr-only" for="heroSearchInput" data-i18n="searchMenu">Search menu</label>
-          <input id="heroSearchInput" type="search" placeholder="Search menu" data-i18n-placeholder="searchMenu" autocomplete="off" />
-          <button type="submit" data-i18n="searchButton">Search</button>
-        </form>
-        <div class="v2-hero__actions">
-          <a class="btn btn--primary v2-button v2-button--primary" href="v2-menu.html#menu">Browse Menu <span aria-hidden="true">♡</span></a>
-          <a class="btn btn--ghost v2-button v2-button--ghost" href="#how-it-works">How It Works</a>
+    <section class="v2-menu-hero" id="hero">
+      <div>
+        <p class="v2-script">Product Menu</p>
+        <h1>Cakes, pastries and bakery.</h1>
+        <p>Browse DÉESSES products by category and pickup branch. Tap any item to configure a WhatsApp enquiry.</p>
+      </div>
+      <form class="hero-search v2-search v2-menu-search" role="search" aria-label="Search DÉESSES menu" data-i18n-aria="searchMenu" data-hero-search>
+        <label class="sr-only" for="heroSearchInput" data-i18n="searchMenu">Search menu</label>
+        <input id="heroSearchInput" type="search" placeholder="Search menu" data-i18n-placeholder="searchMenu" autocomplete="off" />
+        <button type="submit" data-i18n="searchButton">Search</button>
+      </form>
+    </section>
+
+    <section class="menu v2-menu" id="menu">
+      <div class="section__head v2-section-head">
+        <p class="v2-script">Shop the menu</p>
+        <h2>Cakes, pastries and bakery.</h2>
+        <p class="section__sub">Use the same live filters, search and product detail modal from V1, now styled like an ordering catalogue.</p>
+      </div>
+      <div class="filters v2-filters" role="group" aria-label="Menu filters">
+        <div class="filters__row v2-filters__row" id="categoryFilters" aria-label="Filter by category">
+          <span class="filters__label">Category</span>
+        </div>
+        <div class="filters__row v2-filters__row" id="branchFilters" aria-label="Filter by branch">
+          <span class="filters__label">Branch</span>
         </div>
       </div>
-      <div class="hero-gallery v2-hero__visual" aria-hidden="true">
-        <figure class="v2-hero-photo v2-hero-photo--cake hero-gallery__tile"><img src="assets/strawberry.jpg" alt="" width="520" height="520" fetchpriority="high" /></figure>
-        <figure class="v2-hero-photo v2-hero-photo--berry hero-gallery__tile"><img src="assets/mini.jpg" alt="" width="440" height="440" /></figure>
-        <figure class="v2-hero-photo v2-hero-photo--gift hero-gallery__tile"><img src="assets/orange.jpg" alt="" width="360" height="360" /></figure>
-        <figure class="v2-hero-photo v2-hero-photo--tart hero-gallery__tile"><img src="assets/croissant.jpg" alt="" width="260" height="260" /></figure>
-      </div>
-    </section>
-
-    <section class="v2-category-dock hero-category-nav" aria-label="Quick order categories">
-      <a href="v2-menu.html?cat=cake#menu" data-hero-filter="cake"><span>♧</span><strong>Cakes</strong></a>
-      <a href="v2-menu.html?cat=pastry#menu" data-hero-filter="pastry"><span>♢</span><strong>Pastries</strong></a>
-      <a href="v2-menu.html?cat=bakery#menu" data-hero-filter="bakery"><span>◌</span><strong>Bakery Breads</strong></a>
-      <a href="v2-menu.html#menu"><span>□</span><strong>Seasonal Gifts</strong></a>
-      <a href="#order"><span>◇</span><strong>Custom Orders</strong></a>
-    </section>
-
-    <section class="branches v2-branches" id="branches">
-      <div class="section__head v2-section-head">
-        <h2>Choose a pickup branch</h2>
-        <p class="section__sub">Four Hong Kong counters share one menu system. Tap a branch to filter the products and prefill your order enquiry.</p>
-      </div>
-      <div class="branch-grid v2-branch-grid" id="branchGrid" aria-live="polite"></div>
-    </section>
-
-    <section class="signature v2-signature" id="signature">
-      <div class="signature__copy v2-signature__copy">
-        <p class="v2-script">Artemis Signature</p>
-        <h2>Gift-ready bakes from Kai Tak.</h2>
-        <p>Artemis at AIRSIDE leads with pink-purple gift energy, fresh breads, mochi croissants and celebration cakes.</p>
-        <a class="btn btn--primary v2-button v2-button--primary" href="v2-menu.html?branch=kaitak&cat=pastry#menu" data-hero-filter="pastry">View Artemis picks</a>
-      </div>
-      <div class="signature__visual v2-signature__visual">
-        <img src="assets/croissant.jpg" alt="Croissants from DÉESSES Bakery" width="520" height="420" loading="lazy" />
-        <ul class="signature-list v2-signature-list">
-          <li><button type="button" data-signature-product="pistachio-mochi-croissant">Pistachio mochi croissant</button></li>
-          <li><button type="button" data-signature-product="rainbow-croissants">Mini rainbow croissants</button></li>
-          <li><button type="button" data-signature-product="bear-cake">Bear cake</button></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="v2-menu-gateway" id="menu-preview" aria-labelledby="menuGatewayTitle">
-      <div class="v2-section-head">
-        <p class="v2-script">Menu Preview</p>
-        <h2 id="menuGatewayTitle">Products have their own page.</h2>
-        <p class="section__sub">To keep the front page clean, cakes, pastries and bakery breads now live in a dedicated catalogue with filters and WhatsApp ordering.</p>
-      </div>
-      <div class="v2-menu-gateway__cards" aria-label="Product categories">
-        <a href="v2-menu.html?cat=cake#menu"><img src="assets/strawberry.jpg" alt="" width="420" height="320" loading="lazy" /><span>訂購蛋糕</span><strong>Cakes</strong></a>
-        <a href="v2-menu.html?cat=pastry#menu"><img src="assets/croissant.jpg" alt="" width="420" height="320" loading="lazy" /><span>特快訂購</span><strong>Pastries</strong></a>
-        <a href="v2-menu.html?cat=bakery#menu"><img src="assets/sourdough.jpg" alt="" width="420" height="320" loading="lazy" /><span>麵包及包裝產品</span><strong>Bakery</strong></a>
-        <a href="v2-menu.html#menu"><img src="assets/mini.jpg" alt="" width="420" height="320" loading="lazy" /><span>所有產品</span><strong>Full menu</strong></a>
-      </div>
-      <a class="v2-button v2-button--primary v2-menu-gateway__cta" href="v2-menu.html#menu">Open product menu</a>
+      <div class="product-grid v2-product-grid" id="menuGrid" aria-live="polite"></div>
+      <p class="menu__empty v2-empty" id="menuEmpty" hidden>No items match this filter.</p>
     </section>
 
     <section class="order v2-order" id="order">
@@ -148,7 +107,7 @@
         <div>
           <h3>Need inspiration?</h3>
           <p>Browse the gallery first, then send your cake idea through WhatsApp or Instagram DM.</p>
-          <a class="v2-button v2-button--ghost" href="#social">View Cake Gallery</a>
+          <a class="v2-button v2-button--ghost" href="v2.html#social">View Cake Gallery</a>
         </div>
       </aside>
       <form class="v2-custom-form" data-v2-custom-order>
@@ -230,7 +189,7 @@
   <footer class="footer v2-footer" id="contact">
     <div class="footer__inner v2-footer__inner">
       <div>
-        <a href="#top" class="v2-brand v2-footer-brand">
+        <a href="v2.html" class="v2-brand v2-footer-brand">
           <img class="v2-brand__logo" src="assets/deesses-instagram-logo.jpg" alt="DÉESSES Bakery logo" width="48" height="48" />
           <span class="v2-brand__name">DÉESSES<small>Bakery</small></span>
         </a>

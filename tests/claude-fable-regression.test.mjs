@@ -2,8 +2,11 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const v2Home = readFileSync(new URL('../v2.html', import.meta.url), 'utf8');
+const v2Menu = readFileSync(new URL('../v2-menu.html', import.meta.url), 'utf8');
 const js = readFileSync(new URL('../script.js', import.meta.url), 'utf8');
 const css = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
+const v2Css = readFileSync(new URL('../v2.css', import.meta.url), 'utf8');
 
 function test(name, fn) {
   try {
@@ -173,4 +176,18 @@ test('design taste refinements keep the page polished without adding clutter', (
   assert.match(css, /\.hero__title\s*\{[\s\S]*text-shadow:\s*0 1px 0 rgba\(255,250,244,0\.92\)/, 'hero title should carry a readable light lift without adding a panel');
   assert.match(css, /\.branch-card[\s\S]*linear-gradient\(180deg, rgba\(255,255,255,0\.96\), var\(--surface\)\)/, 'branch cards should use subtle depth instead of flat slabs');
   assert.match(css, /\.product__media img[\s\S]*transition:\s*transform 0\.75s var\(--ease\), filter 0\.75s var\(--ease\)/, 'product imagery should feel smoother and intentional');
+});
+
+test('V2 separates the product catalogue from the front page like a bakery reference site', () => {
+  assert.doesNotMatch(v2Home, /id="menuGrid"/, 'V2 homepage should not render the full product grid');
+  assert.match(v2Home, /class="v2-menu-gateway"[\s\S]*v2-menu\.html\?cat=cake#menu[\s\S]*v2-menu\.html\?cat=pastry#menu[\s\S]*v2-menu\.html\?cat=bakery#menu/, 'V2 homepage should use category gateway cards linking to the menu page');
+  assert.match(v2Menu, /<body class="v2-site v2-menu-page">/, 'separate product menu page should have the menu page body class');
+  assert.match(v2Menu, /class="menu v2-menu" id="menu"[\s\S]*id="categoryFilters"[\s\S]*id="branchFilters"[\s\S]*id="menuGrid"/, 'separate product menu page should keep filters and product grid');
+  assert.match(v2Css, /\.v2-menu-gateway__cards[\s\S]*grid-template-columns:\s*repeat\(4/, 'homepage menu gateway should use Arome-style category tiles on desktop');
+  assert.match(v2Css, /\.v2-menu-hero[\s\S]*\.v2-menu-page \.v2-menu/, 'menu page should have a dedicated compact menu hero');
+  assert.match(js, /function menuUrl\(params\)/, 'JS should build filtered menu URLs for cross-page navigation');
+  assert.match(js, /q\.set\("cat", params\.cat\)/, 'menu URL should include category filters');
+  assert.match(js, /q\.set\("branch", params\.branch\)/, 'menu URL should include branch filters');
+  assert.match(js, /q\.set\("q", params\.search\)/, 'menu URL should include search filters');
+  assert.match(js, /function applyInitialMenuParams\(\)[\s\S]*params\.get\("cat"\)[\s\S]*params\.get\("branch"\)[\s\S]*params\.get\("q"\)/, 'menu page should read URL filters on load');
 });

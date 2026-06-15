@@ -490,6 +490,48 @@
   var activeSearch = "";
   var previousModalFocus = null;
 
+  function hasProductMenu() {
+    return !!document.getElementById("menuGrid");
+  }
+
+  function menuUrl(params) {
+    params = params || {};
+    var q = new URLSearchParams();
+    if (params.cat && params.cat !== "all") q.set("cat", params.cat);
+    if (params.branch && params.branch !== "all") q.set("branch", params.branch);
+    if (params.search) q.set("q", params.search);
+    var query = q.toString();
+    return "v2-menu.html" + (query ? "?" + query : "") + "#menu";
+  }
+
+  function goToMenu(params) {
+    if (hasProductMenu()) {
+      if (params && params.cat) activeCategory = params.cat;
+      if (params && params.branch) activeBranch = params.branch;
+      if (params && Object.prototype.hasOwnProperty.call(params, "search")) activeSearch = params.search || "";
+      syncChips();
+      renderMenu();
+      var input = document.getElementById("heroSearchInput");
+      if (input) input.value = activeSearch;
+      smartScroll(document.getElementById("menu"), { block: "start" });
+      return;
+    }
+    window.location.href = menuUrl(params);
+  }
+
+  function applyInitialMenuParams() {
+    if (!hasProductMenu()) return;
+    var params = new URLSearchParams(window.location.search);
+    var cat = params.get("cat");
+    var branch = params.get("branch");
+    var search = params.get("q");
+    if (cat === "cake" || cat === "pastry" || cat === "bakery") activeCategory = cat;
+    if (branchName(branch)) activeBranch = branch;
+    if (search) activeSearch = search.trim().toLowerCase();
+    var input = document.getElementById("heroSearchInput");
+    if (input) input.value = activeSearch;
+  }
+
   function el(tag, cls, html) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -525,9 +567,12 @@
         '<button type="button" class="branch-card__cta">' + (b.id === "kaitak" ? tx("enterArtemis") : tx("viewMenu")) + '</button>';
       function activateBranchCard() {
         var nextBranch = activeBranch === b.id ? "all" : b.id;
+        if (!hasProductMenu()) {
+          goToMenu({ branch: nextBranch });
+          return;
+        }
         selectBranch(nextBranch);
-        var targetId = b.id === "kaitak" ? "signature" : "menu";
-        smartScroll(document.getElementById(targetId), { block: "start" });
+        smartScroll(document.getElementById("menu"), { block: "start" });
       }
       card.addEventListener("click", function (event) {
         if (event.target && event.target.closest && event.target.closest("a")) return;
@@ -893,6 +938,10 @@
   function showProductFromSignature(productId) {
     var product = findProductById(productId);
     if (!product) return;
+    if (!hasProductMenu()) {
+      goToMenu({ branch: "kaitak", cat: product.cat });
+      return;
+    }
     activeSearch = "";
     var searchInput = document.getElementById("heroSearchInput");
     if (searchInput) searchInput.value = "";
@@ -1010,20 +1059,21 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         activeSearch = input.value.trim().toLowerCase();
-        renderMenu();
-        var menu = document.getElementById("menu");
-        smartScroll(menu, { block: "start" });
+        goToMenu({ search: activeSearch });
       });
       input.addEventListener("input", function () {
         activeSearch = input.value.trim().toLowerCase();
-        if (document.activeElement === input && (activeSearch.length >= 2 || activeSearch.length === 0)) renderMenu();
+        if (hasProductMenu() && document.activeElement === input && (activeSearch.length >= 2 || activeSearch.length === 0)) renderMenu();
       });
     }
     document.querySelectorAll("[data-hero-filter]").forEach(function (link) {
-      link.addEventListener("click", function () {
+      link.addEventListener("click", function (event) {
         activeSearch = "";
         if (input) input.value = "";
-        selectCategory(link.getAttribute("data-hero-filter"));
+        var cat = link.getAttribute("data-hero-filter");
+        if (!hasProductMenu()) return;
+        event.preventDefault();
+        goToMenu({ cat: cat });
       });
     });
   }
@@ -1215,6 +1265,7 @@
 
   /* ---------- Init ---------- */
   localizeStatic();
+  applyInitialMenuParams();
   renderBranches();
   renderFilters();
   renderMenu();
