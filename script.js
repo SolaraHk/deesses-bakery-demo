@@ -449,9 +449,10 @@
     var hero = document.querySelector('.site-menu-hero');
     if (!hero) return;
     var body = document.body;
-    var prefix = body.classList.contains('category-page--cakes') ? 'cake'
-      : body.classList.contains('category-page--pastries') ? 'pastry'
-      : body.classList.contains('category-page--breads') ? 'bread'
+    var pageCategory = body.getAttribute('data-category-page');
+    var prefix = pageCategory === 'cake' || body.classList.contains('category-page--cake') || body.classList.contains('category-page--cakes') ? 'cake'
+      : pageCategory === 'pastry' || body.classList.contains('category-page--pastry') || body.classList.contains('category-page--pastries') ? 'pastry'
+      : pageCategory === 'bakery' || pageCategory === 'bread' || body.classList.contains('category-page--bread') || body.classList.contains('category-page--breads') ? 'bread'
       : 'menu';
     var pageKeys = {
       cake: ['cakeCollection', 'cakePageTitle', 'cakePageCopy', 'shopCakes', 'shopCakesCopy'],

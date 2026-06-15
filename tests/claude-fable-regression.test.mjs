@@ -167,6 +167,7 @@ test('language toggle localizes current visible site sections', () => {
   assert.match(js, /productSpotlightTitle:[\s\S]*選擇想看的產品系列/, 'product spotlight should have Chinese copy');
   assert.match(js, /breadPageTitle:[\s\S]*每日新鮮麵包/, 'breads page hero should have Chinese copy');
   assert.match(js, /function localizeCurrentSite\(\)[\s\S]*localizeNavigation\(\)[\s\S]*localizeHomePage\(\)[\s\S]*localizeMenuPage\(\)/, 'language toggle should localize duplicated current-site sections beyond data-i18n nodes');
+  assert.match(js, /pageCategory === 'cake'[\s\S]*category-page--cake[\s\S]*pageCategory === 'pastry'[\s\S]*category-page--pastry[\s\S]*pageCategory === 'bakery'[\s\S]*category-page--breads/, 'category page localization should detect cakes, pastries and breads consistently instead of falling back to Shop menu');
   assert.match(js, /document\.querySelectorAll\('\.site-nav__links a\[data-hero-filter="cake"\]'\)[\s\S]*cakesPlural/, 'language toggle should localize static category nav labels');
   assert.match(js, /localizeStatic\(\)[\s\S]*syncLanguageButtons\(\)[\s\S]*renderBranches\(\)[\s\S]*renderFilters\(\)[\s\S]*renderMenu\(\)/, 'setLanguage should refresh static and generated content');
 });
