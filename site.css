@@ -301,6 +301,31 @@
 .site-section-head { text-align: center; margin-bottom: 28px; }
 .site-section-head h2 { font-size: clamp(2.35rem, 4.8vw, 4.1rem); font-weight: 600; }
 .site-section-head .section__sub { max-width: 60ch; color: var(--site-muted); }
+.category-page #menu .site-section-head h2 {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0 0 clamp(10px, 1.3vw, 14px);
+  font-family: "Cormorant Garamond", "Noto Sans TC", serif;
+  font-size: clamp(3.15rem, 6.5vw, 5.35rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--site-ink-strong);
+  text-wrap: balance;
+}
+.category-page #menu .site-section-head h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(150px, 58%);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--site-rose), var(--site-gold), transparent);
+  transform: translateX(-50%);
+  opacity: 0.8;
+}
 
 .site-product-spotlight {
   max-width: 1210px;

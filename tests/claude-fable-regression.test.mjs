@@ -160,7 +160,7 @@ test('cake craft placeholder controls are implemented accessibly', () => {
 
 test('root loads the current scripts and motion layer progressively', () => {
   assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the root');
-  assert.match(html, /site\.css\?v=concept-7/, 'root should load the current site stylesheet cache key');
+  assert.match(html, /site\.css\?v=concept-8/, 'root should load the current site stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
@@ -210,6 +210,7 @@ test('Homepage separates the product catalogue from the front page like a bakery
     assert.match(page, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order/, `${heading} page should keep the order flow`);
   });
   assert.match(siteCss, /\.site-product-spotlight__stage[\s\S]*grid-template-columns:\s*minmax\(0, 1\.35fr\) minmax\(280px, 0\.65fr\)/, 'homepage product spotlight should use an asymmetric featured-product layout on desktop');
+  assert.match(siteCss, /\.category-page #menu \.site-section-head h2[\s\S]*font-family:\s*"Cormorant Garamond"[\s\S]*::after/, 'category shop headings should use a polished boutique typography treatment');
   assert.match(siteCss, /\.site-menu-hero[\s\S]*\.menu-page \.site-menu/, 'menu page should have a dedicated compact menu hero');
   assert.match(js, /function menuUrl\(params\)/, 'JS should build filtered menu URLs for cross-page navigation');
   assert.match(js, /CATEGORY_ROUTES\s*=\s*\{ cake:\s*"cakes\.html", pastry:\s*"pastries\.html", bakery:\s*"bakery\.html" \}/, 'JS should map product categories to dedicated static pages');
