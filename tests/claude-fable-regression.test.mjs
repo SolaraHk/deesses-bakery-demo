@@ -226,11 +226,13 @@ test('Homepage separates category spotlights and cake-only custom ordering', () 
   assert.match(menuHtml + pastriesHtml + breadsHtml, /href="cakes\.html#order"/, 'Non-cake pages should send Order links to the cakes custom-order flow');
   assert.match(bakeryRedirectHtml, /url=breads\.html|location\.replace\("breads\.html/, 'Old bakery URL should redirect to renamed Breads category page');
   assert.match(cakesHtml, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order[\s\S]*Send Custom Order/, 'Cakes page should keep the custom cake order flow');
-  assert.ok(cakesHtml.indexOf('id="order"') < cakesHtml.indexOf('id="hero"'), 'Cakes page should open with the custom cake order screen before the category hero');
-  assert.ok(cakesHtml.indexOf('id="order"') < cakesHtml.indexOf('id="menu"'), 'Cakes page should not show existing product listings above custom cake order');
+  assert.doesNotMatch(cakesHtml, /id="hero"|Cake Collection|id="menu"|Shop cakes|id="branchFilters"|id="menuGrid"/, 'Cakes page should not show a cake collection/product picker after the custom cake order flow');
+
+  assert.match(cakesHtml, /data-category-page="cake"/, 'Cakes page should declare its fixed category');
+  assert.doesNotMatch(cakesHtml, /class="skip-link"|Skip to products|Skip to menu/, 'Cakes page should not show a confusing skip-link pill');
+  assert.doesNotMatch(cakesHtml, /id="categoryFilters"|Filter by category|>Category<|>分類</, 'Cakes page should not show category filters');
 
   [
-    ['cake', 'Cake Collection', cakesHtml],
     ['pastry', 'Pastry Collection', pastriesHtml],
     ['bakery', 'Bread Collection', breadsHtml]
   ].forEach(([cat, heading, page]) => {
@@ -238,7 +240,7 @@ test('Homepage separates category spotlights and cake-only custom ordering', () 
     assert.doesNotMatch(page, /class="skip-link"|Skip to products|Skip to menu/, `${heading} page should not show a confusing skip-link pill`);
     assert.doesNotMatch(page, /id="categoryFilters"|Filter by category|>Category<|>分類</, `${heading} page should remove the category filter row entirely`);
     assert.doesNotMatch(page, />[^<]*\bonly\.[^<]*</i, `${heading} page should not use awkward "only" section headings`);
-    assert.match(page, /<h2>Shop (cakes|pastries|breads)<\/h2>/, `${heading} page should promote the shop label to the main section heading`);
+    assert.match(page, /<h2>Shop (pastries|breads)<\/h2>/, `${heading} page should promote the shop label to the main section heading`);
     assert.match(page, new RegExp(`${heading}[\\s\\S]*id="branchFilters"`), `${heading} page should keep branch filtering`);
   });
   assert.match(siteCss, /\.category-page #menu \.site-section-head h2[\s\S]*font-family:\s*"Allura"[\s\S]*::after/, 'category shop headings should use a polished handwritten typography treatment');
