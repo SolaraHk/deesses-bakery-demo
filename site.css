@@ -654,22 +654,31 @@
 .site-custom-form h2 { font-size: clamp(2.15rem, 4vw, 3.25rem); margin-bottom: 18px; }
 .site-custom-form label,
 .site-radio-row { display: grid; gap: 7px; color: var(--site-ink); font-size: 0.82rem; font-weight: 800; }
-.site-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; }
+.site-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.site-order,
+.site-inspiration-card,
+.site-custom-form,
+.site-order-info,
+.site-form-grid,
+.site-radio-row,
+.site-radio-options { min-width: 0; }
 .site-custom-form input,
 .site-custom-form select,
 .site-custom-form textarea {
   width: 100%;
+  min-width: 0;
   border: 1px solid rgba(124, 89, 66, 0.18);
   border-radius: 7px;
-  background: rgba(255, 255, 255, 0.78);
-  padding: 11px 12px;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 10px 11px;
   color: var(--site-ink-strong);
   font: 600 0.86rem/1.2 "Manrope", sans-serif;
 }
 .site-custom-form textarea { resize: vertical; }
-.site-radio-row { grid-template-columns: auto 1fr 1fr; align-items: center; margin: 14px 0; padding: 12px; border: 1px solid var(--site-line); border-radius: 8px; }
-.site-radio-row legend { font-weight: 800; padding-right: 8px; }
-.site-radio-row label { display: flex; align-items: center; gap: 7px; }
+.site-radio-row { display: block; margin: 14px 0; padding: 12px; border: 1px solid var(--site-line); border-radius: 8px; }
+.site-radio-row legend { font-weight: 800; padding: 0 8px 8px 0; writing-mode: horizontal-tb; white-space: normal; }
+.site-radio-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.site-radio-row label { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; padding: 8px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.72); border: 1px solid rgba(124, 89, 66, 0.12); writing-mode: horizontal-tb; white-space: nowrap; }
 .site-submit { width: 100%; margin-top: 16px; }
 .site-order-info { padding: 22px; }
 .site-order-info ul { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 14px; }
@@ -918,9 +927,18 @@
   .site-product-spotlight__photo--accent { height: 120px; width: min(44%, 180px); }
   .site-menu-hero { padding: 28px 18px; }
   .site-menu-hero h1 { font-size: clamp(3rem, 14vw, 4.4rem); }
-  .site-order { grid-template-columns: 1fr; }
+  .site-order { width: min(100% - 24px, 1210px); grid-template-columns: 1fr; gap: 16px; }
+  .site-inspiration-card,
+  .site-custom-form,
+  .site-order-info { border-radius: 14px; overflow: hidden; }
+  .site-custom-form { padding: 18px; }
+  .site-custom-form h2 { font-size: clamp(2rem, 12vw, 2.8rem); line-height: 0.96; }
   .site-form-grid { grid-template-columns: 1fr; }
-  .site-radio-row { grid-template-columns: 1fr; }
+  .site-radio-row { padding: 11px; }
+  .site-radio-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-radio-row label { min-width: 0; font-size: 0.82rem; }
+  .site-social-trigger { min-width: 48px; width: 48px; height: 48px; padding: 0; border-radius: 999px; }
+  .site-social-trigger .social-trigger__label { display: none; }
   .site-signature__visual { grid-template-columns: 1fr; }
   .site-social__head { display: block; }
   .site-social-grid { grid-template-columns: repeat(3, 1fr); }

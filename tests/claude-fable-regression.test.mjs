@@ -229,6 +229,7 @@ test('Homepage separates category spotlights and cake-only custom ordering', () 
   assert.doesNotMatch(menuHtml + pastriesHtml + breadsHtml, /id="order"|href="#order"|data-custom-order|Custom Cake Order|Design your perfect cake|Send Custom Order/, 'Custom cake ordering should only appear on the cakes category page and other pages should not link to missing #order anchors');
   assert.match(menuHtml + pastriesHtml + breadsHtml, /href="cakes\.html#order"/, 'Non-cake pages should send Order links to the cakes custom-order flow');
   assert.match(bakeryRedirectHtml, /url=breads\.html|location\.replace\("breads\.html/, 'Old bakery URL should redirect to renamed Breads category page');
+  assert.match(cakesHtml, /<div class="site-radio-options">[\s\S]*name="method" value="Pickup"[\s\S]*name="method" value="Delivery"[\s\S]*<\/div>/, 'Custom cake pickup/delivery radio labels should be grouped for responsive horizontal layout');
   assert.match(cakesHtml, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order[\s\S]*Send Custom Order/, 'Cakes page should keep the custom cake order flow');
   assert.match(cakesHtml, /id="hero"[\s\S]*Cake Collection[\s\S]*id="menu"[\s\S]*Shop cakes[\s\S]*id="branchFilters"[\s\S]*id="menuGrid"[\s\S]*id="order"[\s\S]*data-custom-order/, 'Cakes page should show the cake collection/product grid first and keep custom cake order as a separate anchor');
 
@@ -247,6 +248,10 @@ test('Homepage separates category spotlights and cake-only custom ordering', () 
     assert.match(page, /<h2>Shop (pastries|breads)<\/h2>/, `${heading} page should promote the shop label to the main section heading`);
     assert.match(page, new RegExp(`${heading}[\\s\\S]*id="branchFilters"`), `${heading} page should keep branch filtering`);
   });
+  assert.match(siteCss, /\.site-radio-options \{ display: grid; grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/, 'custom cake pickup/delivery choices should stay as two horizontal pills');
+  assert.match(siteCss, /\.site-radio-row label[\s\S]*writing-mode:\s*horizontal-tb[\s\S]*white-space:\s*nowrap/, 'pickup/delivery labels should not stack letters vertically');
+  assert.match(siteCss, /@media \(max-width: 760px\)[\s\S]*\.site-order \{ width: min\(100% - 24px, 1210px\)/, 'custom cake order section should have mobile side gutters');
+  assert.match(siteCss, /@media \(max-width: 760px\)[\s\S]*\.site-social-trigger \{ min-width: 48px; width: 48px; height: 48px;[\s\S]*\.site-social-trigger \.social-trigger__label \{ display: none; \}/, 'mobile floating social button should collapse to a small icon so it does not cover the custom cake form');
   assert.match(siteCss, /\.category-page #menu \.site-section-head h2[\s\S]*font-family:\s*"Allura"[\s\S]*::after/, 'category shop headings should use a polished handwritten typography treatment');
   assert.match(siteCss, /\.site-menu-hero[\s\S]*\.menu-page \.site-menu/, 'menu page should have a dedicated compact menu hero');
   assert.match(js, /function menuUrl\(params\)/, 'JS should build filtered menu URLs for cross-page navigation');
