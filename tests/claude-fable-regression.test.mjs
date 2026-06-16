@@ -129,6 +129,13 @@ test('hero intro panel stays bright while the opening gallery remains visible', 
   assert.match(css, /\.hero-category-nav a\s*\{[\s\S]*background:\s*rgba\(255,255,255,0\.42\)/, 'hero quick links should stay translucent but easier to read');
 });
 
+test('top bar navigation text stays larger and legible', () => {
+  assert.match(siteCss, /\.site-nav__links\s*\{[\s\S]*font-size:\s*0\.9rem/, 'desktop top bar nav links should be larger than the previous small labels');
+  assert.match(siteCss, /\.site-nav__links a\s*\{[\s\S]*font-weight:\s*800/, 'top bar nav links should use a stronger readable weight');
+  assert.match(siteCss, /\.site-order-pill\s*\{[\s\S]*min-height:\s*40px[\s\S]*font-size:\s*0\.88rem/, 'top bar order pill text should scale with the larger nav');
+  assert.match(siteCss, /@media \(max-width:\s*1120px\)[\s\S]*\.site-nav__links\s*\{[\s\S]*font-size:\s*0\.82rem/, 'tablet top bar should stay larger without forcing desktop nav wrap');
+});
+
 test('mobile homepage hero keeps the bakery photo visible behind a readable translucent panel', () => {
   assert.match(siteCss, /@media \(max-width:\s*760px\)[\s\S]*\.site-hero\s*\{[\s\S]*rgba\(255, 249, 246, 0\.86\)[\s\S]*rgba\(255, 249, 246, 0\.18\)[\s\S]*front-page-bakery-scene\.jpg/, 'mobile site hero should lighten its wash without hiding the cake background image');
   assert.match(siteCss, /@media \(max-width:\s*760px\)[\s\S]*\.site-hero__content\s*\{[\s\S]*rgba\(255, 252, 249, 0\.64\)[\s\S]*rgba\(255, 244, 239, 0\.38\)[\s\S]*backdrop-filter:\s*blur\(3px\) saturate\(118%\)/, 'mobile site hero text panel should be translucent but still readable');
@@ -182,7 +189,7 @@ test('language toggle localizes current visible site sections', () => {
 
 test('root loads the current scripts and motion layer progressively', () => {
   assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the root');
-  assert.match(html, /site\.css\?v=concept-14/, 'root should load the current site stylesheet cache key');
+  assert.match(html, /site\.css\?v=concept-15/, 'root should load the current site stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
