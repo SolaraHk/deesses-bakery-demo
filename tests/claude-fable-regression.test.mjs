@@ -182,7 +182,7 @@ test('language toggle localizes current visible site sections', () => {
 
 test('root loads the current scripts and motion layer progressively', () => {
   assert.match(html, /script\.js\?v=brand-logo-1/, 'site script should be loaded on the root');
-  assert.match(html, /site\.css\?v=concept-13/, 'root should load the current site stylesheet cache key');
+  assert.match(html, /site\.css\?v=concept-14/, 'root should load the current site stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
