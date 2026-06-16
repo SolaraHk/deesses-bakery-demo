@@ -226,6 +226,8 @@ test('Homepage separates category spotlights and cake-only custom ordering', () 
   assert.match(menuHtml + pastriesHtml + breadsHtml, /href="cakes\.html#order"/, 'Non-cake pages should send Order links to the cakes custom-order flow');
   assert.match(bakeryRedirectHtml, /url=breads\.html|location\.replace\("breads\.html/, 'Old bakery URL should redirect to renamed Breads category page');
   assert.match(cakesHtml, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order[\s\S]*Send Custom Order/, 'Cakes page should keep the custom cake order flow');
+  assert.ok(cakesHtml.indexOf('id="order"') < cakesHtml.indexOf('id="hero"'), 'Cakes page should open with the custom cake order screen before the category hero');
+  assert.ok(cakesHtml.indexOf('id="order"') < cakesHtml.indexOf('id="menu"'), 'Cakes page should not show existing product listings above custom cake order');
 
   [
     ['cake', 'Cake Collection', cakesHtml],
