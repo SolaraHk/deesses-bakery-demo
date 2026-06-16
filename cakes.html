@@ -65,6 +65,33 @@
   </aside>
 
   <main id="top">
+    <section class="site-menu-hero" id="hero">
+      <div>
+        <p class="site-script">Cake Collection</p>
+        <h1>Cakes for sweet moments.</h1>
+        <p>Browse celebration cakes, mini cakes and seasonal cake designs as their own collection before sending a WhatsApp enquiry.</p>
+      </div>
+      <form class="hero-search site-search site-menu-search" role="search" aria-label="Search DÉESSES menu" data-i18n-aria="searchMenu" data-hero-search>
+        <label class="sr-only" for="heroSearchInput" data-i18n="searchMenu">Search menu</label>
+        <input id="heroSearchInput" type="search" placeholder="Search menu" data-i18n-placeholder="searchMenu" autocomplete="off" />
+        <button type="submit" data-i18n="searchButton">Search</button>
+      </form>
+    </section>
+
+    <section class="menu site-menu" id="menu">
+      <div class="section__head site-section-head">
+        <h2>Shop cakes</h2>
+        <p class="section__sub">A dedicated cake collection with branch availability, search and product detail ordering.</p>
+      </div>
+      <div class="filters site-filters" role="group" aria-label="Menu filters">
+        <div class="filters__row site-filters__row" id="branchFilters" aria-label="Filter by branch">
+          <span class="filters__label">Branch</span>
+        </div>
+      </div>
+      <div class="product-grid site-product-grid" id="menuGrid" aria-live="polite"></div>
+      <p class="menu__empty site-empty" id="menuEmpty" hidden>No items match this filter.</p>
+    </section>
+
     <section class="order site-order" id="order">
       <aside class="site-inspiration-card">
         <img src="assets/rose.jpg" alt="Pink celebration cake inspiration" width="420" height="520" loading="lazy" />

@@ -230,7 +230,7 @@ test('Homepage separates category spotlights and cake-only custom ordering', () 
   assert.match(menuHtml + pastriesHtml + breadsHtml, /href="cakes\.html#order"/, 'Non-cake pages should send Order links to the cakes custom-order flow');
   assert.match(bakeryRedirectHtml, /url=breads\.html|location\.replace\("breads\.html/, 'Old bakery URL should redirect to renamed Breads category page');
   assert.match(cakesHtml, /id="order"[\s\S]*data-custom-order[\s\S]*Custom Cake Order[\s\S]*Send Custom Order/, 'Cakes page should keep the custom cake order flow');
-  assert.doesNotMatch(cakesHtml, /id="hero"|Cake Collection|id="menu"|Shop cakes|id="branchFilters"|id="menuGrid"/, 'Cakes page should not show a cake collection/product picker after the custom cake order flow');
+  assert.match(cakesHtml, /id="hero"[\s\S]*Cake Collection[\s\S]*id="menu"[\s\S]*Shop cakes[\s\S]*id="branchFilters"[\s\S]*id="menuGrid"[\s\S]*id="order"[\s\S]*data-custom-order/, 'Cakes page should show the cake collection/product grid first and keep custom cake order as a separate anchor');
 
   assert.match(cakesHtml, /data-category-page="cake"/, 'Cakes page should declare its fixed category');
   assert.doesNotMatch(cakesHtml, /class="skip-link"|Skip to products|Skip to menu/, 'Cakes page should not show a confusing skip-link pill');
