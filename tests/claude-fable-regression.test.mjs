@@ -182,6 +182,9 @@ test('language toggle localizes current visible site sections', () => {
   assert.match(js, /pageCategory === 'cake'[\s\S]*category-page--cake[\s\S]*pageCategory === 'pastry'[\s\S]*category-page--pastry[\s\S]*pageCategory === 'bakery'[\s\S]*category-page--breads/, 'category page localization should detect cakes, pastries and breads consistently instead of falling back to Shop menu');
   assert.match(js, /document\.querySelectorAll\('\.site-nav__links a\[data-hero-filter="cake"\]'\)[\s\S]*cakesPlural/, 'language toggle should localize static category nav labels');
   assert.match(js, /localizeStatic\(\)[\s\S]*syncLanguageButtons\(\)[\s\S]*renderBranches\(\)[\s\S]*renderFilters\(\)[\s\S]*renderMenu\(\)/, 'setLanguage should refresh static and generated content');
+  assert.match(js, /function localizeCustomOrderPage\(\)[\s\S]*customCakeOrder[\s\S]*sendCustomOrder[\s\S]*orderingInformation/, 'Chinese mode should localize the custom cake order form and ordering information');
+  assert.match(js, /customCakeOrder:\s*"自訂蛋糕訂購"[\s\S]*sendCustomOrder:\s*"發送自訂蛋糕查詢"[\s\S]*orderingInformation:\s*"訂購資訊"/, 'custom cake order Chinese copy should be present');
+  assert.match(js, /descZh:\s*"慢發酵天然酸種包[\s\S]*descZh:\s*"煙韌麻糬貝果[\s\S]*function productText\(product, field\)[\s\S]*product\[field \+ "Zh"\][\s\S]*renderMenu\(\)[\s\S]*productText\(p, "desc"\)/, 'Chinese mode should render translated product descriptions, including bread descriptions');
   assert.match(html + menuHtml + cakesHtml + pastriesHtml + breadsHtml, /Noto\+Serif\+TC:wght@500;700;900/, 'pages should load a dedicated Chinese serif display font');
   assert.match(siteCss, /\.site:lang\(zh-Hant-HK\) h1[\s\S]*Noto Serif TC|--site-zh-heading:\s*"Noto Serif TC"/, 'Chinese headings should use a dedicated display face');
   assert.match(siteCss, /\.site:lang\(zh-Hant-HK\) \.site-script[\s\S]*letter-spacing:\s*0\.18em/, 'Chinese eyebrow labels should receive a designed typographic treatment');

@@ -207,7 +207,35 @@
       menuPageTitle: "Browse cakes, pastries and breads.",
       menuPageCopy: "Search the product menu, filter by branch and send an enquiry when you are ready.",
       shopMenu: "Shop menu",
-      shopMenuCopy: "Browse all available products with branch availability, search and product detail ordering."
+      shopMenuCopy: "Browse all available products with branch availability, search and product detail ordering.",
+      customCakeOrder: "Custom Cake Order",
+      customCakeTitle: "Design your perfect cake.",
+      cakeTypeLabel: "Cake type",
+      sizeLabel: "Size",
+      flavourLabel: "Flavour",
+      pickupDateLabel: "Pickup date",
+      pickupDeliveryLabel: "Pickup or delivery",
+      pickupLabel: "Pickup",
+      deliveryLabel: "Delivery",
+      cakeMessageLabel: "Message on cake",
+      cakeMessagePlaceholder: "Happy Birthday",
+      notesLabel: "Additional notes",
+      notesPlaceholder: "Allergies, colours, character theme",
+      sendCustomOrder: "Send Custom Order",
+      inspirationTitle: "Need inspiration?",
+      inspirationCopy: "Browse the gallery first, then send your cake idea through WhatsApp or Instagram DM.",
+      viewCakeGallery: "View Cake Gallery",
+      orderingInformation: "Ordering Information",
+      leadTimeTitle: "Order lead time",
+      leadTimeCopy: "Please order at least 48 hours in advance.",
+      pickupConfirmTitle: "Pickup and confirmation",
+      pickupConfirmCopy: "The shop confirms availability, branch and final price.",
+      deliveryInfoTitle: "Delivery",
+      deliveryInfoCopy: "Delivery may be available by request for selected areas.",
+      questionsTitle: "Questions?",
+      questionsCopy: "Message the team before ordering.",
+      orderViaWhatsapp: "Order via WhatsApp",
+      sendIgDm: "Send IG DM"
     },
     zh: {
       languageLabel: "語言",
@@ -343,7 +371,35 @@
       menuPageTitle: "瀏覽蛋糕、酥點及麵包。",
       menuPageCopy: "搜尋產品餐單、按分店篩選，準備好後發送查詢。",
       shopMenu: "選購餐單",
-      shopMenuCopy: "瀏覽所有產品，包含分店供應、搜尋及產品詳情訂購。"
+      shopMenuCopy: "瀏覽所有產品，包含分店供應、搜尋及產品詳情訂購。",
+      customCakeOrder: "自訂蛋糕訂購",
+      customCakeTitle: "設計你的專屬蛋糕。",
+      cakeTypeLabel: "蛋糕類型",
+      sizeLabel: "尺寸",
+      flavourLabel: "口味",
+      pickupDateLabel: "取貨日期",
+      pickupDeliveryLabel: "取貨或送貨",
+      pickupLabel: "到店取貨",
+      deliveryLabel: "送貨",
+      cakeMessageLabel: "蛋糕牌文字",
+      cakeMessagePlaceholder: "生日快樂",
+      notesLabel: "其他備註",
+      notesPlaceholder: "敏感食材、顏色、角色主題",
+      sendCustomOrder: "發送自訂蛋糕查詢",
+      inspirationTitle: "需要靈感？",
+      inspirationCopy: "可先看看相集，再把你的蛋糕想法經 WhatsApp 或 Instagram 私訊發給我們。",
+      viewCakeGallery: "查看蛋糕相集",
+      orderingInformation: "訂購資訊",
+      leadTimeTitle: "預訂時間",
+      leadTimeCopy: "建議最少提前 48 小時預訂。",
+      pickupConfirmTitle: "取貨及確認",
+      pickupConfirmCopy: "店舖會確認供應、分店及最終價錢。",
+      deliveryInfoTitle: "送貨安排",
+      deliveryInfoCopy: "部分地區可按需要查詢送貨安排。",
+      questionsTitle: "有問題？",
+      questionsCopy: "下單前可先向店員查詢。",
+      orderViaWhatsapp: "WhatsApp 訂購",
+      sendIgDm: "Instagram 私訊"
     }
   };
 
@@ -469,6 +525,47 @@
     setText('#menuEmpty', 'noItems');
   }
 
+  function localizeCustomOrderPage() {
+    var order = document.getElementById("order");
+    if (!order) return;
+    setText('.site-inspiration-card h3', 'inspirationTitle', order);
+    setText('.site-inspiration-card p', 'inspirationCopy', order);
+    setText('.site-inspiration-card a', 'viewCakeGallery', order);
+    setText('.site-custom-form .site-script', 'customCakeOrder', order);
+    setText('.site-custom-form h2', 'customCakeTitle', order);
+    var labels = order.querySelectorAll('.site-custom-form > label, .site-form-grid label');
+    var labelKeys = ['cakeTypeLabel', 'sizeLabel', 'flavourLabel', 'pickupDateLabel', 'cakeMessageLabel', 'notesLabel'];
+    labels.forEach(function (label, index) {
+      var control = label.querySelector('select, input, textarea');
+      label.childNodes.forEach(function (node) { if (node.nodeType === Node.TEXT_NODE) node.nodeValue = tx(labelKeys[index] || ''); });
+      if (control && index === 4) control.setAttribute('placeholder', tx('cakeMessagePlaceholder'));
+      if (control && index === 5) control.setAttribute('placeholder', tx('notesPlaceholder'));
+    });
+    setText('.site-radio-row legend', 'pickupDeliveryLabel', order);
+    var radioLabels = order.querySelectorAll('.site-radio-row label');
+    [['pickupLabel'], ['deliveryLabel']].forEach(function (item, index) {
+      var label = radioLabels[index];
+      if (!label) return;
+      label.childNodes.forEach(function (node) { if (node.nodeType === Node.TEXT_NODE) node.nodeValue = ' ' + tx(item[0]); });
+    });
+    setText('.site-submit', 'sendCustomOrder', order);
+    setText('.site-order-info h3', 'orderingInformation', order);
+    var infoKeys = [
+      ['leadTimeTitle', 'leadTimeCopy'],
+      ['pickupConfirmTitle', 'pickupConfirmCopy'],
+      ['deliveryInfoTitle', 'deliveryInfoCopy'],
+      ['questionsTitle', 'questionsCopy']
+    ];
+    order.querySelectorAll('.site-order-info li').forEach(function (item, index) {
+      if (!infoKeys[index]) return;
+      setText('strong', infoKeys[index][0], item);
+      setText('span', infoKeys[index][1], item);
+    });
+    var buttons = order.querySelectorAll('.site-order-info .site-button');
+    if (buttons[0]) buttons[0].textContent = tx('orderViaWhatsapp');
+    if (buttons[1]) buttons[1].textContent = tx('sendIgDm');
+  }
+
   function localizeHowFooterSocial() {
     setText('.site-how h2', 'howItWorks');
     var howItems = document.querySelectorAll('.site-how li');
@@ -503,6 +600,7 @@
     localizeNavigation();
     localizeHomePage();
     localizeMenuPage();
+    localizeCustomOrderPage();
     localizeHowFooterSocial();
   }
 
@@ -565,6 +663,7 @@
       cat: "cake",
       img: IMG.mini,
       desc: "Rotating single-serve cakes — a green apple mini cake among the recent flavours.",
+      descZh: "輪流推出的迷你單人蛋糕，近期口味包括青蘋果迷你蛋糕。",
       price: "From public posts · 售價或有變動",
       size: "Assorted mini size · 散水/派對款",
       serves: "Best for office sharing / party box",
@@ -577,6 +676,7 @@
       cat: "bakery",
       img: IMG.sourdough,
       desc: "Slow-fermented sourdough with no additives, preservatives or artificial colour.",
+      descZh: "慢發酵天然酸種包，不添加防腐劑、人造色素或其他添加劑。",
       price: "Ask in branch · 門市查詢",
       size: "Loaf size varies daily · 每日款式不同",
       serves: "Slice for breakfast / sharing",
@@ -589,6 +689,7 @@
       cat: "pastry",
       img: IMG.croissant,
       desc: "Handmade, hand-folded and double-fermented. Flavours include chocolate custard cream, raspberry-strawberry and black sesame mochi.",
+      descZh: "手工摺疊及雙重發酵牛角酥，口味包括朱古力吉士、紅桑子士多啤梨及黑芝麻麻糬。",
       price: "Ask in branch · 門市查詢",
       size: "Single pastry · 單件裝",
       serves: "1 person",
@@ -601,6 +702,7 @@
       cat: "cake",
       img: IMG.strawberry,
       desc: "Fresh strawberry cake. A public Instagram post listed a limited special price HK$318 (regular HK$368), with pickup before 2026-06-10 — shown as a past example only.",
+      descZh: "新鮮士多啤梨蛋糕。公開 Instagram 帖文曾列出限時優惠價 HK$318（原價 HK$368），並列明 2026-06-10 前取貨；此處只作過往示例。",
       price: "Past example: $318 / reg $368 · 已過期",
       size: "Approx. 5–6 inch cake · 約5–6吋（示例）",
       serves: "4–6 people · 約4–6人",
@@ -614,6 +716,7 @@
       cat: "cake",
       img: IMG.rose,
       desc: "Mother's Day creation: rose-raspberry cream, strawberry jam, sponge, raspberry chocolate mousse and handmade chocolate rose petals under a red glaze.",
+      descZh: "母親節限定作品：玫瑰紅桑子忌廉、士多啤梨果醬、蛋糕胚、紅桑子朱古力慕絲及手工朱古力玫瑰花瓣，配上紅色淋面。",
       price: "Seasonal · 節日限定",
       size: "Approx. 5 inch seasonal cake · 約5吋節日蛋糕",
       serves: "4–6 people · 約4–6人",
@@ -627,6 +730,7 @@
       cat: "cake",
       img: IMG.unicorn,
       desc: "3D chocolate unicorn over a white-peach cake with peach jam and mousse. A festive limited bake (20 only) — example only.",
+      descZh: "白桃蛋糕配桃果醬及慕絲，上面放有 3D 朱古力獨角獸。節日限量作品（20 個）— 只作示例。",
       price: "Seasonal · 節日限定",
       size: "Limited celebration cake · 限量慶祝蛋糕",
       serves: "4–6 people · 約4–6人",
@@ -640,6 +744,7 @@
       cat: "cake",
       img: IMG.orange,
       desc: "Lunar New Year cake: orange mousse, praline chocolate mousse, chocolate-orange sponge and semi-confit mandarin.",
+      descZh: "農曆新年蛋糕：香橙慕絲、榛子朱古力慕絲、朱古力橙蛋糕胚及半糖漬柑橘。",
       price: "Seasonal · 節日限定",
       size: "Approx. 5 inch seasonal cake · 約5吋節日蛋糕",
       serves: "4–6 people · 約4–6人",
@@ -654,6 +759,7 @@
       cat: "pastry",
       img: IMG.croissant,
       desc: "Artemis signature — buttery croissant with pistachio and chewy mochi.",
+      descZh: "Artemis 招牌款：牛油香牛角酥，配開心果餡及煙韌麻糬。",
       price: "Ask in branch · 門市查詢",
       size: "Single signature pastry · 單件招牌酥點",
       serves: "1 person",
@@ -668,6 +774,7 @@
       cat: "pastry",
       img: IMG.croissant,
       desc: "Artemis signature long sausage pastry — a fun sharing bake from the Kai Tak counter.",
+      descZh: "Artemis 招牌 50cm 腸仔酥，啟德櫃位的人氣分享款。",
       price: "Ask in branch · 門市查詢",
       size: "50cm signature pastry · 50cm 招牌酥點",
       serves: "2–4 people sharing · 2–4人分享",
@@ -682,6 +789,7 @@
       cat: "pastry",
       img: IMG.croissant,
       desc: "Colourful mini croissants from Artemis — designed for gifting, photos and sharing boxes.",
+      descZh: "Artemis 彩色迷你牛角酥，適合送禮、拍照及分享禮盒。",
       price: "Ask in branch · 門市查詢",
       size: "Mini croissant box · 迷你牛角酥盒",
       serves: "Sharing box · 分享裝",
@@ -696,6 +804,7 @@
       cat: "cake",
       img: IMG.unicorn,
       desc: "Cute bear-themed celebration cake from the Artemis signature counter.",
+      descZh: "Artemis 招牌櫃位的小熊主題慶祝蛋糕，可愛又適合生日驚喜。",
       price: "Ask in branch · 門市查詢",
       size: "Celebration cake · 慶祝蛋糕",
       serves: "Ask in branch · 門市查詢",
@@ -709,6 +818,7 @@
       cat: "bakery",
       img: IMG.sourdough,
       desc: "Mochi-filled bagels — matcha mochi red bean, earl grey mochi lychee, taro mochi.",
+      descZh: "煙韌麻糬貝果，口味包括抹茶麻糬紅豆、伯爵茶麻糬荔枝及芋泥麻糬。",
       price: "From public posts · $15–$19 · 售價或有變動",
       size: "Single bagel · 單個貝果",
       serves: "1 person",
@@ -721,6 +831,7 @@
       cat: "pastry",
       img: IMG.croissant,
       desc: "Round laminated pastry — pistachio, Lotus sea-salt caramel, lemon yuzu.",
+      descZh: "圓形千層酥點，口味包括開心果、Lotus 海鹽焦糖及檸檬柚子。",
       price: "From public posts · $26–$29 · 售價或有變動",
       size: "Single wheel croissant · 單件圓酥",
       serves: "1 person",
@@ -961,9 +1072,9 @@
   }
 
   function detailOptions(p) {
-    return (p.options || ["Pickup branch", "Quantity", "Message card"])
+    return productList(p, "options").length ? productList(p, "options")
       .map(function (x) { return '<span class="product-modal__pill">' + esc(x) + '</span>'; })
-      .join("");
+      .join("") : ["Pickup branch", "Quantity", "Message card"].map(function (x) { return '<span class="product-modal__pill">' + esc(x) + '</span>'; }).join("");
   }
 
   function detailBranches(p) {
@@ -1002,7 +1113,7 @@
       : '';
     return '<div class="product-modal__section product-modal__config"><span>Step 2 · Choose order details · 選擇設定</span>' +
       '<div class="product-modal__form-grid">' +
-        '<label class="product-modal__control">款式/Option<select data-order-field="variant">' + optionTags(p.options || [p.name]) + '</select></label>' +
+        '<label class="product-modal__control">款式/Option<select data-order-field="variant">' + optionTags(productList(p, "options").length ? productList(p, "options") : [p.name]) + '</select></label>' +
         '<label class="product-modal__control">尺寸/Size<select data-order-field="size">' + optionTags(sizeChoices) + '</select></label>' +
         '<label class="product-modal__control">數量/Quantity<select data-order-field="quantity"><option>1</option><option>2</option><option>3</option><option>4</option><option>6</option><option>12</option></select></label>' +
         '<label class="product-modal__control">取貨日期/Pickup date<input data-order-field="pickupDate" type="date" min="' + todayIso() + '" /></label>' +
@@ -1061,6 +1172,22 @@
     refreshOrderUrl();
   }
 
+  function productText(product, field) {
+    if (currentLanguage === "zh") {
+      var zh = product[field + "Zh"];
+      if (zh) return zh;
+    }
+    return product[field] || "";
+  }
+
+  function productList(product, field) {
+    if (currentLanguage === "zh") {
+      var zh = product[field + "Zh"];
+      if (zh) return zh;
+    }
+    return product[field] || [];
+  }
+
   /* ---------- Menu ---------- */
   function renderMenu() {
     var grid = document.getElementById("menuGrid");
@@ -1071,7 +1198,7 @@
     var items = PRODUCTS.filter(function (p) {
       var catOk = activeCategory === "all" || p.cat === activeCategory;
       var brOk = activeBranch === "all" || p.branches.indexOf(activeBranch) !== -1;
-      var searchText = (p.name + " " + p.desc + " " + p.price + " " + (p.options || []).join(" ")).toLowerCase();
+      var searchText = (p.name + " " + productText(p, "desc") + " " + p.price + " " + productList(p, "options").join(" ")).toLowerCase();
       var searchOk = !activeSearch || searchText.indexOf(activeSearch) !== -1;
       return catOk && brOk && searchOk;
     });
@@ -1118,7 +1245,7 @@
         "</div>" +
         '<div class="product__body">' +
           '<div class="product__head"><h3>' + esc(p.name) + "</h3></div>" +
-          "<p class=\"product__desc\">" + esc(p.desc) + "</p>" +
+          "<p class=\"product__desc\">" + esc(productText(p, "desc")) + "</p>" +
           '<div class="product__foot">' +
             '<span class="product__price">' + esc(p.price) + "</span>" +
             '<span class="product__avail">' + avail + "</span>" +
@@ -1190,7 +1317,7 @@
       '<div class="product-modal__details">' +
         '<p class="eyebrow">Product details · 產品詳情</p>' +
         '<h2 id="productModalTitle">' + esc(p.name) + '</h2>' +
-        '<p class="product-modal__desc">' + esc(p.desc) + '</p>' +
+        '<p class="product-modal__desc">' + esc(productText(p, "desc")) + '</p>' +
         '<div class="product-modal__specs product-modal__specs--compact">' +
           '<div><span>Price · 價錢</span><strong>' + esc(p.price) + '</strong></div>' +
           '<div><span>Lead time · 預訂</span><strong>' + esc(p.lead || "Ask in branch") + '</strong></div>' +
