@@ -174,6 +174,11 @@ test('cake craft placeholder appears only on the front page', () => {
   assert.match(js, /wireCakeAssembly[\s\S]*__cakeAssemblyStatus/, 'cake assembly JS wiring/status missing');
 });
 
+test('product modal details start at the top for every product', () => {
+  assert.match(css, /\.product-modal__details\s*\{[^}]*justify-content:\s*flex-start;/, 'product modal details should align to the top so long product info does not open shifted down or clipped');
+  assert.doesNotMatch(css, /\.product-modal__details\s*\{[^}]*justify-content:\s*center;/, 'product modal details must not vertically center overflowing content');
+});
+
 test('language toggle localizes current visible site sections', () => {
   assert.match(js, /home:\s*"Home"[\s\S]*home:\s*"首頁"/, 'nav home label should have English and Chinese copy');
   assert.match(js, /order:\s*"Custom Cake"[\s\S]*order:\s*"自訂蛋糕"/, 'top bar order link should read Custom Cake / 自訂蛋糕');

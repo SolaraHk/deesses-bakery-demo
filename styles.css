@@ -487,7 +487,7 @@ body[data-nav-open="true"] .nav__toggle span[aria-hidden="true"]::after { opacit
   background: linear-gradient(180deg, transparent 55%, rgba(36,19,38,0.18)); pointer-events: none;
 }
 .product-modal__image img { display: block; width: 100%; height: 100%; min-height: 100%; object-fit: cover; }
-.product-modal__details { padding: clamp(28px, 5vw, 56px); display: flex; flex-direction: column; justify-content: center; overflow: auto; }
+.product-modal__details { padding: clamp(28px, 5vw, 56px); display: flex; flex-direction: column; justify-content: flex-start; overflow: auto; }
 .product-modal__details h2 { font-size: clamp(2rem, 5vw, 3.65rem); margin-bottom: 16px; }
 .product-modal__desc { color: #6f5536; font-size: 1.03rem; margin-bottom: 22px; }
 .product-modal__specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 8px 0 22px; }
