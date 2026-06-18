@@ -184,6 +184,8 @@ test('language toggle localizes current visible site sections', () => {
   assert.match(js, /order:\s*"Custom Cake"[\s\S]*order:\s*"自訂蛋糕"/, 'top bar order link should read Custom Cake / 自訂蛋糕');
   assert.match(js, /homeHeroTitle:\s*"Order Your<br \/>Sweet Moments"[\s\S]*homeHeroTitle:\s*"把心意焗成<br \/>甜蜜時刻"/, 'homepage hero should have more polished Chinese copy');
   assert.match(js, /productSpotlightTitle:[\s\S]*為今天挑一份甜/, 'product spotlight should have more polished Chinese copy');
+  assert.match(html, /data-signature-product="pistachio-mochi-croissant"[^>]*data-i18n="signaturePistachioMochiCroissant"[\s\S]*data-signature-product="mini-rainbow-croissants"[^>]*data-i18n="signatureMiniRainbowCroissants"[\s\S]*data-signature-product="bear-cake"[^>]*data-i18n="signatureBearCake"/, 'Artemis recommendation buttons should be localized and keep valid product IDs');
+  assert.match(js, /signaturePistachioMochiCroissant:\s*"開心果麻糬牛角酥"[\s\S]*signatureMiniRainbowCroissants:\s*"迷你彩虹牛角酥"[\s\S]*signatureBearCake:\s*"小熊蛋糕"/, 'Chinese mode should translate Artemis recommendation product names');
   assert.match(js, /breadPageTitle:[\s\S]*每日出爐，一口柔軟/, 'breads page hero should have more polished Chinese copy');
   assert.match(js, /function localizeCurrentSite\(\)[\s\S]*localizeNavigation\(\)[\s\S]*localizeHomePage\(\)[\s\S]*localizeMenuPage\(\)/, 'language toggle should localize duplicated current-site sections beyond data-i18n nodes');
   assert.match(js, /pageCategory === 'cake'[\s\S]*category-page--cake[\s\S]*pageCategory === 'pastry'[\s\S]*category-page--pastry[\s\S]*pageCategory === 'bakery'[\s\S]*category-page--breads/, 'category page localization should detect cakes, pastries and breads consistently instead of falling back to Shop menu');
@@ -198,7 +200,7 @@ test('language toggle localizes current visible site sections', () => {
 });
 
 test('root loads the current scripts and motion layer progressively', () => {
-  assert.match(html, /script\.js\?v=reviews-placeholder-2/, 'site script should be loaded on the root');
+  assert.match(html, /script\.js\?v=signature-i18n-1/, 'site script should be loaded on the root');
   assert.match(html, /site\.css\?v=concept-18/, 'root should load the current site stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
