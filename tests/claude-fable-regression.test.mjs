@@ -198,8 +198,8 @@ test('language toggle localizes current visible site sections', () => {
 });
 
 test('root loads the current scripts and motion layer progressively', () => {
-  assert.match(html, /script\.js\?v=reviews-placeholder-1/, 'site script should be loaded on the root');
-  assert.match(html, /site\.css\?v=concept-17/, 'root should load the current site stylesheet cache key');
+  assert.match(html, /script\.js\?v=reviews-placeholder-2/, 'site script should be loaded on the root');
+  assert.match(html, /site\.css\?v=concept-18/, 'root should load the current site stylesheet cache key');
   assert.match(js, /function initGsapTasteMotion\(\)/, 'motion initializer should remain available as progressive enhancement');
   assert.match(js, /prefersReducedMotion\(\) \|\| !gsap/, 'motion should disable itself for reduced-motion users or when GSAP is unavailable');
   assert.match(js, /__deessesGsapMotion\s*=\s*\{ enabled:\s*true/, 'motion status should be exposed for browser verification when active');
@@ -228,10 +228,11 @@ test('Homepage separates category spotlights and cake-only custom ordering', () 
   assert.match(homeCopy, /href="cakes\.html"[^>]*>Cakes[\s\S]*href="pastries\.html"[^>]*>Pastries[\s\S]*href="breads\.html"[^>]*>Breads/, 'Homepage top nav category links should open dedicated category pages');
   assert.match(homeCopy, /class="site-product-spotlight"[\s\S]*Choose a spotlight collection[\s\S]*site-product-spotlight__section--cake[\s\S]*site-product-spotlight__photos[\s\S]*site-product-spotlight__copy[\s\S]*View cakes[\s\S]*site-product-spotlight__section--pastry site-product-spotlight__section--reverse[\s\S]*site-product-spotlight__copy[\s\S]*View pastries[\s\S]*site-product-spotlight__photos[\s\S]*site-product-spotlight__section--breads[\s\S]*site-product-spotlight__photos[\s\S]*site-product-spotlight__copy[\s\S]*View breads/, 'Homepage product spotlight should present three horizontal alternating category sections with direct category buttons');
   assert.doesNotMatch(homeCopy, /A cake worth stopping for|View cake spotlight|Browse full menu/, 'Old confusing single-product spotlight copy should be removed');
+  assert.match(homeCopy, /id="how-it-works"[\s\S]*id="customer-reviews"[\s\S]*<section class="social site-social" id="social">/, 'Customer review placeholder should sit directly below the ordering flow and above the social gallery');
+  assert.match(homeCopy, /id="customer-reviews"[\s\S]*Customer Reviews[\s\S]*Sweet notes from customers[\s\S]*site-review-placeholder__quote[\s\S]*site-review-placeholder__meta/, 'Homepage should include a bilingual-ready customer review placeholder section');
+  assert.match(siteCss, /\.site-review-placeholder[\s\S]*\.site-review-placeholder__grid[\s\S]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)[\s\S]*\.site-review-placeholder__quote[\s\S]*Cormorant Garamond[\s\S]*Noto Serif TC/, 'Customer review placeholder should have styled cards and English/Chinese typography');
+  assert.match(js, /customerReviewsEyebrow:[\s\S]*客人好評[\s\S]*customerReviewPlaceholderMetaThree/, 'Customer review placeholder should be localizable with Chinese review copy');
   assert.match(homeCopy, /<section class="social site-social" id="social">[\s\S]*Follow our creations[\s\S]*id="socialGrid"/, 'Homepage should keep the Follow our creations social gallery');
-  assert.match(homeCopy, /id="customer-reviews"[\s\S]*Customer Reviews[\s\S]*Loved by our customers[\s\S]*site-review-placeholder__card/, 'Homepage should include a customer review placeholder section');
-  assert.match(siteCss, /\.site-review-placeholder[\s\S]*\.site-review-placeholder__grid[\s\S]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)[\s\S]*\.site-review-placeholder__card/, 'Customer review placeholder should have styled cards');
-  assert.match(js, /customerReviewsEyebrow:[\s\S]*客人好評[\s\S]*customerReviewPlaceholderCopy/, 'Customer review placeholder should be localizable');
   assert.match(siteCss, /\.site-product-spotlight__stack[\s\S]*\.site-product-spotlight__section[\s\S]*grid-template-columns:\s*minmax\(0, 1\.12fr\) minmax\(320px, 0\.88fr\)[\s\S]*\.site-product-spotlight__section--reverse[\s\S]*grid-template-columns:\s*minmax\(320px, 0\.88fr\) minmax\(0, 1\.12fr\)/, 'Product spotlight should use horizontal alternating image/text sections on desktop');
 
   assert.match(menuHtml, /<body class="site menu-page">/, 'separate product menu page should have the menu page body class');

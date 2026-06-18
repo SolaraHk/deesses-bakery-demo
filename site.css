@@ -834,21 +834,29 @@
 
 .site-review-placeholder {
   max-width: 1210px;
-  margin: 0 auto;
-  padding: 0 0 56px;
+  margin: 28px auto 0;
+  padding: clamp(24px, 4vw, 42px) clamp(18px, 4vw, 36px) clamp(30px, 5vw, 52px);
+  border: 1px solid rgba(199, 93, 112, 0.18);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 218, 226, 0.72), transparent 30%),
+    linear-gradient(135deg, rgba(255, 252, 249, 0.96), rgba(255, 245, 240, 0.84));
+  box-shadow: 0 24px 70px rgba(151, 93, 86, 0.1);
 }
-.site-review-placeholder__head { max-width: 760px; margin-bottom: 18px; }
+.site-review-placeholder__head { max-width: 760px; margin-bottom: 22px; }
 .site-review-placeholder__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 .site-review-placeholder__card {
-  min-height: 190px;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
   border: 1px dashed rgba(199, 93, 112, 0.38);
   border-radius: 24px;
   padding: 24px;
-  background: linear-gradient(135deg, rgba(255, 247, 242, 0.95), rgba(255, 255, 255, 0.86));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 242, 0.9));
   box-shadow: 0 18px 46px rgba(151, 93, 86, 0.08);
 }
 .site-review-placeholder__card span {
@@ -862,8 +870,33 @@
   font-size: 1.3rem;
   margin-bottom: 18px;
 }
-.site-review-placeholder__card h3 { font-size: 1.08rem; margin-bottom: 8px; }
-.site-review-placeholder__card p { color: var(--site-muted); margin: 0; }
+.site-review-placeholder__quote {
+  margin: 0 0 18px;
+  color: var(--site-ink);
+  font-family: "Cormorant Garamond", "Noto Serif TC", serif;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+.site-review-placeholder__meta {
+  margin: auto 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(199, 93, 112, 0.18);
+  color: var(--site-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.site:lang(zh-Hant-HK) .site-review-placeholder__quote,
+.site:lang(zh-Hant-HK) .site-review-placeholder__meta {
+  font-family: "Noto Serif TC", "Noto Sans TC", serif;
+}
+.site:lang(zh-Hant-HK) .site-review-placeholder__quote {
+  font-size: clamp(1.28rem, 4.6vw, 1.72rem);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
 
 .site-footer { padding: 34px clamp(18px, 5vw, 56px) 26px; background: rgba(255, 247, 244, 0.98); border-top: 1px solid var(--site-line); color: var(--site-ink); }
 .site-footer__inner { max-width: 1210px; margin: 0 auto; display: grid; grid-template-columns: 0.8fr 1.5fr 0.8fr; gap: 28px; align-items: start; }
