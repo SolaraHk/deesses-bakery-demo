@@ -109,7 +109,9 @@ test('SEO/social sharing metadata and structured bakery data exist', () => {
   assert.match(html, /rel="canonical"/, 'canonical URL missing');
   assert.match(html, /property="og:title"/, 'Open Graph tags missing');
   assert.match(html, /name="twitter:card"/, 'Twitter card tags missing');
-  assert.match(html, /rel="icon"/, 'favicon missing');
+  assert.match(html, /rel="icon" type="image\/x-icon" href="assets\/favicon\.ico\?v=higgsfield-favicon-1"/, 'Higgsfield favicon ICO should be wired with cache busting');
+  assert.match(html, /rel="icon" type="image\/png" sizes="512x512" href="assets\/favicon-512\.png\?v=higgsfield-favicon-1"/, 'Higgsfield PNG favicon should be wired with cache busting');
+  assert.match(html, /rel="apple-touch-icon" href="assets\/apple-touch-icon\.png\?v=higgsfield-favicon-1"/, 'Higgsfield Apple touch icon should be wired with cache busting');
   assert.match(html, /application\/ld\+json[\s\S]*Bakery/, 'Bakery JSON-LD missing');
 });
 
